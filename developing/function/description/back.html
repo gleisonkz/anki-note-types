@@ -1,0 +1,69 @@
+<section>
+    <header>
+        <div>
+            <p class="deckTree">{{Deck}}</p>
+            <p class="subDeck">{{Subdeck}}</p>
+        </div>
+    </header>
+
+    <article>
+        <div class="questionField">
+            <p>
+                <span class="classColor"> Como se chama</span>
+                a função que realiza a instrução abaixo?</br></br>
+                "<span class="classColor">{{FunctionDescription}}</span>"
+            </p>
+        </div>
+    </article>
+
+    <article class="articleAnswer">
+        <div class="notes">
+            <div class="notesChild containerFlex">
+                <span class="functionColor">{{FunctionName}}</span><span>()</span>
+            </div>
+        </div>
+    </article>
+
+    <article class="extraContainer">
+
+        {{#SampleImage}}
+        <div class="customButton" id="extra_toggle_on_button" onclick="showExtra()">
+            Show Example
+        </div>
+
+        <div class="extra" id="extraField">
+            <div class="notesChild">
+                {{SampleImage}}
+            </div>
+        </div>
+
+        <div class="customButton" id="extra_toggle_off_button" onclick="hideExtra()" style="display: none;">
+            Hide Example
+        </div>
+        {{/SampleImage}}
+    </article>
+    <footer>
+        <audio style="display:none">{{FunctionNameAudio}}</audio>
+    </footer>
+</section>
+<script>
+    $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
+    const extraField = document.getElementById("extraField");
+    const toggleOff = document.getElementById("extra_toggle_off_button");
+    const toggleOn = document.getElementById("extra_toggle_on_button");
+    const tip = document.getElementById("tip");
+
+    showExtra = () => {
+        extraField.style.display = "flex";
+        toggleOff.style.display = "block";
+        toggleOn.style.display = "none";
+    }
+    hideExtra = () => {
+        extraField.style.display = "none";
+        toggleOff.style.display = "none";
+        toggleOn.style.display = "block";
+    }
+    showTip = () => {
+        tip.style.display = "block ";
+    }
+</script>

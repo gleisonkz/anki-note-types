@@ -1,0 +1,102 @@
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+/* CONTENÇÃO PARA OS CARTÕES */
+#kard {
+    padding: 0px 0px;
+    max-width: 800px;
+    margin: 0 auto;
+    word-wrap: break-word;
+}
+
+.card {
+    text-align: left;
+    color: #D7DEE9;
+    background-color: #333B45;
+}
+
+/* ESTILO PARA AS TAGS APARECEREM NO TOPO DO CARTÃO QUANDO PASSAR O MOUSE */
+.tags {
+    color: #ee8f1a;
+    opacity: 0;
+    font-size: 10px;
+    width: 100%;
+    text-align: center;
+    text-transform: ;
+    position: fixed;
+    padding: 0;
+    top: 0;
+    right: 0;
+}
+
+.tags:hover {
+    opacity: 1;
+    position: fixed;
+}
+
+/* ESTILO DE IMAGEM (para alterar a proporção, mexer apenas em max-width ("%" ou "px" (pixies)) */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* ESTILO DE TABELA (apenas para alterar o tamanho da fonte "px" (pixies)) */
+tr {
+    font-size: 18px;
+}
+
+/* ESTILO PARA OS CLOZE DELITIONS */
+.cloze {
+    font-weight: bold;
+    color: #3fc178;
+}
+
+/* ESTILO PARA O CONTAINER EXTRA */
+.extraContainer {
+    padding-top: 20px;
+}
+
+/* ESTILO PARA O TITULO DO CAMPO EXTRA */
+.extraTitle {
+    font-weight: bold;
+    color: #ee8f1a;
+}
+
+/* COR E ESTILO PARA O NEGRITO (b), ITÁLICO (i) E SUBLINHADO (u) */
+/* ESTILO NEGRITO (b) */
+b {
+    font-weight: bold;
+    color: #C695C6;
+}
+
+/* ESTILO ITÁLICO (i) */
+i {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    color: #64bfbf;
+}
+
+/* ESTILO SUBLINHADO (u) */
+u {
+    text-decoration: none;
+    color: #F08080;
+}
+
+/* ESTILO PARA LINKS */
+a {
+    color: LightGray;
+}
+
+/* AJUSTES PARA CELULARES */
+.mobile .card {
+    color: #D7DEE9;
+    background-color: #333B45;
+}
+
+.mobile .tags:hover {
+    opacity: 1;
+    position: relative;
+}

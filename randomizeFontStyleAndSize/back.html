@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randomize Font Style and Size</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <section id="kard">
+        <div class="tags" id='tags'>#tags: {{Tags}}</div>
+        <div id="clozeRandom">{{cloze:Texto}}</div>
+
+        <article id="extraContainer" class="extraContainer">
+            {{#Extra}}
+            <span class="extraTitle">Extra</span><br>{{Extra}}
+            {{/Extra}}
+        </article>
+    </section>
+
+    <tts preset="Microsoft Speech API JScript (Microsoft Maria Desktop)" style="display: none">
+        {{cloze:Texto}}
+    </tts>
+    <script>
+        const applyFontStyleAndSize = (searchElementsID) => {
+            let element = null;
+            searchElementsID.forEach(c => {
+                element = document.getElementById(c);
+                element.style.fontFamily = global.fonte;
+                element.style.fontSize = global.tamanho;
+            })
+        }
+        ((function () {
+            if (typeof global != 'undefined') {
+                applyFontStyleAndSize(["clozeRandom", "extraContainer"]);
+                global = undefined;
+            }
+        }))()
+    </script>
+
+
+
+</body>
+
+</html>

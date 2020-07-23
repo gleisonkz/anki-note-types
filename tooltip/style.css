@@ -1,0 +1,82 @@
+.card {
+    font-family: arial;
+    font-size: 20px;
+    text-align: center;
+    color: black;
+    background-color: white;
+}
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    font-size: 10px;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip .tooltipText::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+.tooltip:hover .tooltipText {
+    visibility: visible;
+}
+
+.extraContainer {
+    display: flex;
+    margin-top: 20px;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.extra {
+    display: none;
+    font-size: 20px;
+    border: 2px dashed rgba(85, 85, 85, 0.75);
+    color: var(--classColor);
+    padding: 10px;
+    margin: 2px 20px 2px 20px;
+    text-align: center;
+}
+
+.customButton {
+    display: block;
+    font-family: Menlo;
+    font-size: 16px;
+    color: #bdc3c7;
+    background-color: rgba(85, 85, 85, 0.15);
+    border-radius: 10px;
+    padding: 5px;
+    width: 50%;
+    text-align: center;
+    font-weight: 500;
+    margin: 20px;
+    transition: background-color 0.15s ease-out;
+    cursor: pointer;
+}
+
+.customButton:hover {
+    background-color: rgba(85, 85, 85, 0.35);
+}

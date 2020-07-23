@@ -1,0 +1,133 @@
+<section>
+    <header>
+        <div class="tags">
+            <p>{{Deck}}</p>
+            <p class="mySubdeck">{{Subdeck}}</p>
+        </div>
+    </header>
+
+
+
+    <p id="myId">HTML Basics</p>
+
+
+
+
+    <article>
+        <div id="questionField" class="questionField">
+            <p>
+                <span class="classColor"> Como se chama</span>
+                a função que realiza a instrução abaixo?</br></br>
+                "<span class="classColor">{{FunctionDescription}}</span>"
+            </p>
+        </div>
+    </article>
+
+    <article class="articleAnswer">
+        <div class="notes">
+            <div class="notesChild containerFlex">
+                <span class="functionColor">{{FunctionName}}</span><span>()</span>
+            </div>
+        </div>
+    </article>
+
+    <article class="extraContainer">
+
+        {{#SampleImage}}
+        <div class="customButton" id="extra_toggle_on_button" onclick="showextra()">
+            Show Example
+        </div>
+
+        <div class="extra" id="extrafield">
+            <div class="notesChild">
+                {{SampleImage}}
+            </div>
+        </div>
+
+        <div class="customButton" id="extra_toggle_off_button" onclick="hideextra()" style="display: none;">
+            Hide Example
+        </div>
+        {{/SampleImage}}
+    </article>
+    <footer>
+        <audio style="display:none">{{FunctionNameAudio}}</audio>
+    </footer>
+</section>
+<script>
+    const fieldsAndElementsID = [
+        { textField: "{{text:FunctionName}}", elementID: 'questionField' },
+        { textField: "{{text:ReturnType}}", elementID: 'answerField' }
+
+    ];
+
+    const characterToSearch = [
+        { key: '?', value: 'tagGrayColor', code: "" },
+        { key: '!', value: 'tagGrayColor', code: "" },
+        { key: '.', value: 'tagGrayColor', code: "" },
+        { key: '-', value: 'tagGrayColor', code: "" },
+        { key: '(', value: 'tagGrayColor', code: "" },
+        { key: ')', value: 'tagGrayColor', code: "" },
+        { key: '<', value: 'tagGrayColor', code: "&lt" },
+        { key: '>', value: 'tagGrayColor', code: "&gt" },
+        { key: '/', value: 'tagGrayColor', code: "&bar" },
+        { key: '[', value: 'tagGrayColor', code: "" },
+        { key: ']', value: 'tagGrayColor', code: "" }]
+
+    //const classToAdd = "replace";
+    const element = document.getElementById('questionField');
+
+    let textElement = `<span class="#value">#key</span>`;
+    characterToSearch.forEach(c => {
+        const replacement = new RegExp(`[{${c.key}]`, 'g');
+        textElement = textElement.replace(replacement, c.code)
+    });
+
+    replace = (element) => {
+        const childrens = [...element.children];
+
+        for (let i = 0; i < childrens.length; i++) {
+            const children = childrens[i];
+            let filhos = [...children.children];
+
+            if (filhos.length > 0) {
+                replace(children);
+            }
+            else {
+                let text = children.innerText;
+                characterToSearch.forEach(char => {
+                    text = text.split(char.key)
+                        .join(textElement.replace('#value', char.value)
+                            .replace('#key', char.key));
+                });
+
+                characterToSearch.filter(c => c.code.length > 0)
+                    .forEach(c => {
+                        const replacement = new RegExp(`${c.code}`, 'g');
+                        text = text.replace(replacement, c.key)
+                    });
+                children.innerHTML = text;
+            }
+        }
+    }
+    replace(element);
+
+    $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
+    const extraField = document.getElementById("extrafield");
+    const toggleOff = document.getElementById("extra_toggle_off_button");
+    const toggleOn = document.getElementById("extra_toggle_on_button");
+    const tip = document.getElementById("tip");
+
+    showextra = () => {
+        extraField.style.display = "flex";
+        toggleOff.style.display = "block";
+        toggleOn.style.display = "none";
+    }
+    hideextra = () => {
+        extraField.style.display = "none";
+        toggleOff.style.display = "none";
+        toggleOn.style.display = "block";
+    }
+    showTip = () => {
+        tip.style.display = "block ";
+    }
+</script>

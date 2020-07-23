@@ -1,0 +1,39 @@
+<section>
+    <article id="pergunta">
+        {{Pergunta}}
+    </article>
+    <hr id=answer>
+    <article class="addTooltip">
+        {{Resposta}}
+    </article>
+    <article class="extraContainer">
+
+        {{#Resumo}}
+        <div class="customButton" id="extra_toggle_on_button" onclick="showExtra()">
+            Mostrar Resumo
+        </div>
+
+        <div class="extra" id="extraField">
+            <div class="notesChild addTooltip">
+                {{Resumo}}
+            </div>
+        </div>
+
+        <div class="customButton" id="extra_toggle_off_button" onclick="hideextra()" style="display: none;">
+            Esconder Resumo
+        </div>
+        {{/Resumo}}
+    </article>
+<script>
+    function showExtra() {
+        document.getElementById("extraField").style.display = "flex";
+        document.getElementById("extra_toggle_off_button").style.display = "block";
+        document.getElementById("extra_toggle_on_button").style.display = "none";
+    }
+
+    function hideExtra() {
+        document.getElementById("extraField").style.display = "none";
+        document.getElementById("extra_toggle_off_button").style.display = "none";
+        document.getElementById("extra_toggle_on_button").style.display = "block";
+    }
+</script>

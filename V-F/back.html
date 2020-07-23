@@ -1,0 +1,30 @@
+<header id="en" class="section" style="text-align:center">
+    <div>
+        <span class="meuSubdeck">{{Subdeck}}</span></br>
+        </br>
+        <span class="tags">{{Deck}}</span>
+    </div>
+</header>
+
+{{#Question}}
+<div id="sample_en" class="sample">
+    {{Question}}
+    <div class="answerList">
+        <p>
+            <span id="answer">{{Answer}}</span>
+        </p>
+    </div>
+</div>
+{{/Question}} {{#Explanation}}
+<div id="explanation" class="section"> Explicação
+    <img id="button_explanation" class="button" src="_lulu_minus.png" onclick="toggle('explanation')">
+</div>
+<div id="sample_explanation" class="sample">
+    {{Explanation}}
+</div>
+{{/Explanation}}
+
+<script>
+    var answer = document.getElementById("answer")
+    answer.style.color = answer.innerText === "VERDADEIRO" ? "green" : "red";
+</script>

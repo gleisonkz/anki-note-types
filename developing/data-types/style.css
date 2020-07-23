@@ -1,0 +1,105 @@
+:root {
+    --header-bg-color: #293d3d;
+    --customGray: rgba(85, 85, 85, 0.75);
+    --background: #212121;
+    --shadow: rgba(0, 0, 0, 0.23);
+    --classColor: #4cc5a1;
+    --stringColor: #d69d85;
+    --attributeColorCSS: #9cdcfe;
+    --tagGrayColor: #aeafad;
+    --elementSelectorColor: #4f9cd6;
+    --selectorColorCSS: #d7ba7d;
+    --methodColor: #dcdcaa;
+    --bgVsCodeColor: #1e1e1e;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+p{
+    margin: 10px 0;
+}
+
+.deckTree {
+    font-family: Verdana;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 11px;
+    color: #a6a6a6;
+    margin-bottom: 10px;
+}
+
+.subDeckName {
+    font-family: courier;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: #c5be3f;
+    margin-bottom: 20px;
+}
+
+.card {
+    font-size: 20px;
+    font-family: consolas;
+    background-color: var(--bgVsCodeColor);
+    padding: 10px;
+    color: rgb(206, 195, 195);
+}
+
+.card.nightMode {
+    background-color: var(--bgVsCodeColor);
+    color: rgb(206, 195, 195);
+}
+
+.dashedBorder {
+    border: 2px dashed rgba(85, 85, 85, 0.75);
+    padding: 10px;
+    margin: 3px 20px 3px 20px;
+    width: 400px;
+}
+
+article div {
+    text-align: center;
+}
+
+article {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 20px 0;
+}
+
+audio {
+    display: none;
+}
+
+.classColor {
+    color: var(--classColor);
+}
+
+.stringColor {
+    color: var(--stringColor);
+}
+
+.attributeColorCSS {
+    color: var(--attributeColorCSS);
+}
+
+.tagGrayColor {
+    color: var(--tagGrayColor);
+}
+
+.elementSelectorColor {
+    color: var(--elementSelectorColor);
+}
+
+.selectorColorCSS {
+    color: var(--selectorColorCSS);
+}
+
+.methodColor {
+    color: var(--methodColor);
+}

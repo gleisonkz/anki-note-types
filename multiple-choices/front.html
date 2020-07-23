@@ -1,0 +1,60 @@
+<section>
+    <header id="menu" class="section">
+        <article>
+            <p class="subdeck">{{Subdeck}}</p>
+            <p class="deckTree">{{Deck}}</p>
+        </article>
+    </header>
+
+    {{#Question}}
+    <article id="choicesContainer" class="sample">
+        <p>
+            {{Question}}
+        </p>
+        <ol class="answerList">
+            <li class="answer">{{Answer1}}</li>
+            <li class="answer">{{Answer2}}</li>
+            <li class="answer">{{Answer3}}</li>
+            <li class="answer">{{Answer4}}</li>
+            <li class="answer">{{Answer5}}</li>
+        </ol>
+    </article>
+    {{/Question}}
+</section>
+<script>
+    var arrayElements = [];
+
+    ((function () {
+        var hasReview = typeof (review) !== 'undefined' && review.arrayElements;
+        var parent = document.getElementsByClassName('answerList')[0];
+        var elements = [...document.getElementsByClassName('answer')];
+
+        var elementAnswer = elements.find(c => [...c.childNodes].find(d => d.nodeName == 'B') && (c.innerText = c.innerText));
+        if (!elementAnswer) {
+            var el = document.getElementById('choicesContainer');
+            el.style = "color:red";
+            el.innerHTML = 'É necessário que a resposta correta esteja com o estilo negrito.';
+        } else {
+            elementAnswer.setAttribute('data-correct', true);
+        }
+
+        elements.forEach(c => {
+            c.id = Math.floor(Math.random() * 1000);
+            arrayElements.push(parent.removeChild(c));
+        });
+
+        arrayElements = hasReview ? review.arrayElements : arrayElements;
+
+        arrayElements.sort((a, b) => a.id - b.id);
+        arrayElements.filter(c => c.innerText.trim().length)
+            .forEach(d => parent.append(d));
+
+        if (!hasReview) {
+            review = {
+                arrayElements
+            };
+        } else {
+            review = undefined
+        }
+    }))()
+</script>

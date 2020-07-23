@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randomize Font Style and Size</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+
+    <section id="kard">
+        <div class="tags">#tags: {{Tags}}</div>
+        <div id="clozeRandom">{{cloze:Texto}}</div>
+    </section>
+    <script>
+        const fontes = ['Open Sans', 'Verdana', 'Consolas'];
+        const tamanhos = ['10px', '20px', '30px', '40px', '50px'];
+        const applyFontStyleAndSize = (searchElementsID) => {
+            let element = null;
+            searchElementsID.forEach(c => {
+                element = document.getElementById(c);
+                element.fontFamily = global.fonte;
+                element.fontSize = global.tamanho;
+            })
+        }
+        ((function () {
+            if (typeof global === 'undefined') {
+                global = {};
+
+                randomizar = (array) => {
+                    return array[Math.floor(Math.random() * array.length)]
+                }
+                global.tamanho = randomizar(tamanhos);
+                global.fonte = randomizar(fontes);
+            }
+
+            applyFontStyleAndSize(["clozeRandom"])
+        }))()
+    </script>
+
+
+
+</body>
+
+</html>

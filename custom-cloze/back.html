@@ -1,0 +1,84 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <section>
+        <header>
+            <div class="deckTree">
+                <p>{{Deck}}</p>
+                <p class="subdeckName">{{Subdeck}}</p>
+            </div>
+        </header>
+
+        <article class="articleQuestion">
+            <div id="questionField" class="questionField">
+                {{Question}}
+            </div>
+        </article>
+
+        <article class="articleAnswer">
+            <div class="answerField">
+                <div id="answerField" class="notesChild containerFlex">
+                    {{Answer}}
+                </div>
+            </div>
+        </article>
+
+        <article style="padding-top: 20px;">
+            <picture>{{Image}}</picture>
+        </article>
+
+        <article class="extraContainer">
+
+            {{#Extra}}
+            <div class="customButton" id="extra_toggle_on_button" onclick="showextra()">
+                Show Extra
+            </div>
+
+            <div class="extra" id="extrafield">
+                <div class="notesChild">
+                    {{Extra}}
+                </div>
+            </div>
+
+            <div class="customButton" id="extra_toggle_off_button" onclick="hideextra()" style="display: none;">
+                Hide Extra
+            </div>
+            {{/Extra}}
+        </article>
+
+        <footer>
+            <audio style="display:none">{{AnswerAudio}}</audio>
+        </footer>
+    </section>
+    <script>
+        $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
+
+        const replaceStringAndAddClass = (classToAdd, elementsID) => {
+            const characterToSearch = ['?', '(', ')']
+
+            elementsID.forEach((elementID) => {
+                const element = document.getElementById(elementID)
+                characterToSearch.forEach(char => {
+                    element.innerHTML = element.innerHTML.split(char)
+                        .join(`<span class="${classToAdd}">${char}</span>`)
+                });
+            })
+        }
+        replaceStringAndAddClass('tagGrayColor', ['questionField', 'answerField'])
+
+        function showextra() {
+            document.getElementById("extrafield").style.display = "flex";
+            document.getElementById("extra_toggle_off_button").style.display = "block";
+            document.getElementById("extra_toggle_on_button").style.display = "none";
+        }
+
+        function hideextra() {
+            document.getElementById("extrafield").style.display = "none";
+            document.getElementById("extra_toggle_off_button").style.display = "none";
+            document.getElementById("extra_toggle_on_button").style.display = "block";
+        }
+    </script>
+</body>

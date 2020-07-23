@@ -1,0 +1,142 @@
+@import url("_editor_button_styles.css");
+
+:root {
+    --header-bg-color: #293d3d;
+    --customGray: rgba(85, 85, 85, 0.75);
+    --background: #212121;
+    --shadow: rgba(0, 0, 0, 0.23);
+    --classColor: #4cc5a1;
+    --stringColor: #d69d85;
+    --attributeColorCSS: #9cdcfe;
+    --tagGrayColor: #aeafad;
+    --elementSelectorColor: #4f9cd6;
+    --selectorColorCSS: #d7ba7d;
+    --methodColor: #dcdcaa;
+    --bgVsCodeColor: #1e1e1e;
+}
+
+section {
+    margin-bottom: 5px;
+}
+
+.card {
+    font-family: Calibri;
+    text-align: left;
+    color: var(--background);
+}
+
+p {
+    margin: 0 0 5px 0;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+}
+
+.deckTree {
+    font-family: Verdana;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 11px;
+    color: #a6a6a6;
+}
+
+.subeck {
+    font-family: courier;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 20px;
+    color: #C5BE3F;
+}
+
+.section {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0 3px 10px var(--shadow);
+    border: 2px dashed var(--customGray);
+}
+
+.sample {
+    font-size: 16px;
+    background-color: #1e1e1e;
+    border: 2px dashed var(--customGray);
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 3px 10px var(--shadow);
+    padding: 16px;
+    border-top: 0;
+}
+
+#menu {
+    font-size: 30px;
+    line-height: 45%;
+    border-top-left-radius: 15px;
+    background: var(--header-bg-color);
+    padding: 15px 10px 10px 52px;
+}
+
+#explanation {
+    display: flex;
+    justify-content: space-between;
+    font-size: 25px;
+    background: var(--header-bg-color);
+    padding: 5px;
+    color: #a6a6a6
+}
+
+#explanation p {
+    margin: 0;
+    flex-grow: 1;
+}
+
+li {
+    padding-bottom: 10px;
+    counter-increment: number;
+}
+
+ol {
+    counter-reset: list;
+}
+
+ol li {
+    list-style: none;
+}
+
+ol li:before {
+    content: counter(list, lower-alpha) ") ";
+    counter-increment: list;
+}
+
+.classColor {
+    color: var(--classColor);
+}
+
+.stringColor {
+    color: var(--stringColor);
+}
+
+.attributeColorCSS {
+    color: var(--attributeColorCSS);
+}
+
+.tagGrayColor {
+    color: var(--tagGrayColor);
+}
+
+.elementSelectorColor {
+    color: var(--elementSelectorColor);
+}
+
+.selectorColorCSS {
+    color: var(--selectorColorCSS);
+}
+
+.methodColor {
+    color: var(--methodColor);
+}
+
+@media (min-width: 700px) {
+    .sample {
+        font-size: 22px;
+    }
+}

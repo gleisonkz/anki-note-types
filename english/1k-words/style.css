@@ -1,0 +1,101 @@
+:root {
+    --header-bg-color: #293d3d;
+    --customGray: rgba(85, 85, 85, 0.75);
+    --background: #212121;
+    --shadow: rgba(0, 0, 0, 0.23);
+    --classColor: #4cc5a1;
+    --stringColor: #d69d85;
+    --attributeColorCSS: #9cdcfe;
+    --tagGrayColor: #aeafad;
+    --elementSelectorColor: #4f9cd6;
+    --selectorColorCSS: #d7ba7d;
+    --methodColor: #dcdcaa;
+    --bgVsCodeColor: #1e1e1e;
+}
+
+audio {
+    display: none;
+}
+
+.ipa{
+    font-size: 20px;
+    color: #C5BE3F;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.deckTree {
+    font-family: Verdana;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 11px;
+    color: #a6a6a6;
+}
+
+.subDeckName {
+    font-family: courier;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 20px;
+    color: #C5BE3F;
+}
+
+.card {
+    font-size: 20px;
+    font-family: consolas;
+    text-align: center;
+    background-color: #1e1e1e;
+}
+
+.card.nightMode {
+    background-color: #1e1e1e;
+}
+
+span {
+    font-size: 30px;
+}
+
+.dashedBorder {
+    border: 2px dashed rgba(73, 22, 22, 0.75);
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 3px 20px 3px 20px;
+}
+
+.containerArticle {
+    display: flex;
+    justify-content: center;
+}
+
+.dashedHrLine {
+    border: 1.5px dashed rgba(85, 85, 85, 0.75);
+    margin: 20px;
+}
+
+.verb {
+    color: var(--stringColor);
+}
+
+.noun {
+    color: var(--attributeColorCSS);
+}
+
+.adjective {
+    color: var(--classColor);
+}
+
+.preposition {
+    color: var(--selectorColorCSS);
+}
+
+.adverb {
+    color: var(--methodColor);
+}
+
+.conjunction {
+    color: var(--elementSelectorColor);
+}
+
+.pronoun {
+    color: var(--tagGrayColor);
+}

@@ -1,0 +1,40 @@
+<section>
+    <article>
+        <p id="p1" class="fala" onclick="playAudio('a1')">{{Fala1}}</p>
+    </article>
+    <article>
+        <p id="p2" class="fala">{{Fala2}}</p>
+    </article>
+    <article>
+        <p id="p3" class="fala">{{Fala3}}</p>
+    </article>
+    <article>
+        <p id="p4" class="fala">{{Fala4}}</p>
+    </article>
+    <article>
+        <p id="p5" class="fala">{{Fala5}}</p>
+    </article>
+    <article>
+        <p id="p6" class="fala">{{Fala6}}</p>
+    </article>
+
+    <footer>
+        <audio id="a1">{{Audio1}}</audio>
+        <audio id="a2">{{Audio2}}</audio>
+        <audio id="a3">{{Audio3}}</audio>
+        <audio id="a4">{{Audio4}}</audio>
+        <audio id="a5">{{Audio5}}</audio>
+        <audio id="a6">{{Audio6}}</audio>
+    </footer>
+</section>
+<script>
+
+    const audio = document.getElementById("a1");
+    
+    audio.click();
+
+    // function playAudio(id) {
+    //     const audio = document.getElementById(id);        
+    //     audio.click();
+    // }
+</script>

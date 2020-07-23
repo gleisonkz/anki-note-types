@@ -1,0 +1,126 @@
+@import url("_editor_button_styles.css");
+
+:root {
+    --classColor: #4cc5a1;
+    --stringColor: #d69d85;
+    --attributeColorCSS: #9cdcfe;
+    --tagGrayColor: #aeafad;
+    --elementSelectorColor: #4f9cd6;
+    --selectorColorCSS: #d7ba7d;
+    --methodColor: #dcdcaa;
+    --bgVsCodeColor: #1e1e1e;
+}
+
+.card {
+    font-size: 20px;
+    font-family: consolas;
+    background-color: var(--bgVsCodeColor);
+    padding: 10px;
+}
+
+.card.nightMode {
+    background-color: var(--bgVsCodeColor);
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+article {
+    margin: 5px;
+}
+
+.deckTree {
+    font-family: Verdana;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 11px;
+    color: #a6a6a6;
+    margin-bottom: 20px;
+}
+
+.subDeck {
+    font-family: courier;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: #c5be3f;
+}
+
+.expression {
+    font-size: 22px;
+}
+
+#translationArticle {
+    font-size: 18px;
+    color: var(--stringColor);
+}
+
+.notes {
+    font-size: 18px;
+}
+
+.media {
+    display: none;
+}
+
+img {
+    height: 200px;
+}
+
+article {
+    text-align: center;
+}
+
+.info-Queue {
+    font-family: courier;
+    font-size: 11px;
+    color: #e0dab6;
+}
+
+.customButton {
+    display: block;
+    font-family: Menlo;
+    font-size: 16px;
+    color: #bdc3c7;
+    background-color: rgba(85, 85, 85, 0.15);
+    border-radius: 10px;
+    padding: 5px;
+    width: 50%;
+    text-align: center;
+    font-weight: 500;
+    margin: 20px;
+    transition: background-color 0.15s ease-out;
+    cursor: pointer;
+}
+
+.customButton:hover {
+    background-color: rgba(85, 85, 85, 0.35);
+}
+
+
+
+:root {
+    --classColor: #4cc5a1;
+    --stringColor: #d69d85;
+    --attributeColorCSS: #9cdcfe;
+    --tagGrayColor: #aeafad;
+    --elementSelectorColor: #4f9cd6;
+    --selectorColorCSS: #d7ba7d;
+    --methodColor: #dcdcaa;
+    --bgVsCodeColor: #1e1e1e;
+}
+
+.card {
+    font-size: 20px;
+    font-family: consolas;
+    text-align: center;
+    color: rgb(206, 195, 195);
+    background-color: var(--bgVsCodeColor);
+}
+
+.card.nightMode {
+    color: rgb(206, 195, 195);
+    background-color: var(--bgVsCodeColor);
+}

@@ -1,0 +1,61 @@
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <section>
+        <header>
+            <div class="deckTree">
+                <p>{{Deck}}</p>
+                <p class="subdeckName">{{Subdeck}}</p>
+            </div>
+        </header>
+
+        <article class="articleQuestion">
+            <div id="questionField" class="questionField">
+                {{Question}}
+            </div>
+        </article>
+
+        <article class="articleTip">
+            {{#Tip}}
+            <div class="customButton" id="tipButton" onclick="showTip()">
+                Show Tip
+            </div>
+
+            <div class="tip" id="tipField">
+                {{Tip}}
+            </div>
+            {{/Tip}}
+        </article>
+
+        <article class="articleAnswer">
+            <div class="answerField">
+                <div class="notesChild">
+                    [...]
+                </div>
+            </div>
+        </article>
+        <footer>
+            <audio style="display:none">{{QuestionAudio}}</audio>
+        </footer>
+    </section>
+    <script>
+        const replaceStringAndAddClass = (classToAdd, elementsID) => {
+            const characterToSearch = ['?', '(', ')']
+
+            elementsID.forEach((elementID) => {
+                const element = document.getElementById(elementID)
+                characterToSearch.forEach(char => {
+                    element.innerHTML = element.innerHTML.split(char).join(`<span class="${classToAdd}">${char}</span>`)
+                });
+            })
+        }
+        replaceStringAndAddClass('tagGrayColor', ['questionField'])
+
+        const showTip = () => {
+            document.getElementById("tipField").style.display = "block";
+            document.getElementById("tipButton").style.display = "none";
+        }
+    </script>
+</body>

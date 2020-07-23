@@ -1,0 +1,47 @@
+<section>
+    <header>
+        <div class="deckTree">
+            <p>{{Deck}}</p>
+            <p class="subdeckName">{{Subdeck}}</p>
+        </div>
+    </header>
+
+    <article>
+        <div class="questionField">
+            <div>
+                <span class="classColor">Para que serve a </span>
+                <span>propriedade</span> <span class="format">{{PropertyName}}</span>
+            </div>
+        </div>
+    </article>
+
+    <article>
+        <div class="notes">
+            <div class="notesChild classColor">
+                [...]
+            </div>
+        </div>
+    </article>
+    <footer>
+        <audio>{{PropertyNameAudio}}</audio>
+    </footer>
+</section>
+<script>
+    const regex = /(?<key>[\w-]+): (?<value>[\w-]+);/g
+    let elements = [...document.getElementsByClassName("format")];
+    const addClass = (element) => {
+        let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
+        const result = [...elementHTML.matchAll(regex)]
+            .map(item => ({
+                element: `<span><span class="attributeColorCSS">${item.groups.key}</span>: <span class="stringColor">${item.groups.value}</span>; ?</span>`,
+                fullMatch: item['0']
+            }));
+        result.forEach(c => {
+            elementHTML = elementHTML.replace(c.fullMatch, c.element)
+        })
+        element.innerHTML = elementHTML;
+    }
+    elements.forEach((element) => {
+        addClass(element);
+    })    
+</script>

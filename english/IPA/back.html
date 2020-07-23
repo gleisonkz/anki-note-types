@@ -1,0 +1,78 @@
+<section>
+    <header>
+        <article class="header">
+            <p class="deckTree">{{Deck}}</p>
+            <p class="subdeck">{{Subdeck}}</p>
+        </article>
+    </header>
+
+    <article>
+        <span class="ipa">/{{IPA}}/</span>
+    </article>
+
+    <article>
+        <span>{{PhoneticType}}</span>
+    </article>
+
+    <article>
+        <div class="dashedBorder">
+            {{Answer}}
+        </div>
+    </article>
+
+    <picture>
+        {{Imagem}}
+    </picture>
+
+
+    <article class="containerExamples">
+        <div class="customButton buttonEffect" id="examplesButtonOn" onclick="showExamples()">
+            Show Examples
+        </div>
+        <div class="customButton buttonEffect" id="examplesButtonOff" onclick="hideExamples()">
+            Hide Examples
+        </div>
+        <div class="examples dashedBorder" id="examplesField">
+            <div class="displayFlexCenter">
+                {{Examples}}
+            </div>
+            <div class="customButton buttonEffect" id="examplesButtonOn" onclick="showExamples()">
+                Replay
+            </div>
+        </div>
+    </article>
+</section>
+<script>
+    const buttonOn = document.getElementById("examplesButtonOn");
+    const buttonOff = document.getElementById("examplesButtonOff");
+    const examplesField = document.getElementById("examplesField");
+    const examplesAudio = new Audio("{{ExamplesAudio}}");
+    const ipaAudio = new Audio("{{Audio}}");
+    const playAudio = (audioField) => {
+        audioField.play();
+    }
+
+    const playAudioIPA = () => {
+        playAudio(ipaAudio);
+    }
+    const playAudioExamples = () => {
+        playAudio(examplesAudio);
+    }
+
+    function showExamples() {
+        examplesField.style.display = "flex";
+        buttonOn.style.display = "none";
+        buttonOff.style.display = "block";
+        playAudioExamples();
+    }
+
+    function hideExamples() {
+        examplesField.style.display = "none";
+        buttonOn.style.display = "block";
+        buttonOff.style.display = "none";
+    }
+
+    
+
+    playAudio(ipaAudio);
+</script>

@@ -1,0 +1,68 @@
+<header>
+    <div >
+        <p class="deckTree">{{Deck}}</p>
+        <p class="subDeckName">{{Subdeck}}</p>
+    </div>
+</header>
+<section class="dex">
+    <article class="topBar">
+        <span class="number">#{{DexNumber}}</span>
+        <span class="name answer">{{Name}}</span>
+    </article>
+
+    <article class="img">
+        {{Image}}
+    </article>
+
+    <article class="types">
+        <div class="type">
+            {{Type1}}
+        </div>
+        {{#Type2}}
+        <div class="type" id="type2">
+            {{Type2}}
+        </div>
+        {{/Type2}}
+    </article>
+
+    <div>
+        <span class="gen">Gen. {{Generation}}</span>
+    </div>
+</section>
+<footer>
+    <p class="credits">Original idea by: nunixnunix04 - Improvements and mass import by gleisonKZ and Akilez from Brazil
+    </p>
+    <audio>{{NameAudio}}</audio>
+</footer>
+<script>
+    var typesAndColors = {
+        Electric: '#fc3',
+        Water: '#39f',
+        Grass: '#7c5',
+        Ice: '#6cf',
+        Fighting: '#b54',
+        Poison: '#a59',
+        Ground: '#db5',
+        Flying: '#89f',
+        Psychic: '#f59',
+        Bug: '#ab2',
+        Rock: '#ba6',
+        Ghost: '#66b',
+        Dragon: '#76e',
+        Dark: '#754',
+        Steel: '#b8b8d0',
+        Fairy: '#e9e',
+        Fire: '#ff3333',
+        Normal: '#A8A878'
+    };
+    var typeFields = [...document.getElementsByClassName("type")];
+
+    $(function () {
+        const typeFields = [...document.getElementsByClassName("type")];
+        typeFields.forEach((element) => {
+            const textElement = element.innerHTML.trim();
+            const color = typesAndColors[textElement];
+            element.style.backgroundColor = color;
+        });
+    });
+</script>

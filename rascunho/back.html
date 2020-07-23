@@ -1,0 +1,43 @@
+<section>
+    <header>
+        <div class="deckTree">
+            <p>{{Deck}}</p>
+            <p class="subDeck">{{Subdeck}}</p>
+            <p class="info-Queue"><span id="infoQueue">{{info-Queue:}}</span> - card</p>
+        </div>
+    </header>
+    <article>
+        <picture>
+            {{Snapshot}}
+        </picture>
+    </article>
+    <div id="toggle" style="visibility:hidden" class="customButton" onclick="toggle()">
+        Show Expression
+    </div>
+    <article id="expressionArticle">
+        <div>
+            {{Expression}}
+        </div>
+    </article>
+    {{#Translation}}
+    <article id="translationArticle">
+        <div>
+            {{Translation}}
+        </div>
+    </article>
+    {{/Translation}}
+    <footer>
+        <audio style="display:none">{{Audio}}</audio>
+    </footer>
+</section>
+<script>
+    const infoQueueElement = document.getElementById("infoQueue");
+    const infoQueueElementText = infoQueueElement.innerText;
+    const cardTypes = {
+        0: "new",
+        1: "learning",
+        2: "review",
+        3: "re-learning"
+    };
+    infoQueueElement.innerText = cardTypes[infoQueueElementText]
+</script>

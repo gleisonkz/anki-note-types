@@ -1,0 +1,67 @@
+<section>
+    <header>
+        <div class="deckTree">
+            <p>{{Deck}}</p>
+            <p class="subDeck">{{Subdeck}}</p>
+            <p class="info-Queue"><span id="infoQueue">{{info-Queue:}}</span> - card</p>
+        </div>
+    </header>
+    <article>
+        <picture>
+            {{Snapshot}}
+        </picture>
+    </article>
+    <article id="expressionArticle">
+        <div>
+            {{Expression}}
+        </div>
+    </article>
+    {{#Translation}}
+    <article id="translationArticle">
+        <div>
+            {{Translation}}
+        </div>
+    </article>
+    {{/Translation}}
+    <div id="toggle" style="visibility:hidden" class="customButton" onclick="toggle()">
+        Show Expression
+    </div>
+    <footer>
+        <audio style="display:none">{{Audio}}</audio>
+    </footer>
+</section>
+<script>
+    const infoQueueElement = document.getElementById("infoQueue");
+    const infoQueueElementText = infoQueueElement.innerText;
+    const cardTypes = {
+        0: "new",
+        1: "learning",
+        2: "review",
+        3: "re-learning"
+    };
+    infoQueueElement.innerText = cardTypes[infoQueueElementText];
+
+    (function highLightTargetWord() {
+        const phraseElement = document.getElementById("expressionArticle");
+        const target = "{{text:Target}}"
+
+        const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
+        const original = phraseElement.innerText.substring(index, index + target.length);
+
+        const replacementElements = [
+            {
+                element: phraseElement,
+                searchValue: original,
+                classElement: "new-word"
+            }
+        ]
+        const applyStyles = (object) => {
+            object.element.innerHTML = object.element.innerText
+                .replace(object.searchValue,
+                    `<span class="${object.classElement}">${object.searchValue}</span>`
+                );
+        }
+        replacementElements.filter(c => c.searchValue)
+                           .forEach(object => applyStyles(object));
+    })();
+</script>

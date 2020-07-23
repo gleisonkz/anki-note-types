@@ -1,0 +1,35 @@
+{{FrontSide}}
+
+{{#Explanation}}
+<section>
+    <article id="explanation" class="section">
+        <img src="_lulu_clipboard.png" onclick="toggle('explanation')">
+        <p>Explicação</p>
+        <img id="button_explanation" src="_lulu_minus.png" onclick="toggle('explanation')">
+    </article>
+    <article id="sample_explanation" class="sample">
+        {{Explanation}}
+    </article>
+    {{/Explanation}}
+</section>
+<script>
+
+    const answer = arrayElements.find(c => c.getAttribute('data-correct') == 'true');
+    if (answer) {
+        answer.style.color = "green";
+    }
+    review = undefined;
+
+    function toggle(e) {
+        const box = document.getElementById('sample_' + e);
+        const btn = document.getElementById('button_' + e);
+
+        if (box.style.display == 'none') {
+            box.style.display = 'block';
+            btn.src = '_lulu_minus.png';
+        } else {
+            box.style.display = 'none';
+            btn.src = '_lulu_plus.png';
+        }
+    }
+</script>

@@ -1,0 +1,77 @@
+<section>
+    <header>
+        <div class="deckTree">
+            <p>{{Deck}}</p>
+            <p class="subDeck">{{Subdeck}}</p>
+            <p class="info-Queue"><span id="infoQueue">{{info-Queue:}}</span> - card</p>
+        </div>
+    </header>
+    <article>
+        <div>
+            {{Snapshot}}
+        </div>
+    </article>
+    <div id="toggle" class="customButton" onclick="toggle()">
+        Show Expression
+    </div>
+    <article id="expressionArticle">
+        <div>
+            {{Expression}}
+        </div>
+    </article>
+    <footer>
+        <audio style="display:none">{{Audio}}</audio>
+    </footer>
+</section>
+<script>
+    function card() {
+        const cardTypeID = `{{info-Queue:}}`;
+        const articleExpressionElement = document.getElementById("expressionArticle");
+        const toggleElement = document.getElementById("toggle");
+        const infoQueueElement = document.getElementById("infoQueue");
+
+        const cardTypeById = {}
+        const cardTypeByText = {
+            new: 0,
+            learning: 1,
+            review: 2,
+            reLearning: 3,
+        };
+        for (let prop in cardTypeByText) {
+            cardTypeById[cardTypeByText[prop]] = prop;
+        }
+        infoQueueElement.innerText = cardTypeById[cardTypeID];
+
+
+
+        const visibility = {
+            true: {
+                state: "visible",
+                text: "Hide Expression"
+            },
+            false: {
+                state: "hidden",
+                text: "Show Expression"
+            },
+            isHidden: function (element) {
+                return element.style.visibility === "hidden" ||
+                    cardTypeID == cardTypeByText.new ? true : false;
+            },
+            apply: function (toggleButton, elementToToggle) {
+                const hidden = this.isHidden(elementToToggle);
+                const stateHandler = this[hidden];
+                elementToToggle.style.visibility = stateHandler.state;
+                toggleButton.innerText = stateHandler.text;
+                toggleButton.style.visibility = (cardTypeID == cardTypeByText.new) ? 'hidden' : 'visible';
+            }
+        };
+        this.toggle = function () {
+            visibility.apply(toggleElement, articleExpressionElement);
+        }
+        this.toggle();
+    }
+    const obj = new card();
+    function toggle() {
+        obj.toggle();
+    }
+</script>

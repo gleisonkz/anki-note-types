@@ -1,0 +1,129 @@
+<section>
+    <header>
+        <div class="tags">
+            <p>{{Deck}}</p>
+            <p class="meuSubdeck">{{Subdeck}}</p>
+        </div>
+    </header>
+
+    <article class="rowCenter">
+        <div>
+            <span>tap on the right word below</span>
+        </div>
+    </article>
+
+    <article class="containerArticle">
+        <div class="containerDashed">
+            <ol class="answerList">
+                <li id="answer1" class="answer"><b>{{FirstPair}}</b></li>
+                <li id="answer2" class="answer">{{SecondPair}}</li>
+            </ol>
+        </div>
+    </article>
+    <audio style="display:none">{{FirstAudio}}</audio>
+</section>
+<script>
+    var arrayElements = [];
+
+    ((function() {
+        var hasReview = typeof(review) !== 'undefined' && review.arrayElements;
+        var parent = document.getElementsByClassName('answerList')[0];
+        var elements = [...document.getElementsByClassName('answer')];
+
+        var elementAnswer = elements.find(c => [...c.childNodes].find(d => d.nodeName == 'B') && (c.innerText = c.innerText));
+        elementAnswer.setAttribute('data-correct', true);
+        elements.forEach(c => {
+            c.id = Math.floor(Math.random() * 1000);
+            arrayElements.push(parent.removeChild(c));
+        });
+
+        arrayElements = hasReview ? review.arrayElements : arrayElements;
+
+        arrayElements.sort((a, b) => a.id - b.id);
+        arrayElements.filter(c => c.innerText.trim().length)
+            .forEach(d => parent.append(d));
+
+        if (!hasReview) {
+            review = {
+                arrayElements
+            };
+        } else {
+            review = undefined
+        }
+    }))()
+
+
+    var answer = arrayElements.find(c => c.getAttribute('data-correct') == 'true');
+    answer.style.color = "green";
+    review = undefined;
+    $('.answer').removeClass("selecionado")
+
+    selecionado = typeof(selecionado) !== 'undefined' ? selecionado : "";
+    var resultado = answer.innerText !== selecionado ? "Wrong" : "Correct"
+    document.getElementById("resultado").innerText = resultado;
+</script>
+<style>
+    .card {
+        font-size: 20px;
+        font-family: consolas;
+        text-align: center;
+        background-color: #1e1e1e;
+    }
+    
+    .card.nightMode {
+        background-color: #1e1e1e;
+    }
+    
+    .tags {
+        font-family: Verdana;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 11px;
+        color: #a6a6a6;
+        margin-bottom: 20px;
+    }
+    
+    .meuSubdeck {
+        font-family: courier;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 20px;
+        color: #C5BE3F;
+    }
+    
+    .rowCenter {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .containerArticle {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    
+    .containerDashed {
+        border: 2px dashed rgba(85, 85, 85, 0.75);
+        display: flex;
+        justify-content: space-evenly;
+        padding: 20px;
+        margin: 3px 0px 3px 0px;
+        width: 400px;
+    }
+    
+    li {
+        border: 1.5px dashed rgba(85, 85, 85, 0.75);
+        padding: 10px;
+        margin: 20;
+        list-style-type: none;
+    }
+    
+    li:nth-child(1)::before {
+        content: "1 - "
+    }
+    
+    li:hover {
+        background: #9cdcfe;
+        cursor: pointer;
+    }
+</style>

@@ -1,0 +1,60 @@
+<section>
+    <header>
+        <div class="tags">
+            <p>{{Deck}}</p>
+            <p class="mySubdeck">{{Subdeck}}</p>
+        </div>
+    </header>
+
+    <article>
+        <div class="questionField">
+            Qual a
+            <span>divisão silábica</span> da palavra abaixo ?
+        </div>
+        <div class="palavraField" style="color: #4cc5a1;">
+            {{Palavra}}
+        </div>
+    </article>
+
+    <article class="articleAnswer">
+        <div class="notes">
+            <div class="notesChild containerFlex" style="color: #4cc5a1;">
+                {{DivisaoSilabica}}
+            </div>
+        </div>
+    </article>
+
+    <article class="extraContainer ">
+
+        {{#RegraCompleta}}
+        <div class="customButton " id="extra_toggle_on_button " onclick="showextra() ">
+            Mostrar Regras
+        </div>
+
+        <div class="extra " id="extrafield ">
+            <div class="notesChild ">
+                {{RegraCompleta}}
+            </div>
+        </div>
+
+        <div class="customButton " id="extra_toggle_off_button " onclick="hideextra() " style="display: none; ">
+            Esconder Regras
+        </div>
+        {{/RegraCompleta}}
+    </article>
+</section>
+<script>
+    $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
+
+    function showextra() {
+        document.getElementById("extrafield ").style.display = "flex ";
+        document.getElementById("extra_toggle_off_button ").style.display = "block ";
+        document.getElementById("extra_toggle_on_button ").style.display = "none ";
+    }
+
+    function hideextra() {
+        document.getElementById("extrafield ").style.display = "none ";
+        document.getElementById("extra_toggle_off_button ").style.display = "none ";
+        document.getElementById("extra_toggle_on_button ").style.display = "block ";
+    }
+</script>

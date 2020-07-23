@@ -1,0 +1,81 @@
+<section>
+    <header>
+        <div class="tags">
+            <p class="deckTree">{{Deck}}</p>
+            <p class="subDeckName">{{Subdeck}}</p>
+        </div>
+    </header>
+
+    <article>
+        <div>
+            <span style="color:#d69d85">{{Word}}</span> - <span class="ipa">/{{IPA}}/</span>
+        </div>
+    </article>
+
+    <div class="dashedHrLine">
+    </div>
+
+    {{#Answer}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>{{Answer}}</span>
+        </div>
+    </article>
+    {{/Answer}}
+
+    {{#Verb}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>Verb:&nbsp;</span><span class="verb">{{Verb}}</span>
+        </div>
+    </article>
+    {{/Verb}}
+
+    {{#Noun}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>Noun:&nbsp;</span><span class="noun">{{Noun}}</span>
+        </div>
+    </article>
+    {{/Noun}}
+
+    {{#Adjective}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>Adjective:&nbsp;</span><span class="adjective">{{Adjective}}</span>
+        </div>
+    </article>
+    {{/Adjective}}
+
+    {{#Preposition}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>Preposition:&nbsp;</span><span class="preposition">{{Preposition}}</span>
+        </div>
+    </article>
+    {{/Preposition}}
+
+    {{#Adverb}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>Adverb:&nbsp;</span><span class="adverb">{{Adverb}}</span>
+        </div>
+    </article>
+    {{/Adverb}}
+
+    {{#Conjunction}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>Conjunction:&nbsp;</span><span class="conjunction">{{Conjunction}}</span>
+        </div>
+    </article>
+    {{/Conjunction}}
+
+    {{#Pronoun}}
+    <article class="containerArticle">
+        <div class="dashedBorder">
+            <span>Pronoun:&nbsp;</span><span class="pronoun">{{Pronoun}}</span>
+        </div>
+    </article>
+    {{/Pronoun}}
+</section>

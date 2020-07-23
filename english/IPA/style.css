@@ -1,0 +1,140 @@
+.deckTree {
+    font-family: Verdana;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 11px;
+    color: #a6a6a6;
+    margin-bottom: 20px;
+}
+
+.subdeck {
+    font-family: courier;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 20px;
+    color: #C5BE3F;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+article {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+u {
+    text-decoration-style: Menlo;
+    text-underline-position: under;
+    color: white;
+    padding: 1px;
+}
+
+p {
+    margin: 0;
+}
+
+.containerExamples {
+    flex-direction: column;
+}
+
+.card {
+    font-size: 20px;
+    font-family: consolas;
+    text-align: center;
+    background-color: #1e1e1e;
+    padding: 10px;
+}
+
+.header {
+    flex-direction: column;
+}
+
+.ipa {
+    font-family: Calibri;
+    font-size: 55px;
+    padding: 0px 0px 0px;
+}
+
+.body-lower {
+    text-align: center;
+    color: #FFF57A;
+    padding: 25px 10px 25px;
+}
+
+.dashedBorder {
+    border: 2px dashed rgba(85, 85, 85, 0.75);
+    padding: 10px;
+    color: var(--classColor);    
+    /* margin: 2px 20px 2px 20px; */
+    margin: auto;
+    text-align: center;
+    min-width: 50%;
+}
+
+.notes {
+
+    font-size: 20px;
+    border: 2px dashed rgba(85, 85, 85, 0.75);
+    padding: 10px;
+    margin: 3px 20px 3px 20px;
+    text-align: center;
+}
+
+.displayFlexCenter {
+    display: flex;
+    justify-content: center;
+}
+
+.displayFlexCenter li {
+    text-align: left
+}
+
+.customButton {
+    display: block;
+    font-family: Menlo;
+    font-size: 16px;
+    color: #BDC3C7;
+    background-color: rgba(85, 85, 85, 0.15);
+    border-radius: 10px;
+    padding: 5px;
+    width: 20%;
+    text-align: center;
+    font-weight: 500;
+    margin: auto;
+    margin-top: 10px;
+    transition: background-color 0.15s ease-out;
+    cursor: pointer
+}
+
+.buttonEffect:hover {
+    background-color: rgba(85, 85, 85, 0.35);
+}
+
+#examplesButtonOff {
+    display: none;
+}
+
+.examples {
+    margin-top: 10px;
+    display: none;
+    flex-direction: column;
+    font-size: 20px;
+    color: white;
+    /* padding: 20px; */
+    
+}
+
+.card.nightMode {
+    background-color: #1e1e1e;
+}
+
+.cloze {
+    font-family: consolas;
+    font-size: 20px;
+    color: #4cc5a1;
+    font-weight: bold;
+}

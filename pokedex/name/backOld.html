@@ -1,0 +1,54 @@
+<div class="dex">
+    <div class="topbar">
+        <span class="number">#{{Dex Number}}</span>
+        <span class="name answer">{{Name}}</span>
+        <p></p>
+    </div>
+    <br>
+    <div class="img">
+        {{Image}}
+    </div>
+    <br>
+    <div class="typing">
+        <div class="type">
+            {{Type 1}}
+        </div>
+        <div class="type" id="type2">
+            {{Type 2}}
+        </div>
+    </div>
+    <br>
+    <span class="gen">Gen. {{Generation}}</span><span style="display: none;" {{Cry}}</span>
+</div>
+
+
+<script>
+    var type2 = document.getElementById("type2").innerHTML.trim();
+    if (type2.length < 1) {
+        document.getElementById("type2").style.display = "none";
+    }
+
+    for (i = 0; i < 2; i++) {
+        var type = document.getElementsByClassName("type")[i]
+        var type_name = type.innerHTML.trim();
+        type.style.color = "white";
+        if (type_name == "Fire") { type.style.backgroundColor = "#f42"; }
+        else if (type_name == "Water") { type.style.backgroundColor = "#39f"; }
+        else if (type_name == "Electric") { type.style.backgroundColor = "#fc3"; }
+        else if (type_name == "Grass") { type.style.backgroundColor = "#7c5"; }
+        else if (type_name == "Ice") { type.style.backgroundColor = "#6cf"; }
+        else if (type_name == "Fighting") { type.style.backgroundColor = "#b54"; }
+        else if (type_name == "Poison") { type.style.backgroundColor = "#a59"; }
+        else if (type_name == "Ground") { type.style.backgroundColor = "#db5"; }
+        else if (type_name == "Flying") { type.style.backgroundColor = "#89f"; }
+        else if (type_name == "Psychic") { type.style.backgroundColor = "#f59"; }
+        else if (type_name == "Bug") { type.style.backgroundColor = "#ab2"; }
+        else if (type_name == "Rock") { type.style.backgroundColor = "#ba6"; }
+        else if (type_name == "Ghost") { type.style.backgroundColor = "#66b"; }
+        else if (type_name == "Dragon") { type.style.backgroundColor = "#76e"; }
+        else if (type_name == "Dark") { type.style.backgroundColor = "#754"; }
+        else if (type_name == "Steel") { type.style.backgroundColor = "#aan"; }
+        else if (type_name == "Fairy") { type.style.backgroundColor = "#e9e"; }
+        else { type.style.backgroundColor = "#aa9"; }
+    }
+</script>
