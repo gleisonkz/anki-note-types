@@ -2,7 +2,7 @@ const deckName = "🏳️ GENERAL::👨‍💻 DEVELOPMENT::🎨 FRONT-END::🟨
 const subDeckName = "JAVASCRIPT";
 const question = "Qual o valor retornado da função Array.prototype.filter() quando nenhum do elementos atende a condição passada?";
 const answer = "um array vazio.";
-const extra = "";
+const extra = "Teste de extra";
 const image = "";
 const tip = "";
 
@@ -23,6 +23,10 @@ const replacementElements = [
         searchValue: "{{Answer}}",
         newValue: answer
     },
+    {
+        searchValue: "{{Extra}}",
+        newValue: extra
+    }
 ]
 
 const replaceFields = (searchValue) => {

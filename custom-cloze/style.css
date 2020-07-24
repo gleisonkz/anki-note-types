@@ -1,12 +1,18 @@
 :root {
-    --classColor: #4cc5a1;
-    --stringColor: #d69d85;
-    --attributeColorCSS: #9cdcfe;
-    --tagGrayColor: #aeafad;
-    --elementSelectorColor: #4f9cd6;
-    --selectorColorCSS: #d7ba7d;
+    --class-color: #4cc5a1;
+    --string-color: #d69d85;
+    --attribute-color-css: #9cdcfe;
+    --tag-gray-color: #aeafad;
+    --element-selector-color: #4f9cd6;
+    --selector-color-css: #d7ba7d;
     --methodColor: #dcdcaa;
-    --bgVsCodeColor: #1e1e1e;
+    --bg-vs-code-color: #1e1e1e;
+    --symbols: #d4d4d4;
+    --const-color: #4fc1ff;
+}
+
+.test {
+    color: red
 }
 
 article {
@@ -16,15 +22,20 @@ article {
 .card {
     font-size: 20px;
     font-family: consolas;
-    background-color: var(--bgVsCodeColor);
-    padding: 10px;
+    text-align: center;
+    color: rgb(206, 195, 195);
+    background-color: var(--bg-vs-code-color);
 }
 
 .card.nightMode {
-    background-color: var(--bgVsCodeColor);
+    font-size: 20px;
+    font-family: consolas;
+    text-align: center;
+    color: rgb(206, 195, 195);
+    background-color: var(--bg-vs-code-color);
 }
 
-.deckTree {
+.deck-tree {
     font-family: Verdana;
     text-transform: uppercase;
     text-align: center;
@@ -33,9 +44,9 @@ article {
     margin-bottom: 20px;
 }
 
-.subdeckName {
+.sub-deck-name {
     font-family: courier;
-    text-transform: uppercase;    
+    text-transform: uppercase;
     font-size: 20px;
     color: #c5be3f;
 }
@@ -81,7 +92,7 @@ article {
 
 .answerField b {
     font-weight: normal;
-    color: var(--stringColor);
+    color: var(--string-color);
 }
 
 .answerContainer {
@@ -107,14 +118,25 @@ article {
     align-items: center;
 }
 
-.extra {
-    display: none;
+#extraField {
     font-size: 20px;
     border: 2px dashed rgba(85, 85, 85, 0.75);
     color: var(--classColor);
     padding: 10px;
     margin: 2px 20px 2px 20px;
     text-align: center;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .5s linear;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity .5s linear;
 }
 
 .customButton {
@@ -133,6 +155,22 @@ article {
     cursor: pointer;
 }
 
+.no-select {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
 .customButton:hover {
     background-color: rgba(85, 85, 85, 0.35);
 }
@@ -146,30 +184,38 @@ audio {
     flex-wrap: wrap;
 }
 
-.classColor {
-    color: var(--classColor);
+.class-color {
+    color: var(--class-color);
 }
 
 .stringColor {
-    color: var(--stringColor);
+    color: var(--string-color);
 }
 
 .attributeColorCSS {
-    color: var(--attributeColorCSS);
+    color: var(--attribute-color-css);
 }
 
 .tagGrayColor {
-    color: var(--tagGrayColor);
+    color: var(--tag-gray-color);
 }
 
 .elementSelectorColor {
-    color: var(--elementSelectorColor);
+    color: var(--element-selector-color);
 }
 
 .selectorColorCSS {
-    color: var(--selectorColorCSS);
+    color: var(--selector-color-css);
 }
 
 .methodColor {
     color: var(--methodColor);
+}
+
+.symbols-color {
+    color: var(--symbols);
+}
+
+.const-color {
+    color: var(--const-color);
 }
