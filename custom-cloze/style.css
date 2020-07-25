@@ -5,14 +5,10 @@
     --tag-gray-color: #aeafad;
     --element-selector-color: #4f9cd6;
     --selector-color-css: #d7ba7d;
-    --methodColor: #dcdcaa;
+    --method-color: #dcdcaa;
     --bg-vs-code-color: #1e1e1e;
     --symbols: #d4d4d4;
     --const-color: #4fc1ff;
-}
-
-.test {
-    color: red
 }
 
 article {
@@ -79,13 +75,13 @@ article {
 
 .questionField b {
     font-weight: normal;
-    color: var(--classColor);
+    color: var(--class-color);
 }
 
 .answerField {
     border: 2px dashed rgba(85, 85, 85, 0.75);
     padding: 10px;
-    color: var(--classColor);
+    color: var(--class-color);
     margin: 2px 20px 2px 20px;
     text-align: center;
 }
@@ -104,7 +100,7 @@ article {
 .notesChild {
     display: flex;
     justify-content: center;
-    color: var(--classColor);
+    color: var(--class-color);
 }
 
 .notesChild li {
@@ -121,7 +117,7 @@ article {
 #extraField {
     font-size: 20px;
     border: 2px dashed rgba(85, 85, 85, 0.75);
-    color: var(--classColor);
+    color: var(--class-color);
     padding: 10px;
     margin: 2px 20px 2px 20px;
     text-align: center;
@@ -156,19 +152,18 @@ article {
 }
 
 .no-select {
-    -webkit-touch-callout: none;
     /* iOS Safari */
-    -webkit-user-select: none;
+    -webkit-touch-callout: none;
     /* Safari */
-    -khtml-user-select: none;
+    -webkit-user-select: none;
     /* Konqueror HTML */
-    -moz-user-select: none;
+    -khtml-user-select: none;
     /* Old versions of Firefox */
-    -ms-user-select: none;
+    -moz-user-select: none;
     /* Internet Explorer/Edge */
+    -ms-user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     user-select: none;
-    /* Non-prefixed version, currently
-                                    supported by Chrome, Edge, Opera and Firefox */
 }
 
 .customButton:hover {
@@ -209,7 +204,7 @@ audio {
 }
 
 .methodColor {
-    color: var(--methodColor);
+    color: var(--method-color);
 }
 
 .symbols-color {

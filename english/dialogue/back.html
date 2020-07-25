@@ -1,0 +1,76 @@
+<section>
+    <header>
+        <div class="deck-tree">
+            <p>{{Deck}}</p>
+            <p class="sub-deck-name">{{Subdeck}}</p>
+        </div>
+    </header>
+
+    {{#Fala1}}
+    <article>
+        <div>
+            <p>{{Fala1}}</p>
+            <div>{{Audio1}}</div>
+        </div>
+        <p class="hidden">{{Traducao1}}</p>
+    </article>
+    {{/Fala1}}
+
+    {{#Fala2}}
+    <article>
+        <div>
+            <p>{{Fala2}}</p>
+            <div>{{Audio2}}</div>
+        </div>
+        <p class="hidden">{{Traducao2}}</p>
+    </article>
+    {{/Fala2}}
+
+    {{#Fala3}}
+    <article>
+        <div>
+            <p>{{Fala3}}</p>
+            <div>{{Audio3}}</div>
+        </div>
+        <p class="hidden">{{Traducao3}}</p>
+    </article>
+    {{/Fala3}}
+
+    {{#Fala4}}
+    <article>
+        <div>
+            <p>{{Fala4}}</p>
+            <div>{{Audio4}}</div>
+        </div>
+        <p class="hidden">{{Traducao4}}</p>
+    </article>
+    {{/Fala4}}
+
+    {{#Fala5}}
+    <article>
+        <div>
+            <p>{{Fala5}}</p>
+            <div>{{Audio5}}</div>
+        </div>
+        <p class="hidden">{{Traducao5}}</p>
+    </article>
+    {{/Fala5}}
+
+    {{#Fala6}}
+    <article>
+        <div>
+            <p>{{Fala6}}</p>
+            <div>{{Audio6}}</div>
+        </div>
+        <p class="hidden">{{Traducao6}}</p>
+    </article>
+    {{/Fala6}}
+</section>
+<script>
+    const paragraphs = [...document.getElementsByClassName("hidden")];
+    paragraphs.forEach(c => {
+        setTimeout(() => {
+            c.className = "visible";
+        }, 100);
+    })
+</script>

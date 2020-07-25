@@ -24,6 +24,16 @@
     color: rgb(206, 195, 195);
 }
 
+header div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} 
+
+ header p {
+    margin: 5px 0;
+} 
+
 section {
     display: flex;
     flex-direction: column;
@@ -34,7 +44,7 @@ article{
     margin: 5px;
 }
 
-.deckTree {
+.deck-tree {
     font-family: Verdana;
     text-transform: uppercase;
     text-align: center;
@@ -43,7 +53,7 @@ article{
     margin-bottom: 20px;
 }
 
-.subDeck {
+.sub-deck {
     font-family: courier;
     text-transform: uppercase;
     font-size: 20px;
@@ -54,7 +64,7 @@ article{
     font-size: 22px;
 }
 
-#translationArticle {
+#translation-article {
     font-size: 18px;
     color: var(--stringColor);
 }
@@ -75,13 +85,13 @@ article {
     text-align: center;
 }
 
-.info-Queue {
+.info-queue {
     font-family: courier;
     font-size: 11px;
     color: #e0dab6;
 }
 
-.customButton {
+.custom-button {
     display: block;
     font-family: Menlo;
     font-size: 16px;
@@ -97,11 +107,30 @@ article {
     cursor: pointer;
 }
 
-.customButton:hover {
+.custom-button:hover {
     background-color: rgba(85, 85, 85, 0.35);
 }
 
 .new-word {
     color: #4cc5a1;
     font-weight: bold;
+}
+
+.no-select {
+    /* iOS Safari */
+    -webkit-touch-callout: none;
+    /* Safari */
+    -webkit-user-select: none;
+    /* Konqueror HTML */
+    -khtml-user-select: none;
+    /* Old versions of Firefox */
+    -moz-user-select: none;
+    /* Internet Explorer/Edge */
+    -ms-user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    user-select: none;
+}
+
+.mobile{
+    background-color: red;
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="fields.js"></script>
+    <style>
+        .maxSize{
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-color: #1e1e1e;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="maxSize card"  id="front" 
+    style="border: solid 3px rgb(110, 64, 124);">
+
+    </section>
+    <script>
+        $.get("front.html", (data) => {
+            $("#front").append(replaceFields(data));
+        });
+    </script>
+</body>
+
+</html>
