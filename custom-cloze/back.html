@@ -12,7 +12,7 @@
         </div>
     </article>
 
-    <article class="articleAnswer">
+    <article class="articleAnswer hidden auto-hidden">
         <div class="answerField">
             <div id="answerField" class="notesChild containerFlex">
                 {{Answer}}
@@ -20,25 +20,24 @@
         </div>
     </article>
 
-    <article style="padding-top: 20px;">
+    <article class="hidden auto-hidden" style="padding-top: 20px;">
         <picture>{{Image}}</picture>
     </article>
 
-    <article class="extraContainer">
+    <article class="extra-container no-select">
 
-        <!-- {{#Extra}} -->
+        {{#Extra}}
         <div class="customButton no-select" id="toggleButton" onclick="toggle()">
             Show Extra
         </div>
-        
-        <div class="hidden"  id="extraField">
+
+        <div class="hidden" id="extraField">
             <div class="notesChild">
                 {{Extra}}
             </div>
         </div>
 
-
-        <!-- {{/Extra}} -->
+        {{/Extra}}
     </article>
 
     <footer>
@@ -46,6 +45,15 @@
     </footer>
 </section>
 <script>
+
+    const hiddenElements = [...document.getElementsByClassName("auto-hidden")];
+    setTimeout(() => {
+        hiddenElements.forEach(c => {
+            c.classList.remove("hidden")
+            c.classList.add("visible");
+        })
+    }, 100);
+
     $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
 
     const toggleButton = document.getElementById("toggleButton");
@@ -76,22 +84,39 @@
         visibility.apply(toggleButton, extraField);
     }
 
-    const replaceStringAndAddClass = (elementsID) => {
-        const mapColors = [
+    const replaceStringAndAddClass = (...elementsID) => {
+        const mapTextColors = [
             { key: '?', value: 'symbols-color' },
             { key: '(', value: 'symbols-color' },
             { key: ')', value: 'symbols-color' },
             { key: 'Array', value: 'class-color' },
+            { key: 'String', value: 'class-color' },
+            { key: 'Object', value: 'class-color' },
             { key: 'prototype', value: 'const-color' },
-        ]
+        ]        
 
         elementsID.forEach((elementID) => {
             const element = document.getElementById(elementID)
-            mapColors.forEach(c => {
+            let textElement = element.innerText;
+            const match = [...textElement.matchAll(/\w+[.]\w+[.](?<function>\w+)[\(][\)]/g)][0];
+            const groupValue = match.groups['function'];            
+            textElement = textElement
+            .replace(groupValue, `<span class="function-color">${groupValue}</span>`)
+
+            element.innerHTML = textElement;
+            mapTextColors.forEach(c => {
+                element.innerHTML = element.innerHTML.split(c.key)
+                                                     .join(`<span class="${c.value}">${c.key}</span>`)
+            });
+        })
+
+        elementsID.forEach((elementID) => {
+            const element = document.getElementById(elementID)
+            mapTextColors.forEach(c => {
                 element.innerHTML = element.innerHTML.split(c.key)
                     .join(`<span class="${c.value}">${c.key}</span>`)
             });
         })
     }
-    replaceStringAndAddClass(['questionField']);
+    replaceStringAndAddClass('questionField');
 </script>

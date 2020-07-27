@@ -1,0 +1,36 @@
+<section class="visible">
+    <header>
+        <div>
+            <p class="deck-tree">{{Deck}}</p>
+            <p class="sub-deck-name">{{Subdeck}}</p>
+        </div>
+    </header>
+
+    <article>
+        <div class="questionField">
+            <p>
+                <span class="class-color"> Como se chama</span>
+                a <span class="attribute-color-css">propriedade</span>:<span class="string-color">valor</span> que
+                realiza
+                a instrução abaixo?</br></br>
+                "<span class="class-color">{{PropertyDescription}}</span>"
+            </p>
+        </div>
+    </article>
+
+    <article>
+        <div class="notes">
+            <div class="notesChild" style="color: #4cc5a1;">
+                [...]
+            </div>
+        </div>
+    </article>
+</section>
+<script>
+    const hiddenElements = [...document.getElementsByClassName("hidden")];
+    setTimeout(() => {
+        hiddenElements.forEach(c => {
+            c.className = "visible";
+        })
+    }, 100);
+</script>

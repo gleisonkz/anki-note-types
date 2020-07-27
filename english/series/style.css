@@ -28,11 +28,11 @@ header div {
     display: flex;
     flex-direction: column;
     align-items: center;
-} 
+}
 
- header p {
+header p {
     margin: 5px 0;
-} 
+}
 
 section {
     display: flex;
@@ -40,7 +40,7 @@ section {
     align-items: center;
 }
 
-article{
+article {
     margin: 5px;
 }
 
@@ -131,6 +131,9 @@ article {
     user-select: none;
 }
 
-.mobile{
-    background-color: red;
+/* MOBILE */
+@media screen and (max-width: 600px) {
+    .info-queue{
+        display: none;
+    }
 }

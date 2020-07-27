@@ -5,10 +5,46 @@
     --tag-gray-color: #aeafad;
     --element-selector-color: #4f9cd6;
     --selector-color-css: #d7ba7d;
-    --method-color: #dcdcaa;
+    --function-color: #dcdcaa;
     --bg-vs-code-color: #1e1e1e;
     --symbols: #d4d4d4;
     --const-color: #4fc1ff;
+}
+
+.class-color {
+    color: var(--class-color);
+}
+
+.stringColor {
+    color: var(--string-color);
+}
+
+.attributeColorCSS {
+    color: var(--attribute-color-css);
+}
+
+.tagGrayColor {
+    color: var(--tag-gray-color);
+}
+
+.elementSelectorColor {
+    color: var(--element-selector-color);
+}
+
+.selector-color-css {
+    color: var(--selector-color-css);
+}
+
+.function-color {
+    color: var(--function-color);
+}
+
+.symbols-color {
+    color: var(--symbols);
+}
+
+.const-color {
+    color: var(--const-color);
 }
 
 article {
@@ -177,40 +213,4 @@ audio {
 .containerFlex {
     display: flex;
     flex-wrap: wrap;
-}
-
-.class-color {
-    color: var(--class-color);
-}
-
-.stringColor {
-    color: var(--string-color);
-}
-
-.attributeColorCSS {
-    color: var(--attribute-color-css);
-}
-
-.tagGrayColor {
-    color: var(--tag-gray-color);
-}
-
-.elementSelectorColor {
-    color: var(--element-selector-color);
-}
-
-.selectorColorCSS {
-    color: var(--selector-color-css);
-}
-
-.methodColor {
-    color: var(--method-color);
-}
-
-.symbols-color {
-    color: var(--symbols);
-}
-
-.const-color {
-    color: var(--const-color);
 }

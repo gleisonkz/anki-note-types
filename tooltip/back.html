@@ -2,38 +2,70 @@
     <article id="pergunta">
         {{Pergunta}}
     </article>
-    <hr id=answer>
-    <article class="addTooltip">
+    <hr>
+    <article class="add-tooltip">
         {{Resposta}}
     </article>
-    <article class="extraContainer">
 
-        {{#Resumo}}
-        <div class="customButton" id="extra_toggle_on_button" onclick="showExtra()">
+    {{#Resumo}}
+    <article class="extra-container">
+
+        <div class="custom-button no-select" id="toggleButton" onclick="toggle()">
             Mostrar Resumo
         </div>
 
-        <div class="extra" id="extraField">
-            <div class="notesChild addTooltip">
+        <div class="extra hidden" id="extraField">
+            <div class="add-tooltip">
                 {{Resumo}}
             </div>
         </div>
 
-        <div class="customButton" id="extra_toggle_off_button" onclick="hideextra()" style="display: none;">
-            Esconder Resumo
-        </div>
-        {{/Resumo}}
     </article>
+    {{/Resumo}}
+</section>
+
 <script>
-    function showExtra() {
-        document.getElementById("extraField").style.display = "flex";
-        document.getElementById("extra_toggle_off_button").style.display = "block";
-        document.getElementById("extra_toggle_on_button").style.display = "none";
+    const toggleButton = document.getElementById("toggleButton");
+    const extraField = document.getElementById("extraField");
+    const regex = /\{(?<key>[a-zA-Z0-9_,. \u00C0-\u00FF]+)[:](?<value>[a-zA-Z0-9_,. \u00C0-\u00FF]+)\}/g
+    const elements = [...document.getElementsByClassName("add-tooltip")];
+    const addTooltip = (element) => {
+        let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
+        const result = [...elementHTML.matchAll(regex)]
+            .map(item => ({
+                element: `<div class="tooltip">${item.groups.key}<span class="tooltipText">${item.groups.value}</span></div>`,
+                fullMatch: item['0']
+            }));
+        result.forEach(c => {
+            elementHTML = elementHTML.replace(c.fullMatch, c.element)
+        })
+        element.innerHTML = elementHTML;
     }
 
-    function hideExtra() {
-        document.getElementById("extraField").style.display = "none";
-        document.getElementById("extra_toggle_off_button").style.display = "none";
-        document.getElementById("extra_toggle_on_button").style.display = "block";
+    function toggle(string) {
+        const visibility = {
+            true: {
+                state: "visible",
+                text: "Esconder Resumo"
+            },
+            false: {
+                state: "hidden",
+                text: "Mostrar Resumo"
+            },
+            isHidden: function (element) {
+                console.log(element.className);
+                return element.classList.contains("hidden");
+            },
+            apply: function (toggleButton, elementToToggle) {
+                const hidden = this.isHidden(elementToToggle);
+                const stateHandler = this[hidden];
+                toggleButton.innerText = stateHandler.text;
+                elementToToggle.className = `${stateHandler.state} extra`;
+            }
+        };
+        visibility.apply(toggleButton, extraField);
     }
+    elements.forEach((element) => {
+        addTooltip(element);
+    })
 </script>

@@ -26,7 +26,23 @@ const replacementElements = [
     {
         searchValue: "{{Extra}}",
         newValue: extra
-    }
+    },
+    {
+        searchValue: "{{#Extra}}",
+        newValue: ''
+    },
+    {
+        searchValue: "{{/Extra}}",
+        newValue: ''
+    },
+    {
+        searchValue: "{{#Tip}}",
+        newValue: ''
+    },
+    {
+        searchValue: "{{/Tip}}",
+        newValue: ''
+    },
 ]
 
 const replaceFields = (searchValue) => {

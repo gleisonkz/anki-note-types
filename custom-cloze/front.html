@@ -1,7 +1,7 @@
-<section>
+<section class="hidden">
     <header>
-        <div class="deck-tree">
-            <p>{{Deck}}</p>
+        <div>
+            <p class="deck-tree">{{Deck}}</p>
             <p class="sub-deck-name">{{Subdeck}}</p>
         </div>
     </header>
@@ -36,27 +36,55 @@
     </footer>
 </section>
 <script>
+    const hiddenElements = [...document.getElementsByClassName("hidden")];
+    setTimeout(() => {
+        hiddenElements.forEach(c => {
+            c.classList.remove("hidden")
+            c.classList.add("visible");
+        })
+    }, 100);
+
     const toggleButton = document.getElementById("tipButton");
     const extraField = document.getElementById("tipField");
 
-    const replaceStringAndAddClass = (elementsID) => {
-        const mapColors = [
+    const replaceStringAndAddClass = (...elementsID) => {        
+        const mapTextColors = [
             { key: '?', value: 'symbols-color' },
             { key: '(', value: 'symbols-color' },
             { key: ')', value: 'symbols-color' },
             { key: 'Array', value: 'class-color' },
+            { key: 'String', value: 'class-color' },
+            { key: 'Object', value: 'class-color' },
             { key: 'prototype', value: 'const-color' },
         ]
 
+        elementsID.forEach((elementID) => {            
+            const element = document.getElementById(elementID)            
+            let textElement = element.innerHTML.trim();
+            const match = [...textElement.matchAll(/\w+[.]\w+[.](?<function>\w+)[\(][\)]/g)][0];
+                console.log(element);
+                console.log(textElement);
+                console.log(match);
+            const groupValue = match.groups['function'];
+            textElement = textElement
+                .replace(groupValue, `<span class="function-color">${groupValue}</span>`)
+
+            element.innerHTML = textElement;
+            mapTextColors.forEach(c => {
+                element.innerHTML = element.innerHTML.split(c.key)
+                    .join(`<span class="${c.value}">${c.key}</span>`)
+            });
+        })
+
         elementsID.forEach((elementID) => {
             const element = document.getElementById(elementID)
-            mapColors.forEach(c => {
+            mapTextColors.forEach(c => {
                 element.innerHTML = element.innerHTML.split(c.key)
                     .join(`<span class="${c.value}">${c.key}</span>`)
             });
         })
     }
-    replaceStringAndAddClass(['questionField']);
+    replaceStringAndAddClass('questionField');
 
     function toggle(string) {
         const visibility = {

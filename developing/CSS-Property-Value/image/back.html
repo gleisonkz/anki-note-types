@@ -1,44 +1,34 @@
 <section>
     <header>
-        <div class="deckTree">
-            <p>{{Deck}}</p>
-            <p class="subdeckName">{{Subdeck}}</p>
+        <div>
+            <p class="deck-tree">{{Deck}}</p>
+            <p class="sub-deck-name">{{Subdeck}}</p>
         </div>
     </header>
 
     <article>
         <div class="questionField">
-            <div>
-                <span class="classColor">Para que serve a </span>
-                <span>propriedade</span> <span class="format">{{PropertyName}}</span>
-            </div>
+            <p>
+                <span class="class-color"> Como se chama</span>
+                a <span class="attribute-color-css">propriedade</span>:<span class="string-color">valor</span>
+                responsável
+                pelo resultado abaixo?
+            </p>
         </div>
     </article>
+
+    <picture class="class-color">{{ImageQuestion}}</picture>
 
     <article class="articleAnswer">
         <div class="notes">
-            <div id="answerField" class="notesChild containerFlex classColor">
-                {{PropertyDescription}}
+            <div id="answerField" class="notesChild containerFlex">
+                <span class="format">{{PropertyName}}</span>
             </div>
         </div>
     </article>
-
-    <article class="extraContainer">
-        <div class="customButton" id="extra_toggle_on_button" onclick="showextra()" style="display: none;">
-            Show Example
-        </div>
-
-        <div class="extra" id="extrafield">
-            <div class="notesChild ">
-                {{SampleImage}}
-            </div>
-        </div>
-
-        <div class="customButton" id="extra_toggle_off_button" onclick="hideextra()">
-            Hide Example
-        </div>
-
-    </article>
+    <footer>
+        <audio>{{PropertyNameAudio}}</audio>
+    </footer>
 </section>
 <script>
     $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
@@ -49,7 +39,7 @@
         let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
         const result = [...elementHTML.matchAll(regex)]
             .map(item => ({
-                element: `<span><span class="attributeColorCSS">${item.groups.key}</span>: <span class="stringColor">${item.groups.value}</span>; ?</span>`,
+                element: `<span><span class="attributeColorCSS">${item.groups.key}</span>: <span class="stringColor">${item.groups.value}</span>;</span>`,
                 fullMatch: item['0']
             }));
         result.forEach(c => {
