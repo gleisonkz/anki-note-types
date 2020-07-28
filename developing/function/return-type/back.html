@@ -1,25 +1,24 @@
 <section>
     <header>
-        <div>
+        <div >
             <p class="deckTree">{{Deck}}</p>
             <p class="subDeck">{{Subdeck}}</p>
         </div>
     </header>
 
     <article>
-        <div class="questionField">
+        <div id="questionField" class="questionField">
             <div>
-                <span class="classColor">Quais são os parâmetros</span>
-                <span>da função </span>
-                <span class="functionColor">{{FunctionName}}</span>()?
-            </div>
+                <span class="classColor">Qual o tipo de retorno</span>
+                <span>da função</span>
+                <span class="functionColor">{{FunctionName}}</span><span>()?</span> </div>
         </div>
     </article>
 
     <article class="articleAnswer">
         <div class="notes">
-            <div id="parameters" class="notesChild containerFlex" style="color: gray;">
-                {{Parameters}}
+            <div id="answerField"  class="notesChild containerFlex" style="color: #4cc5a1;">
+                {{ReturnType}}
             </div>
         </div>
     </article>
@@ -43,33 +42,11 @@
         {{/Parameters}}
     </article>
     <footer>
-        <audio style="display:none">{{ParametersAudio}}</audio>
+        <audio style="display:none">{{ReturnTypeAudio}}</audio>
     </footer>
 </section>
 <script>
     $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
-
-    const regex = /(?<parameter>[^:]*): (?<type>[^-]*)- \[(?<description>.*?)\]/g
-    const element = document.getElementById("parameters");
-    const addClass = (element) => {
-        let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
-        const result = [...elementHTML.matchAll(regex)]
-            .map(item => ({
-                element: `<span>
-                    <span class="attributeColorCSS">${item.groups.parameter}</span>: 
-                    <span class="classColor">${item.groups.type}</span> - 
-                    <span class="tagGrayColor">${item.groups.description}</span>
-                    </span>`,
-                fullMatch: item['0']
-            }));
-        result.forEach(c => {
-            elementHTML = elementHTML.replace(c.fullMatch, c.element)
-        })
-        element.innerHTML = elementHTML;
-    }
-
-    addClass(element);
-
     function showextra() {
         document.getElementById("extrafield ").style.display = "flex ";
         document.getElementById("extra_toggle_off_button ").style.display = "block ";

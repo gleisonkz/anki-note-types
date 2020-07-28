@@ -1,7 +1,6 @@
 const deckName = "🏳️ GENERAL::👨‍💻 DEVELOPMENT::🎨 FRONT-END::🟨 JAVASCRIPT";
 const subDeckName = "JAVASCRIPT";
-// const question = "Como funciona a propriedade display:flex; ?";
-const question = "Array.prototype.filter()";
+const question = "Qual o valor retornado da função Array.prototype.filter() quando nenhum do elementos atende a condição passada?";
 const answer = "um array vazio.";
 const extra = "Teste de extra";
 const image = "";
@@ -17,31 +16,39 @@ const replacementElements = [
         newValue: subDeckName
     },
     {
-        searchValue: "{{Question}}",
+        searchValue: "{{FunctionName}}",
         newValue: question
     },
     {
-        searchValue: "{{Answer}}",
+        searchValue: "{{FunctionNameAudio}}",
         newValue: answer
     },
     {
-        searchValue: "{{Extra}}",
+        searchValue: "{{FunctionDescription}}",
         newValue: extra
     },
     {
-        searchValue: "{{#Extra}}",
+        searchValue: "{{Parameters}}",
         newValue: ''
     },
     {
-        searchValue: "{{/Extra}}",
+        searchValue: "{{ParametersAudio}}",
         newValue: ''
     },
     {
-        searchValue: "{{#Tip}}",
+        searchValue: "{{ParametersQuantity}}",
         newValue: ''
     },
     {
-        searchValue: "{{/Tip}}",
+        searchValue: "{{SampleImage}}",
+        newValue: ''
+    },
+    {
+        searchValue: "{{ReturnType}}",
+        newValue: ''
+    },
+    {
+        searchValue: "{{ReturnTypeAudio}}",
         newValue: ''
     },
 ]

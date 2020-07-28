@@ -6,7 +6,7 @@
         </div>
     </header>
 
-    <article class="articleQuestion">
+    <article class="article-question">
         <div id="questionField" class="questionField">
             {{Question}}
         </div>
@@ -45,7 +45,6 @@
     </footer>
 </section>
 <script>
-
     const hiddenElements = [...document.getElementsByClassName("auto-hidden")];
     setTimeout(() => {
         hiddenElements.forEach(c => {
@@ -70,52 +69,45 @@
                 text: "Show Extra"
             },
             isHidden: function (element) {
-                console.log(element.className);
-                return element.className === "hidden" ? true : false;
+                return element.className === "hidden";
             },
             apply: function (toggleButton, elementToToggle) {
                 const hidden = this.isHidden(elementToToggle);
                 const stateHandler = this[hidden];
                 toggleButton.innerText = stateHandler.text;
                 elementToToggle.className = stateHandler.state;
-
             }
         };
         visibility.apply(toggleButton, extraField);
     }
 
     const replaceStringAndAddClass = (...elementsID) => {
-        const mapTextColors = [
-            { key: '?', value: 'symbols-color' },
-            { key: '(', value: 'symbols-color' },
-            { key: ')', value: 'symbols-color' },
-            { key: 'Array', value: 'class-color' },
-            { key: 'String', value: 'class-color' },
-            { key: 'Object', value: 'class-color' },
-            { key: 'prototype', value: 'const-color' },
-        ]        
+        const replaceStringAndAddClass = [
+            { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },
+            { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: 'fix', className: 'const-color' },
+            { pattern: /(?<function>\w+)[(][)]/g, groupName: 'function', className: 'function-color' },
+            { pattern: /(?<symbol>\?)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\!)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\()/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\))/g, groupName: 'symbol', className: 'symbols-color' },
+        ]
 
-        elementsID.forEach((elementID) => {
-            const element = document.getElementById(elementID)
-            let textElement = element.innerText;
-            const match = [...textElement.matchAll(/\w+[.]\w+[.](?<function>\w+)[\(][\)]/g)][0];
-            const groupValue = match.groups['function'];            
-            textElement = textElement
-            .replace(groupValue, `<span class="function-color">${groupValue}</span>`)
+        function replace(textElement, matches) {
+            matches.forEach(c => {
+                var matches = [...textElement.matchAll(c.pattern)];
+                matches.forEach(match => {
+                    var value = match.groups[c.groupName];
+                    textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+                });
+            });
+            return textElement;
+        }
 
+        elementsID.forEach(elementID => {
+            const element = document.getElementById(elementID);
+            let textElement = element.innerHTML.trim();
+            textElement = replace(textElement, replaceStringAndAddClass);
             element.innerHTML = textElement;
-            mapTextColors.forEach(c => {
-                element.innerHTML = element.innerHTML.split(c.key)
-                                                     .join(`<span class="${c.value}">${c.key}</span>`)
-            });
-        })
-
-        elementsID.forEach((elementID) => {
-            const element = document.getElementById(elementID)
-            mapTextColors.forEach(c => {
-                element.innerHTML = element.innerHTML.split(c.key)
-                    .join(`<span class="${c.value}">${c.key}</span>`)
-            });
         })
     }
     replaceStringAndAddClass('questionField');

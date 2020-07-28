@@ -9,6 +9,7 @@
     --bg-vs-code-color: #1e1e1e;
     --symbols: #d4d4d4;
     --const-color: #4fc1ff;
+    --default-gray: rgb(206, 195, 195);
 }
 
 .class-color {
@@ -19,15 +20,15 @@
     color: var(--string-color);
 }
 
-.attributeColorCSS {
+.attribute-color-css {
     color: var(--attribute-color-css);
 }
 
-.tagGrayColor {
+.tag-gray-color {
     color: var(--tag-gray-color);
 }
 
-.elementSelectorColor {
+.element-selector-color {
     color: var(--element-selector-color);
 }
 
@@ -55,7 +56,7 @@ article {
     font-size: 20px;
     font-family: consolas;
     text-align: center;
-    color: rgb(206, 195, 195);
+    color: var(--default-gray);
     background-color: var(--bg-vs-code-color);
 }
 
@@ -63,7 +64,7 @@ article {
     font-size: 20px;
     font-family: consolas;
     text-align: center;
-    color: rgb(206, 195, 195);
+    color: var(--default-gray);
     background-color: var(--bg-vs-code-color);
 }
 
@@ -98,7 +99,7 @@ article {
     text-align: center;
 }
 
-.articleQuestion {
+.article-question {
     display: flex;
     justify-content: center;
 }
