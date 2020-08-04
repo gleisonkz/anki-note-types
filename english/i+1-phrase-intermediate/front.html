@@ -1,0 +1,23 @@
+<section class="fade-in">
+    <header>
+        <span class="deck-tree">{{Deck}}</span>
+        <span class="sub-deck-name">{{Subdeck}}</span>
+    </header>
+
+    <article>
+        <p id="phrase" class="phrase"><span>{{Phrase}}</span></p>
+    </article>
+
+    <footer>
+        <audio>{{Audio}}</audio>
+    </footer>
+
+</section>
+<script>
+    (function () {
+        const phrase = document.getElementById("phrase");
+        let newWord = "{{text:NewWord}}"
+        newWord = newWord.trim();
+        phrase.innerHTML = phrase.innerText.replace(newWord, `<span class="new-word">${newWord}</span>`)
+    })();
+</script>

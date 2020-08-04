@@ -1,0 +1,65 @@
+<section>
+    <header>
+        <span class="deck-tree">{{Deck}}</span>
+        <span class="sub-deck-name">{{Subdeck}}</span>
+    </header>
+
+    <article>
+        <p id="phrase" class="phrase"><span>{{Phrase}}</span></p>
+    </article>
+
+    <hr class="fade-in">
+
+    <article class="fade-in">
+        <span id="NewWord" class="new-word">{{NewWord}}</span>
+        &nbsp;
+        <span class="ipa">/{{IPA}}/</span>
+        &nbsp;
+        <span class="translated-word">{{TranslatedWord}}</span>
+    </article>
+
+    <hr class="fade-in">
+
+    {{#Class}}
+    <article class="fade-in">
+        <span class="classification">Class: {{Class}}</span>
+    </article>
+    {{/Class}}
+
+    {{#Meaning}}
+    <article class="fade-in">
+        <p class="meaning">({{Meaning}})</p>
+    </article>
+    {{/Meaning}}
+
+    {{#Image}}
+    <article class="fade-in">
+        <picture>
+            {{Image}}
+        </picture>
+    </article>
+    {{/Image}}
+</section>
+<script>
+    (function () {
+        const phraseElement = document.getElementById("phrase");
+        const translatedWord = "{{text:TranslatedWord}}";
+        const newWord = "{{text:NewWord}}"
+
+        const replacementElements = [
+            {
+                element: phraseElement,
+                searchValue: newWord,
+                classElement: "new-word"
+            },
+        ]
+
+        const applyStyles = (object) => {
+            object.element.innerHTML = object.element.innerText
+                .replace(object.searchValue,
+                    `<span class="${object.classElement}">${object.searchValue}</span>`
+                );
+        }
+        replacementElements.forEach(object => applyStyles(object));
+    })();
+</script>
