@@ -3,7 +3,8 @@
         <div>
             <p class="deck-tree">{{Deck}}</p>
             <p class="sub-deck">{{Subdeck}}</p>
-            <p class="info-queue"><span id="infoQueue">{{info-Queue:}}</span> - card</p>
+            <p class="info-queue"><span id="infoQueue">{{info-Queue:}}</span> card | <span
+                    id="infoQueue">{{info-Ivl:}}</span> Days </p>
         </div>
     </header>
     <article>
@@ -26,12 +27,33 @@
     <div id="toggle" style="visibility:hidden" class="custom-button" onclick="toggle()">
         Show Expression
     </div>
+    <article id="textType">
+        <div class="type">
+            {{type:Expression}}
+        </div>
+    </article>
     <footer>
         <audio style="display:none">{{Audio}}</audio>
     </footer>
 </section>
 <script>
-    const infoQueueElement = document.getElementById("infoQueue");
+    const html = {
+        get(element) {
+            return document.querySelector(element);
+        }
+    }
+    const isMatureCard = `{{info-Reviews:}}` > 6;
+    const textTypeElement = html.get("#textType");
+
+    (function enableTextType() {
+        const StyleElementHandler = {
+            true: 'block',
+            false: 'none'
+        }
+        textTypeElement.style.display = StyleElementHandler[isMatureCard];
+    })()
+
+    const infoQueueElement = html.get("#infoQueue");
     const infoQueueElementText = infoQueueElement.innerText;
     const cardTypes = {
         0: "new",
@@ -42,7 +64,7 @@
     infoQueueElement.innerText = cardTypes[infoQueueElementText];
 
     (function highLightTargetWord() {
-        const phraseElement = document.getElementById("expressionArticle");
+        const phraseElement = html.get("#expressionArticle");
         const target = "{{text:Target}}"
 
         const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
@@ -62,6 +84,6 @@
                 );
         }
         replacementElements.filter(c => c.searchValue)
-                           .forEach(object => applyStyles(object));
+            .forEach(object => applyStyles(object));
     })();
 </script>

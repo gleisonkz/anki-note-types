@@ -15,12 +15,12 @@
     <article class="containerArticle">
         <div class="containerDashed">
             <ol class="answerList">
-                <li data-index="1" class="answer ripple"><b>{{FirstPair}}</b></li>
-                <li data-index="2" id="answer2" class="answer ripple">{{SecondPair}}</li>
+                <li data-index="1" class="answer ripple"><b>{{SecondPair}}</b></li>
+                <li data-index="2" id="answer2" class="answer ripple">{{FirstPair}}</li>
             </ol>
         </div>
     </article>
-    <audio style="display:none">{{FirstAudio}}</audio>
+    <audio style="display:none">{{SecondAudio}}</audio>
 </section>
 <script>
     var arrayElements = [];
@@ -52,8 +52,7 @@
         }
     }))()
 
-
-    $('.answer').click(function (c) {        
+    $('.answer').click(function (c) {
         $('.answer').removeClass("selecionado")
         $(this).addClass("selecionado")
         selecionado = this.innerText;

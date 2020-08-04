@@ -12,28 +12,17 @@
         </div>
     </article>
 
-    <article class="articleTip">
-        {{#Tip}}
-        <div class="customButton" id="tipButton" onclick="toggle()">
-            Show Tip
-        </div>
-
-        <div class="tip" id="tipField">
-            {{Tip}}
-        </div>
-        {{/Tip}}
+    <article>
+        <picture>{{Image}}</picture>
     </article>
 
-    <article class="articleAnswer">
-        <div class="answerField">
-            <div class="notesChild">
-                [...]
-            </div>
+    <hr id=answer>
+
+    <article>
+        <div>
+            {{type:Answer}}
         </div>
     </article>
-    <footer>
-        <audio style="display:none">{{QuestionAudio}}</audio>
-    </footer>
 </section>
 <script>
     const hiddenElements = [...document.getElementsByClassName("hidden")];
@@ -44,9 +33,6 @@
         })
     }, 100);
 
-    const toggleButton = document.getElementById("tipButton");
-    const extraField = document.getElementById("tipField");
-    
     const replaceStringAndAddClass = (...elementsID) => {
         const replaceStringAndAddClass = [
             { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },
@@ -77,27 +63,4 @@
         })
     }
     replaceStringAndAddClass('questionField');
-
-    function toggle(string) {
-        const visibility = {
-            true: {
-                state: "visible",
-                text: "Hide Extra"
-            },
-            false: {
-                state: "hidden",
-                text: "Show Extra"
-            },
-            isHidden: function (element) {
-                return element.className === "hidden" ? true : false;
-            },
-            apply: function (toggleButton, elementToToggle) {
-                const hidden = this.isHidden(elementToToggle);
-                const stateHandler = this[hidden];
-                toggleButton.innerText = stateHandler.text;
-                elementToToggle.className = stateHandler.state;
-            }
-        };
-        visibility.apply(toggleButton, extraField);
-    }
 </script>

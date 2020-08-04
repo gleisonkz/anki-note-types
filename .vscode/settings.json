@@ -6,6 +6,8 @@
         "Konqueror",
         "Subdeck",
         "Traducao",
-        "callout"
+        "callout",
+        "pycmd",
+        "typeans"
     ]
 }

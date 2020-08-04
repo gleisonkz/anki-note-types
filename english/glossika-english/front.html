@@ -1,17 +1,15 @@
-<section>
+<section class="fade-in">
     <header>
         <span class="deck-tree">{{Deck}}</span>
         <span class="sub-deck-name">{{Subdeck}}</span>
     </header>
 
     <article>
-        <p id="phrase" class="phrase"><span>{{Phrase}}</span></p>
+        <p id="phrase" class="phrase">
+            <span>{{Phrase}}</span>
+        </p>
+        <div>{{Audio}}</div>
     </article>
-
-    <footer>
-        <audio>{{Audio}}</audio>
-    </footer>
-
 </section>
 <script>
     (function highLightTargetWord() {
@@ -35,6 +33,6 @@
                 );
         }
         replacementElements.filter(c => c.searchValue)
-                           .forEach(object => applyStyles(object));
+            .forEach(object => applyStyles(object));
     })();
 </script>

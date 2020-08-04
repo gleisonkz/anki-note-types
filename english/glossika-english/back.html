@@ -1,5 +1,44 @@
-{{FrontSide}}
+<section>
+    <header>
+        <span class="deck-tree">{{Deck}}</span>
+        <span class="sub-deck-name">{{Subdeck}}</span>
+    </header>
 
-<hr id=answer>
+    <article>
+        <p id="phrase" class="phrase">
+            <span>{{Phrase}}</span>
+        </p>
+        <div>{{Audio}}</div>
+    </article>
 
-<div>{{Translation}}</div>
+    <hr class="fade-in">
+
+    <div class="fade-in">{{Translation}}</div>
+
+</section>
+
+<script>
+    (function highLightTargetWord() {
+        const phraseElement = document.getElementById("phrase");
+        const target = "{{text:Target}}"
+
+        const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
+        const original = phraseElement.innerText.substring(index, index + target.length);
+
+        const replacementElements = [
+            {
+                element: phraseElement,
+                searchValue: original,
+                classElement: "new-word"
+            }
+        ]
+        const applyStyles = (object) => {
+            object.element.innerHTML = object.element.innerText
+                .replace(object.searchValue,
+                    `<span class="${object.classElement}">${object.searchValue}</span>`
+                );
+        }
+        replacementElements.filter(c => c.searchValue)
+            .forEach(object => applyStyles(object));
+    })();
+</script>

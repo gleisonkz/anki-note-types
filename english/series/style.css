@@ -1,5 +1,3 @@
-@import url("_editor_button_styles.css");
-
 :root {
     --classColor: #4cc5a1;
     --stringColor: #d69d85;
@@ -9,6 +7,10 @@
     --selectorColorCSS: #d7ba7d;
     --methodColor: #dcdcaa;
     --bgVsCodeColor: #1e1e1e;
+}
+
+.type {
+    width: 100%;
 }
 
 .card {
@@ -116,6 +118,14 @@ article {
     font-weight: bold;
 }
 
+.typeGood {
+    background: #179a4bdb;
+}
+
+.typeMissed {
+    background: #918950;
+}
+
 .no-select {
     /* iOS Safari */
     -webkit-touch-callout: none;
@@ -133,7 +143,11 @@ article {
 
 /* MOBILE */
 @media screen and (max-width: 600px) {
-    .info-queue{
+    .info-queue {
+        display: none;
+    }
+
+    .type{
         display: none;
     }
 }

@@ -3,7 +3,8 @@
         <div>
             <p class="deck-tree">{{Deck}}</p>
             <p class="sub-deck">{{Subdeck}}</p>
-            <p class="info-queue"><span id="infoQueue">{{info-Queue:}}</span> - card</p>
+            <p class="info-queue"><span id="infoQueue">{{info-Queue:}}</span> card | <span
+                    id="infoQueue">{{info-Ivl:}}</span> Days </p>
         </div>
     </header>
     <article>
@@ -12,24 +13,44 @@
         </div>
     </article>
     <article id="expressionArticle">
-        <div>
+        <div id="phrase">
             {{Expression}}
         </div>
     </article>
     <div id="toggle" class="custom-button no-select" onclick="toggle()">
         Show Expression
     </div>
+    <article class="type" id="textType">
+        <div class="type">
+            {{type:Expression}}
+        </div>
+    </article>
     <footer>
         <audio style="display:none">{{Audio}}</audio>
     </footer>
 </section>
 <script>
+    const html = {
+        get(element) {
+            return document.querySelector(element);
+        }
+    }
+    const isMatureCard = `{{info-Reviews:}}` > 6;
+    const textTypeElement = html.get("#textType");
+
+    (function enableTextType() {
+        const StyleElementHandler = {
+            true: 'block',
+            false: 'none'
+        }
+        textTypeElement.style.display = StyleElementHandler[isMatureCard];
+    })()
+
     function card() {
         const cardTypeID = `{{info-Queue:}}`;
-        const articleExpressionElement = document.getElementById("expressionArticle");
-        const toggleElement = document.getElementById("toggle");
-        const infoQueueElement = document.getElementById("infoQueue");
-
+        const articleExpressionElement = html.get("#expressionArticle");
+        const toggleElement = html.get("#toggle");
+        const infoQueueElement = html.get("#infoQueue");
 
         const cardTypeById = {}
         const cardTypeByText = {
@@ -67,18 +88,18 @@
         };
         this.toggle = function () {
             visibility.apply(toggleElement, articleExpressionElement);
-        }        
+        }
         this.toggle();
     }
 
-    
+
     const obj = new card();
     function toggle() {
         obj.toggle();
     }
 
     (function highLightTargetWord() {
-        const phraseElement = document.getElementById("expressionArticle");
+        const phraseElement = html.get("#expressionArticle");
         const target = "{{text:Target}}"
 
         const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
