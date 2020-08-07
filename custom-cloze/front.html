@@ -36,6 +36,12 @@
     </footer>
 </section>
 <script>
+    const html = {
+        get: (elementSelector) => {
+            return document.querySelector(elementSelector);
+        }
+    }
+
     const hiddenElements = [...document.getElementsByClassName("hidden")];
     setTimeout(() => {
         hiddenElements.forEach(c => {
@@ -44,9 +50,9 @@
         })
     }, 100);
 
-    const toggleButton = document.getElementById("tipButton");
-    const extraField = document.getElementById("tipField");
-    
+    const toggleButton = html.get("#tipButton");
+    const extraField = html.get("#tipField");
+
     const replaceStringAndAddClass = (...elementsID) => {
         const replaceStringAndAddClass = [
             { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },

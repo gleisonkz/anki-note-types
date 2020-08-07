@@ -12,9 +12,17 @@
         </div>
     </article>
 
-    <article class="articleAnswer hidden auto-hidden">
+    <!-- <article class="articleAnswer hidden auto-hidden">
         <div class="answerField">
             <div id="answerField" class="notesChild containerFlex">
+                {{Answer}}
+            </div>
+        </div>
+    </article> -->
+
+    <article class="hidden auto-hidden">
+        <div class="answerField">
+            <div id="answerField">
                 {{Answer}}
             </div>
         </div>
@@ -45,6 +53,12 @@
     </footer>
 </section>
 <script>
+    const html = {
+        get: (elementSelector) => {
+            return document.querySelector(elementSelector);
+        }
+    }
+
     const hiddenElements = [...document.getElementsByClassName("auto-hidden")];
     setTimeout(() => {
         hiddenElements.forEach(c => {
@@ -55,8 +69,8 @@
 
     $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
 
-    const toggleButton = document.getElementById("toggleButton");
-    const extraField = document.getElementById("extraField");
+    const toggleButton = html.get("#tipButton");
+    const extraField = html.get("#tipField");
 
     function toggle(string) {
         const visibility = {
@@ -86,10 +100,15 @@
             { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },
             { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: 'fix', className: 'const-color' },
             { pattern: /(?<function>\w+)[(][)]/g, groupName: 'function', className: 'function-color' },
+            { pattern: /(?<keyWord>function)/g, groupName: 'keyWord', className: 'element-selector-color' },
+            { pattern: /(?<keyWord>return)/g, groupName: 'keyWord', className: 'return-keyword' },
             { pattern: /(?<symbol>\?)/g, groupName: 'symbol', className: 'symbols-color' },
             { pattern: /(?<symbol>\!)/g, groupName: 'symbol', className: 'symbols-color' },
             { pattern: /(?<symbol>\()/g, groupName: 'symbol', className: 'symbols-color' },
             { pattern: /(?<symbol>\))/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\{)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\})/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\:)/g, groupName: 'symbol', className: 'symbols-color' },
         ]
 
         function replace(textElement, matches) {
@@ -97,7 +116,10 @@
                 var matches = [...textElement.matchAll(c.pattern)];
                 matches.forEach(match => {
                     var value = match.groups[c.groupName];
-                    textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+                    textElement = textElement.split(value)
+                                             .map(a => a.concat(`<span class="${c.className}">${value}</span>`))
+                                             .join('');
+                    // textElement = textElement.replace(regex, `<span class="${c.className}">${value}</span>`);
                 });
             });
             return textElement;
@@ -110,5 +132,5 @@
             element.innerHTML = textElement;
         })
     }
-    replaceStringAndAddClass('questionField');
+    replaceStringAndAddClass('questionField', 'answerField');    
 </script>

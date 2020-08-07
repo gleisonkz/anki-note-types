@@ -10,6 +10,11 @@
     --symbols: #d4d4d4;
     --const-color: #4fc1ff;
     --default-gray: rgb(206, 195, 195);
+    --return-keyword: #c586c0;
+}
+
+.return-keyword {
+    color: var(--return-keyword);
 }
 
 .class-color {
