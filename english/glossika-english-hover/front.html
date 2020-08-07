@@ -1,0 +1,42 @@
+<section class="fade-in">
+    <header>
+        <span class="deck-tree">{{Deck}}</span>
+        <span class="sub-deck-name">{{Subdeck}}</span>
+    </header>
+
+    <article>
+        <p id="phrase" class="phrase">
+            <span onmouseover="showAnswer()">{{Phrase}}</span>
+        </p>
+        <div>{{Audio}}</div>
+    </article>
+</section>
+<script>
+    function showAnswer() {
+        pycmd("ans");
+    }
+
+    (function highLightTargetWord() {
+        const phraseElement = document.getElementById("phrase");
+        const target = "{{text:Target}}"
+
+        const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
+        const original = phraseElement.innerText.substring(index, index + target.length);
+
+        const replacementElements = [
+            {
+                element: phraseElement,
+                searchValue: original,
+                classElement: "new-word"
+            }
+        ]
+        const applyStyles = (object) => {
+            object.element.innerHTML = object.element.innerText
+                .replace(object.searchValue,
+                    `<span class="${object.classElement}">${object.searchValue}</span>`
+                );
+        }
+        replacementElements.filter(c => c.searchValue)
+            .forEach(object => applyStyles(object));
+    })();
+</script>
