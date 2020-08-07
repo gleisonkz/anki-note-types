@@ -3,8 +3,12 @@
         <div>
             <p class="deck-tree">{{Deck}}</p>
             <p class="sub-deck">{{Subdeck}}</p>
-            <p class="info-queue"><span id="infoQueue">{{info-Queue:}}</span> card | <span
-                    id="infoQueue">{{info-Ivl:}}</span> Days </p>
+            <p class="info-queue">
+                <span id="infoQueue">{{info-Queue:}}</span> card |
+                <span id="infoQueue">{{info-Ivl:}}</span> Days |
+                <span id="infoQueue">{{info-Reviews:}}</span> Times
+            </p>
+
         </div>
     </header>
     <article>
@@ -42,7 +46,7 @@
             return document.querySelector(element);
         }
     }
-    const isMatureCard = `{{info-Reviews:}}` > 6;
+    const isMatureCard = `{{info-Reviews:}}` > 5;
     const textTypeElement = html.get("#textType");
 
     (function enableTextType() {

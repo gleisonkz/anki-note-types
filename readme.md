@@ -1,0 +1,1 @@
+These are templates that I created using HTML, CSS AND JavaScript to be used with Anki Flashcards application, below are some examples.

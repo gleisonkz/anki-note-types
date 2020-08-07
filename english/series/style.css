@@ -26,6 +26,13 @@
     color: rgb(206, 195, 195);
 }
 
+.buttons {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
 header div {
     display: flex;
     flex-direction: column;
@@ -81,6 +88,7 @@ article {
 
 img {
     height: 200px;
+    border-radius: 12px;
 }
 
 article {
@@ -147,7 +155,21 @@ article {
         display: none;
     }
 
-    .type{
+    .type {
         display: none;
     }
+}
+
+.replay-button svg path {
+    stroke: #2f2f31;
+    fill: #4cc5a1;
+}
+
+.replay-button {
+    width: 25px;
+}
+
+.replay-button svg circle {
+    fill: rgb(206, 195, 195);
+    stroke: #c5be3f;
 }
