@@ -11,7 +11,7 @@
 <section class="fade-in">
     <hr>
     <article>
-        <span id="NewWord" class="new-word">{{NewWord}}</span>
+        <span class="new-word">{{NewWord}}</span>
         &nbsp;
         <span class="ipa">/{{IPA}}/</span>
     </article>
@@ -42,6 +42,11 @@
 </section>
 <script>
     (function () {
+        const html = {
+            get: (element) => {
+                return document.querySelector(element);
+            }
+        }
         const phraseElement = document.getElementById("phrase");
         const translatedPhraseElement = document.getElementById("translatedPhrase");
         const translatedWord = "{{text:TranslatedWord}}";
