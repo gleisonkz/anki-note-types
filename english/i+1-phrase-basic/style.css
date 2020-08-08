@@ -1,123 +1,135 @@
-@import url("_editor_button_styles.css");
-
 :root {
-    --header-bg-color: #293d3d;
-    --customGray: rgba(85, 85, 85, 0.75);
-    --background: #212121;
-    --shadow: rgba(0, 0, 0, 0.23);
-    --classColor: #4cc5a1;
-    --stringColor: #d69d85;
-    --attributeColorCSS: #9cdcfe;
-    --tagGrayColor: #aeafad;
-    --elementSelectorColor: #4f9cd6;
-    --selectorColorCSS: #d7ba7d;
-    --methodColor: #dcdcaa;
-    --bgVsCodeColor: #1e1e1e;
+  --header-bg-color: #293d3d;
+  --customGray: rgba(85, 85, 85, 0.75);
+  --background: #212121;
+  --shadow: rgba(0, 0, 0, 0.23);
+  --classColor: #4cc5a1;
+  --stringColor: #d69d85;
+  --attributeColorCSS: #9cdcfe;
+  --tagGrayColor: #aeafad;
+  --elementSelectorColor: #4f9cd6;
+  --selectorColorCSS: #d7ba7d;
+  --methodColor: #dcdcaa;
+  --bgVsCodeColor: #1e1e1e;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.fade-in {
+  animation: fadeIn ease 1.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 header {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
 }
 
 article {
-    display: flex;
-    justify-content: center;
-    margin: 5px 0px;
+  display: flex;
+  justify-content: center;
+  margin: 5px 0px;
 }
 
 section {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .card {
-    font-size: 20px;
-    font-family: consolas;
-    text-align: center;
-    color: rgb(206, 195, 195);
-    background-color: var(--bgVsCodeColor);
+  font-size: 20px;
+  font-family: consolas;
+  text-align: center;
+  color: rgb(206, 195, 195);
+  background-color: var(--bgVsCodeColor);
 }
 
 .card.nightMode {
-    font-size: 20px;
-    font-family: consolas;
-    text-align: center;
-    color: rgb(206, 195, 195);
-    background-color: var(--bgVsCodeColor);
+  font-size: 20px;
+  font-family: consolas;
+  text-align: center;
+  color: rgb(206, 195, 195);
+  background-color: var(--bgVsCodeColor);
 }
 
 .deck-tree {
-    font-family: Verdana;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 11px;
-    color: #a6a6a6;
-    margin-bottom: 10px;
+  font-family: Verdana;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 11px;
+  color: #a6a6a6;
+  margin-bottom: 10px;
 }
 
 .sub-deck-name {
-    font-family: courier;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 20px;
-    color: #c5be3f;
-    margin-bottom: 20px;
+  font-family: courier;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #c5be3f;
+  margin-bottom: 20px;
 }
 
 .WordAndPhonetic {
-    font-family: consolas;
-    text-align: center;
-    color: #4cc5a1;
-    font-weight: bold;
-    font-size: 25px;
+  font-family: consolas;
+  text-align: center;
+  color: #4cc5a1;
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .new-word {
-    color: #4cc5a1;
-    font-weight: bold;
+  color: #4cc5a1;
+  font-weight: bold;
 }
 
 .ipa {
-    font-size: 20px;
-    color: #C5BE3F;
-    font-family: courier;
+  font-size: 20px;
+  color: #c5be3f;
+  font-family: courier;
 }
 
 .translation {
-    font-family: consolas;
-    color: #4cc5a1;
-    font-size: 17px;
+  font-family: consolas;
+  color: #4cc5a1;
+  font-size: 17px;
 }
 
 .meaning {
-    font-family: consolas;
-    color: #dcdcaa;
-    font-size: 16px;
+  font-family: consolas;
+  color: #dcdcaa;
+  font-size: 16px;
 }
 
 .classification {
-    font-family: consolas;
-    color: #dcdcaa;
-    font-size: 16px;
+  font-family: consolas;
+  color: #dcdcaa;
+  font-size: 16px;
 }
 
 .translated-word {
-    color: #d69d85;
-    font-weight: bold;
-    text-decoration: underline;
+  color: #d69d85;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 hr {
-margin: 10px 0;
-border-style: inset; 
-border-width: 0.5px;
+  margin: 10px 0;
+  border-style: inset;
+  border-width: 0.5px;
 }
