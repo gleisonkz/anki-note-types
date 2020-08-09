@@ -85,14 +85,6 @@ section {
   margin-bottom: 20px;
 }
 
-.WordAndPhonetic {
-  font-family: consolas;
-  text-align: center;
-  color: #4cc5a1;
-  font-weight: bold;
-  font-size: 25px;
-}
-
 .new-word {
   color: #4cc5a1;
   font-weight: bold;
@@ -126,6 +118,10 @@ section {
   color: #d69d85;
   font-weight: bold;
   text-decoration: underline;
+}
+
+img{
+    border-radius: 8px;
 }
 
 hr {
