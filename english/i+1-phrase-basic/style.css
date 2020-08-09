@@ -122,6 +122,8 @@ section {
 
 img{
     border-radius: 8px;
+    max-width: 200px;
+    max-height: 200px;
 }
 
 hr {
