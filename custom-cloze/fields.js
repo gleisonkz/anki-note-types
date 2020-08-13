@@ -1,6 +1,5 @@
 const deckName = "🏳️ GENERAL::👨‍💻 DEVELOPMENT::🎨 FRONT-END::🟨 JAVASCRIPT";
 const subDeckName = "JAVASCRIPT";
-// const question = "Como funciona a propriedade display:flex; ?";
 const question = "Array.prototype.filter()";
 const answer = "um array vazio.";
 const extra = "Teste de extra";
@@ -48,7 +47,7 @@ const replacementElements = [
 
 const replaceFields = (searchValue) => {
     replacementElements.forEach(c => {
-        searchValue = searchValue.replace(c.searchValue, c.newValue)
+        searchValue = searchValue.replace(c.searchValue, c.newValue);
     })
     return searchValue;
 }
