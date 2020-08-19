@@ -1,38 +1,41 @@
-<header>
-    <div >
-        <p class="deckTree">{{Deck}}</p>
-        <p class="subDeckName">{{Subdeck}}</p>
-    </div>
-</header>
-<section class="dex">
-    <article class="topBar">
-        <span class="number">#{{DexNumber}}</span>
-        <span class="name answer">[...]</span>
-    </article>
-
-    <article class="img">
-        {{Image}}
-    </article>
-
-    <article class="types">
-        <div class="type">
-            {{Type1}}
+<section class="fade-in">
+    <header>
+        <div>
+            <p class="deck-tree">{{Deck}}</p>
+            <p class="sub-deck-name">{{Subdeck}}</p>
         </div>
-        {{#Type2}}
-        <div class="type" id="type2">
-            {{Type2}}
-        </div>
-        {{/Type2}}
-    </article>
+    </header>
+    <section class="dex">
+        <article class="top-bar">
+            <span class="number">#{{DexNumber}}</span>
+            <span class="name answer">[...]</span>
+        </article>
 
-    <div>
-        <span class="gen">Gen. {{Generation}}</span>
-    </div>
+        <article class="img">
+            {{Image}}
+        </article>
+
+        <article class="types">
+            <div class="type">
+                {{Type1}}
+            </div>
+            {{#Type2}}
+            <div class="type" id="type2">
+                {{Type2}}
+            </div>
+            {{/Type2}}
+        </article>
+
+        <div>
+            <span class="gen">Gen. {{Generation}}</span>
+        </div>
+    </section>
+    <footer class="hidden auto-hidden">
+        <p class="credits">Original idea by: nunixnunix04 - Improvements and mass import by gleisonKZ and Akilez from
+            Brazil
+        </p>
+    </footer>
 </section>
-<footer>
-    <p class="credits">Original idea by: nunixnunix04 - Improvements and mass import by gleisonKZ and Akilez from Brazil
-    </p>
-</footer>
 <script>
     var typesAndColors = {
         Electric: '#fc3',
