@@ -37,34 +37,35 @@
     </footer>
 </section>
 <script>
-    var typesAndColors = {
-        Electric: '#fc3',
-        Water: '#39f',
-        Grass: '#7c5',
-        Ice: '#6cf',
-        Fighting: '#b54',
-        Poison: '#a59',
-        Ground: '#db5',
-        Flying: '#89f',
-        Psychic: '#f59',
-        Bug: '#ab2',
-        Rock: '#ba6',
-        Ghost: '#66b',
-        Dragon: '#76e',
-        Dark: '#754',
-        Steel: '#b8b8d0',
-        Fairy: '#e9e',
-        Fire: '#ff3333',
-        Normal: '#A8A878'
+    let html = {
+        getByClass: (element) => {
+            return document.getElementsByClassName(element);
+        }
+    }
+    let classTypes = {
+        Electric: 'electric',
+        Water: 'water',
+        Grass: 'grass',
+        Ice: 'ice',
+        Fighting: 'fighting',
+        Poison: 'poison',
+        Ground: 'ground',
+        Flying: 'flying',
+        Psychic: 'psychic',
+        Bug: 'bug',
+        Rock: 'rock',
+        Ghost: 'ghost',
+        Dragon: 'dragon',
+        Dark: 'dark',
+        Steel: 'steel',
+        Fairy: 'fairy',
+        Fire: 'fire',
+        Normal: 'normal'
     };
-    var typeFields = [...document.getElementsByClassName("type")];
-
-    $(function () {
-        const typeFields = [...document.getElementsByClassName("type")];
-        typeFields.forEach((element) => {
-            const textElement = element.innerHTML.trim();
-            const color = typesAndColors[textElement];
-            element.style.backgroundColor = color;
-        });
+    let typeFields = [...html.getByClass("type")];
+    typeFields.forEach((element) => {
+        let textElement = element.innerHTML.trim();
+        let classType = classTypes[textElement];
+        element.className = ` type ${classType}`
     });
 </script>
