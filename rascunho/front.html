@@ -1,77 +1,109 @@
-<section>
+<section class="hidden">
     <header>
-        <div class="deckTree">
-            <p>{{Deck}}</p>
-            <p class="subDeck">{{Subdeck}}</p>
-            <p class="info-Queue"><span id="infoQueue">{{info-Queue:}}</span> - card</p>
+        <div>
+            <p class="deck-tree">{{Deck}}</p>
+            <p class="sub-deck-name">{{Subdeck}}</p> 
         </div>
     </header>
-    <article>
+
+    <article class="article-question">
         <div>
-            {{Snapshot}}
+           Qual o nome dado a definição abaixo?
+        </div>
+        <div id="questionField" class="questionField">
+<span class="stringColor">"</span>{{Definiton}}<span class="stringColor">"</span>
         </div>
     </article>
-    <div id="toggle" class="customButton" onclick="toggle()">
-        Show Expression
-    </div>
-    <article id="expressionArticle">
-        <div>
-            {{Expression}}
+
+    <article class="articleTip">
+        {{#Tip}}
+        <div class="customButton" id="tipButton" onclick="toggle()">
+            Show Tip
+        </div>
+
+        <div class="tip" id="tipField">
+            {{Tip}}
+        </div>
+        {{/Tip}}
+    </article>
+
+    <article class="articleAnswer">
+        <div class="answerField">
+            <div class="notesChild">
+                [...]
+            </div>
         </div>
     </article>
-    <footer>
-        <audio style="display:none">{{Audio}}</audio>
-    </footer>
 </section>
 <script>
-    function card() {
-        const cardTypeID = `{{info-Queue:}}`;
-        const articleExpressionElement = document.getElementById("expressionArticle");
-        const toggleElement = document.getElementById("toggle");
-        const infoQueueElement = document.getElementById("infoQueue");
-
-        const cardTypeById = {}
-        const cardTypeByText = {
-            new: 0,
-            learning: 1,
-            review: 2,
-            reLearning: 3,
-        };
-        for (let prop in cardTypeByText) {
-            cardTypeById[cardTypeByText[prop]] = prop;
+    var html = {
+        get: (elementSelector) => {
+            return document.querySelector(elementSelector);
         }
-        infoQueueElement.innerText = cardTypeById[cardTypeID];
+    }
 
+    var hiddenElements = [...document.getElementsByClassName("hidden")];
+    setTimeout(() => {
+        hiddenElements.forEach(c => {
+            c.classList.remove("hidden")
+            c.classList.add("visible");
+        })
+    }, 100);
+        
+    var toggleButton = html.get("#tipButton");    
+    var extraField = html.get("#tipField");
 
+    var replaceStringAndAddClass = (...elementsID) => {
+        var replaceStringAndAddClass = [
+            { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },
+            { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: 'fix', className: 'const-color' },
+            { pattern: /(?<function>\w+)[(][)]/g, groupName: 'function', className: 'function-color' },
+            { pattern: /(?<symbol>\?)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\!)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\()/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\))/g, groupName: 'symbol', className: 'symbols-color' },
+        ]
 
-        const visibility = {
+        function replace(textElement, matches) {
+            matches.forEach(c => {
+                var matches = [...textElement.matchAll(c.pattern)];
+                matches.forEach(match => {
+                    var value = match.groups[c.groupName];
+                    textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+                });
+            });
+            return textElement;
+        }
+
+        elementsID.forEach(elementID => {
+            var element = document.getElementById(elementID);
+            var textElement = element.innerHTML.trim();
+            textElement = replace(textElement, replaceStringAndAddClass);
+            element.innerHTML = textElement;
+        })
+    }
+    replaceStringAndAddClass('questionField');
+
+    function toggle(string) {
+        var visibility = {
             true: {
                 state: "visible",
-                text: "Hide Expression"
+                text: "Hide Extra"
             },
             false: {
                 state: "hidden",
-                text: "Show Expression"
+                text: "Show Extra"
             },
             isHidden: function (element) {
-                return element.style.visibility === "hidden" ||
-                    cardTypeID == cardTypeByText.new ? true : false;
+                return element.className === "hidden" ? true : false;
             },
             apply: function (toggleButton, elementToToggle) {
-                const hidden = this.isHidden(elementToToggle);
-                const stateHandler = this[hidden];
-                elementToToggle.style.visibility = stateHandler.state;
+                var hidden = this.isHidden(elementToToggle);
+                var stateHandler = this[hidden];
                 toggleButton.innerText = stateHandler.text;
-                toggleButton.style.visibility = (cardTypeID == cardTypeByText.new) ? 'hidden' : 'visible';
+                elementToToggle.className = stateHandler.state;
             }
         };
-        this.toggle = function () {
-            visibility.apply(toggleElement, articleExpressionElement);
-        }
-        this.toggle();
-    }
-    const obj = new card();
-    function toggle() {
-        obj.toggle();
+        visibility.apply(toggleButton, extraField);
     }
 </script>

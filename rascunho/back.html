@@ -1,43 +1,135 @@
 <section>
     <header>
-        <div class="deckTree">
+        <div class="deck-tree">
             <p>{{Deck}}</p>
-            <p class="subDeck">{{Subdeck}}</p>
-            <p class="info-Queue"><span id="infoQueue">{{info-Queue:}}</span> - card</p>
+            <p class="sub-deck-name">{{Subdeck}}</p>
         </div>
     </header>
-    <article>
-        <picture>
-            {{Snapshot}}
-        </picture>
-    </article>
-    <div id="toggle" style="visibility:hidden" class="customButton" onclick="toggle()">
-        Show Expression
-    </div>
-    <article id="expressionArticle">
+
+    <article class="article-question">
         <div>
-            {{Expression}}
+            Qual o nome dado a definição abaixo?
+        </div>
+        <div id="questionField" class="questionField">
+            <span class="stringColor">"</span>{{Definiton}}<span class="stringColor">"</span>
         </div>
     </article>
-    {{#Translation}}
-    <article id="translationArticle">
-        <div>
-            {{Translation}}
+
+    <!-- <article class="articleAnswer hidden auto-hidden">
+        <div class="answerField">
+            <div id="answerField" class="notesChild containerFlex">
+                {{Definiton}}
+            </div>
+        </div>
+    </article> -->
+
+    <article class="hidden auto-hidden">
+        <div class="answerField">
+            <div id="answerField">
+                {{Term}}
+            </div>
         </div>
     </article>
-    {{/Translation}}
+
+    <article class="hidden auto-hidden" style="padding-top: 20px;">
+        <picture>{{Image}}</picture>
+    </article>
+
+    <article class="extra-container no-select">
+
+        {{#Extra}}
+        <div class="customButton no-select" id="toggleButton" onclick="toggle()">
+            Show Extra
+        </div>
+
+        <div class="hidden" id="extraField">
+            <div class="notesChild">
+                {{Extra}}
+            </div>
+        </div>
+
+        {{/Extra}}
+    </article>
     <footer>
-        <audio style="display:none">{{Audio}}</audio>
+        <audio style="display:none">{{TermAudio}}</audio>
     </footer>
 </section>
 <script>
-    const infoQueueElement = document.getElementById("infoQueue");
-    const infoQueueElementText = infoQueueElement.innerText;
-    const cardTypes = {
-        0: "new",
-        1: "learning",
-        2: "review",
-        3: "re-learning"
-    };
-    infoQueueElement.innerText = cardTypes[infoQueueElementText]
+    var html = {
+        get: (elementSelector) => {
+            return document.querySelector(elementSelector);
+        }
+    }
+
+    var hiddenElements = [...document.getElementsByClassName("auto-hidden")];
+    setTimeout(() => {
+        hiddenElements.forEach(c => {
+            c.classList.remove("hidden")
+            c.classList.add("visible");
+        })
+    }, 100);
+
+    $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
+
+    var toggleButton = html.get("#tipButton");
+    var extraField = html.get("#tipField");
+
+    function toggle(string) {
+        var visibility = {
+            true: {
+                state: "visible",
+                text: "Hide Extra"
+            },
+            false: {
+                state: "hidden",
+                text: "Show Extra"
+            },
+            isHidden: function (element) {
+                return element.className === "hidden";
+            },
+            apply: function (toggleButton, elementToToggle) {
+                var hidden = this.isHidden(elementToToggle);
+                var stateHandler = this[hidden];
+                toggleButton.innerText = stateHandler.text;
+                elementToToggle.className = stateHandler.state;
+            }
+        };
+        visibility.apply(toggleButton, extraField);
+    }
+
+    var replaceStringAndAddClass = (...elementsID) => {
+        var replaceStringAndAddClass = [
+            { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },
+            { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: 'fix', className: 'const-color' },
+            { pattern: /(?<function>\w+)[(][)]/g, groupName: 'function', className: 'function-color' },
+            { pattern: /(?<keyWord>function)/g, groupName: 'keyWord', className: 'element-selector-color' },
+            { pattern: /(?<keyWord>return)/g, groupName: 'keyWord', className: 'return-keyword' },
+            { pattern: /(?<symbol>\?)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\!)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\()/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\))/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\{)/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\})/g, groupName: 'symbol', className: 'symbols-color' },
+            { pattern: /(?<symbol>\:)/g, groupName: 'symbol', className: 'symbols-color' },
+        ]
+
+        function replace(textElement, matches) {
+            matches.forEach(c => {
+                var matches = [...textElement.matchAll(c.pattern)];
+                matches.forEach(match => {
+                    var value = match.groups[c.groupName];
+                    textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+                });
+            });
+            return textElement;
+        }
+
+        elementsID.forEach(elementID => {
+            var element = document.getElementById(elementID);
+            var textElement = element.innerHTML.trim();
+            textElement = replace(textElement, replaceStringAndAddClass);
+            element.innerHTML = textElement;
+        })
+    }
+    replaceStringAndAddClass('questionField', 'answerField');    
 </script>

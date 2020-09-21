@@ -1,121 +1,150 @@
 :root {
-    --header-bg-color: #293d3d;
-    --customGray: rgba(85, 85, 85, 0.75);
-    --background: #212121;
-    --shadow: rgba(0, 0, 0, 0.23);
-    --class-color: #4cc5a1;
-    --string-color: #d69d85;
-    --attribute-color-css: #9cdcfe;
-    --tag-gray-color: #aeafad;
-    --element-selector-color: #4f9cd6;
-    --selector-color-css: #d7ba7d;
-    --methodColor: #dcdcaa;
-    --bg-vs-code-color: #1e1e1e;
-    --symbols: #d4d4d4;
-    --const-color: #4fc1ff;
+  --header-bg-color: #293d3d;
+  --customGray: rgba(85, 85, 85, 0.75);
+  --background: #212121;
+  --shadow: rgba(0, 0, 0, 0.23);
+  --class-color: #4cc5a1;
+  --string-color: #d69d85;
+  --attribute-color-css: #9cdcfe;
+  --tag-gray-color: #aeafad;
+  --element-selector-color: #4f9cd6;
+  --selector-color-css: #d7ba7d;
+  --methodColor: #dcdcaa;
+  --bg-vs-code-color: #1e1e1e;
+  --symbols: #d4d4d4;
+  --const-color: #4fc1ff;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 .fade-in {
-    animation: fadeIn ease 1.5s;
+  animation: fadeIn ease 1.5s;
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 header {
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.margin-bottom {
+  border-bottom: solid 0.5px;
 }
 
 article {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 5px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 0px;
 }
 
 section {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card {
-    font-size: 20px;
-    font-family: consolas;
-    text-align: center;
-    color: rgb(206, 195, 195);
-    background-color: var(--bg-vs-code-color);
+  font-size: 20px;
+  font-family: consolas;
+  text-align: center;
+  color: rgb(206, 195, 195);
+  background-color: var(--bg-vs-code-color);
 }
 
 .card.nightMode {
-    font-size: 20px;
-    font-family: consolas;
-    text-align: center;
-    color: rgb(206, 195, 195);
-    background-color: var(--bg-vs-code-color);
+  font-size: 20px;
+  font-family: consolas;
+  text-align: center;
+  color: rgb(206, 195, 195);
+  background-color: var(--bg-vs-code-color);
 }
 
 .deck-tree {
-    font-family: Verdana;
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 11px;
-    color: #a6a6a6;
-    margin-bottom: 10px;
+  font-family: Verdana;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 11px;
+  color: #a6a6a6;
+  margin-bottom: 10px;
 }
 
 .sub-deck-name {
-    font-family: courier;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 20px;
-    color: #c5be3f;
-    margin-bottom: 20px;
+  font-family: courier;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #c5be3f;
+  margin-bottom: 20px;
 }
 
 .translation {
-    font-family: consolas;
-    color: #4cc5a1;
-    font-size: 17px;
+  font-family: consolas;
+  color: #4cc5a1;
+  font-size: 17px;
 }
 
 .new-word {
-    color: #4cc5a1;
-    font-weight: bold;
+  color: #4cc5a1;
+  font-weight: bold;
 }
-
-hr {
-    margin: 10px 0;
-    border-style: inset;
-    border-width: 0.5px;
-}
-
 
 .replay-button svg path {
-    stroke: #2f2f31;
-    fill: #4cc5a1;
+  stroke: #2f2f31;
+  fill: #4cc5a1;
 }
 
 .replay-button {
-    width: 25px;
+  width: 25px;
 }
 
 .replay-button svg circle {
-    fill: rgb(206, 195, 195);
-    stroke: #c5be3f;
+  fill: rgb(206, 195, 195);
+  stroke: #c5be3f;
+}
+
+.custom-button {
+  display: block;
+  font-family: Menlo;
+  font-size: 16px;
+  color: #bdc3c7;
+  background-color: rgba(85, 85, 85, 0.15);
+  border-radius: 10px;
+  padding: 5px;
+  width: 50%;
+  text-align: center;
+  font-weight: 500;
+  margin: 20px;
+  transition: background-color 0.15s ease-out;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-button:hover {
+  background-color: rgba(85, 85, 85, 0.35);
+}
+
+/* MOBILE */
+@media screen and (max-width: 600px) {
+  article {
+    flex-direction: column;
+  }
+
+  article > p {
+    margin-bottom: 10px;
+  }
 }

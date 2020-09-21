@@ -27,17 +27,17 @@
     </article>
 
     <article class="extraContainer hidden">
-        <div class="customButton " id="extra_toggle_on_button " onclick="showextra() " style="display: none; ">
+        <div class="customButton " id="extra_toggle_on_button " onclick="showExtra() " style="display: none; ">
             Show Example
         </div>
 
-        <div class="extra " id="extrafield ">
+        <div class="extra " id="extraField">
             <div class="notesChild ">
-                {{SampleImage}}
+                <picture>{{SampleImage}}</picture>
             </div>
         </div>
 
-        <div class="customButton " id="extra_toggle_off_button " onclick="hideextra() ">
+        <div class="customButton " id="extra_toggle_off_button " onclick="hideExtra() ">
             Hide Example
         </div>
     </article>
@@ -46,7 +46,7 @@
     </footer>
 </section>
 <script>
-    const hiddenElements = [...document.getElementsByClassName("hidden")];
+    var hiddenElements = [...document.getElementsByClassName("hidden")];
     setTimeout(() => {
         hiddenElements.forEach(c => {
             c.classList.remove("hidden")
@@ -56,11 +56,11 @@
 
     $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
 
-    const regex = /(?<key>[\w-]+): (?<value>[\w-]+);/g
-    let elements = [...document.getElementsByClassName("format")];
-    const addClass = (element) => {
-        let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
-        const result = [...elementHTML.matchAll(regex)]
+    var regex = /(?<key>[\w-]+): (?<value>[\w-]+);/g
+    var elements = [...document.getElementsByClassName("format")];
+    var addClass = (element) => {
+        var elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
+        var result = [...elementHTML.matchAll(regex)]
             .map(item => ({
                 element: `<span><span class="attributeColorCSS">${item.groups.key}</span>: <span class="stringColor">${item.groups.value}</span>;</span>`,
                 fullMatch: item['0']
@@ -75,14 +75,14 @@
         addClass(element);
     })
 
-    function showextra() {
-        document.getElementById("extrafield ").style.display = "flex ";
+    function showExtra() {
+        document.getElementById("extraField").style.display = "flex ";
         document.getElementById("extra_toggle_off_button ").style.display = "block ";
         document.getElementById("extra_toggle_on_button ").style.display = "none ";
     }
 
-    function hideextra() {
-        document.getElementById("extrafield ").style.display = "none ";
+    function hideExtra() {
+        document.getElementById("extraField").style.display = "none ";
         document.getElementById("extra_toggle_off_button ").style.display = "none ";
         document.getElementById("extra_toggle_on_button ").style.display = "block ";
     }

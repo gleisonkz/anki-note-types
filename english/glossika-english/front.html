@@ -10,10 +10,15 @@
         </p>
         <div>{{Audio}}</div>
     </article>
+    <div id="toggle" class="custom-button no-select" onclick="toggle()">
+        Show Expression
+    </div>
 </section>
 <script>
+    document.getElementById("phrase").style.visibility = "hidden";
     (function highLightTargetWord() {
         const phraseElement = document.getElementById("phrase");
+        const toggleElement = document.getElementById("toggle");
         const target = "{{text:Target}}"
 
         const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
@@ -35,4 +40,31 @@
         replacementElements.filter(c => c.searchValue)
             .forEach(object => applyStyles(object));
     })();
+
+    function toggle() {
+        const phraseElement = document.getElementById("phrase");
+        const toggleElement = document.getElementById("toggle");
+        console.log("teste")
+
+        const visibility = {
+            true: {
+                state: "visible",
+                text: "Hide Expression"
+            },
+            false: {
+                state: "hidden",
+                text: "Show Expression"
+            },
+            isHidden: function (element) {
+                return element.style.visibility === "hidden" ? true : false;
+            },
+            apply: function (toggleButton, elementToToggle) {
+                const hidden = this.isHidden(elementToToggle);
+                const stateHandler = this[hidden];
+                elementToToggle.style.visibility = stateHandler.state;
+                toggleButton.innerText = stateHandler.text;
+            }
+        };
+        visibility.apply(toggleElement, phraseElement)
+    };
 </script>

@@ -1,4 +1,4 @@
-<section>
+<section class="hidden auto-hidden">
     <header>
         <div>
             <p class="deck-tree">{{Deck}}</p>
@@ -27,11 +27,11 @@
     </article>
 </section>
 <script>
-    const regex = /(?<key>[\w-]+): (?<value>[\w-]+);/g
-    let elements = [...document.getElementsByClassName("format")];
-    const addClass = (element) => {
-        let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
-        const result = [...elementHTML.matchAll(regex)]
+    var regex = /(?<key>[\w-]+): (?<value>[\w-]+);/g
+    var elements = [...document.getElementsByClassName("format")];
+    var addClass = (element) => {
+        var elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
+        var result = [...elementHTML.matchAll(regex)]
             .map(item => ({
                 element: `<span><span class="attributeColorCSS">${item.groups.key}</span>: <span class="stringColor">${item.groups.value}</span>; ?</span>`,
                 fullMatch: item['0']
@@ -44,4 +44,12 @@
     elements.forEach((element) => {
         addClass(element);
     })    
+
+    var hiddenElements = [...document.getElementsByClassName("auto-hidden")];
+    setTimeout(() => {
+        hiddenElements.forEach(c => {
+            c.classList.remove("hidden")
+            c.classList.add("visible");
+        })
+    }, 100);
 </script>

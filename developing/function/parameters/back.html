@@ -49,9 +49,9 @@
 <script>
     $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
 
-    const regex = /(?<parameter>[^:]*): (?<type>[^-]*)- \[(?<description>.*?)\]/g
-    const element = document.getElementById("parameters");
-    const addClass = (element) => {
+    var regex = /(?<parameter>[^:]*): (?<type>[^-]*)- \[(?<description>.*?)\]/g
+    var element = document.getElementById("parameters");
+    function addClass(element) {
         let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
         const result = [...elementHTML.matchAll(regex)]
             .map(item => ({
@@ -67,22 +67,5 @@
         })
         element.innerHTML = elementHTML;
     }
-
-    addClass(element);
-
-    function showextra() {
-        document.getElementById("extrafield ").style.display = "flex ";
-        document.getElementById("extra_toggle_off_button ").style.display = "block ";
-        document.getElementById("extra_toggle_on_button ").style.display = "none ";
-    }
-
-    function hideextra() {
-        document.getElementById("extrafield ").style.display = "none ";
-        document.getElementById("extra_toggle_off_button ").style.display = "none ";
-        document.getElementById("extra_toggle_on_button ").style.display = "block ";
-    }
-
-    function showTip() {
-        document.getElementByClass("tip ").style.display = "block ";
-    }
+    addClass(element); 
 </script>

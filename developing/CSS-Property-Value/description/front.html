@@ -1,4 +1,4 @@
-<section class="visible">
+<section class="hidden">
     <header>
         <div>
             <p class="deck-tree">{{Deck}}</p>
@@ -27,7 +27,7 @@
     </article>
 </section>
 <script>
-    const hiddenElements = [...document.getElementsByClassName("hidden")];
+    var hiddenElements = [...document.getElementsByClassName("hidden")];
     setTimeout(() => {
         hiddenElements.forEach(c => {
             c.className = "visible";

@@ -3,6 +3,11 @@
         <div>
             <p class="deck-tree">{{Deck}}</p>
             <p class="sub-deck-name">{{Subdeck}}</p>
+            <p class="info-queue">
+                <span id="infoQueue">{{info-Queue:}}</span> card |
+                <span id="infoQueue">{{info-Ivl:}}</span> Days |
+                <span id="infoQueue">{{info-Reviews:}}</span> Times
+            </p>
         </div>
     </header>
 
@@ -36,13 +41,13 @@
     </footer>
 </section>
 <script>
-    const html = {
+    var html = {
         get: (elementSelector) => {
             return document.querySelector(elementSelector);
         }
     }
 
-    const hiddenElements = [...document.getElementsByClassName("hidden")];
+    var hiddenElements = [...document.getElementsByClassName("hidden")];
     setTimeout(() => {
         hiddenElements.forEach(c => {
             c.classList.remove("hidden")
@@ -50,11 +55,11 @@
         })
     }, 100);
 
-    const toggleButton = html.get("#tipButton");
-    const extraField = html.get("#tipField");
+    var toggleButton = html.get("#tipButton");
+    var extraField = html.get("#tipField");
 
-    const replaceStringAndAddClass = (...elementsID) => {
-        const replaceStringAndAddClass = [
+    var replaceStringAndAddClass = (...elementsID) => {
+        var replaceStringAndAddClass = [
             { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },
             { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: 'fix', className: 'const-color' },
             { pattern: /(?<function>\w+)[(][)]/g, groupName: 'function', className: 'function-color' },
@@ -76,8 +81,8 @@
         }
 
         elementsID.forEach(elementID => {
-            const element = document.getElementById(elementID);
-            let textElement = element.innerHTML.trim();
+            var element = document.getElementById(elementID);
+            var textElement = element.innerHTML.trim();
             textElement = replace(textElement, replaceStringAndAddClass);
             element.innerHTML = textElement;
         })
@@ -85,7 +90,7 @@
     replaceStringAndAddClass('questionField');
 
     function toggle(string) {
-        const visibility = {
+        var visibility = {
             true: {
                 state: "visible",
                 text: "Hide Extra"
@@ -98,12 +103,28 @@
                 return element.className === "hidden" ? true : false;
             },
             apply: function (toggleButton, elementToToggle) {
-                const hidden = this.isHidden(elementToToggle);
-                const stateHandler = this[hidden];
+                var hidden = this.isHidden(elementToToggle);
+                var stateHandler = this[hidden];
                 toggleButton.innerText = stateHandler.text;
                 elementToToggle.className = stateHandler.state;
             }
         };
         visibility.apply(toggleButton, extraField);
     }
+
+    (function showDescriptionCardType() {
+        var cardTypeID = `{{info-Queue:}}`;
+        var infoQueueElement = html.get("#infoQueue");
+        var cardTypeById = {}
+        var cardTypeByText = {
+            new: 0,
+            learning: 1,
+            review: 2,
+            reLearning: 3,
+        };
+        for (let prop in cardTypeByText) {
+            cardTypeById[cardTypeByText[prop]] = prop;
+        }
+        infoQueueElement.innerText = cardTypeById[cardTypeID];
+    })();
 </script>

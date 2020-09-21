@@ -1,4 +1,4 @@
-@import url("_editor_button_styles.css");
+@import url('_editor_button_styles.css');
 
 :root {
   --classColor: #4cc5a1;
@@ -64,6 +64,10 @@
   justify-content: center;
 }
 
+.articleAnswer {
+  margin-bottom: 10px;
+}
+
 .articleAnswer b {
   font-weight: normal;
   color: var(--stringColor);
@@ -75,14 +79,14 @@
 }
 
 .extraContainer {
-  display: flex;
+  display: block;
   margin-top: 20px;
   flex-flow: column wrap;
   align-items: center;
 }
 
 .extra {
-  display: none;
+  display: flex;
   font-size: 20px;
   border: 2px dashed rgba(85, 85, 85, 0.75);
   color: #4cc5a1;
@@ -164,4 +168,17 @@
 
 .functionColor {
   color: #dcdcaa;
+}
+
+.fade-in {
+  animation: fadeIn ease 1.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
