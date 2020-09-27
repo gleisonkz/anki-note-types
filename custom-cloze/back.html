@@ -48,18 +48,18 @@
     },
   };
 
-  var toggleButton = html.get("#tipButton");
-  var extraField = html.get("#tipField");
+  var toggleButton = html.get("#toggleButton");
+  var extraField = html.get("#extraField");
 
   function toggle(string) {
     var visibility = {
       true: {
         state: "visible",
-        text: "Hide Tip",
+        text: "Hide Extra",
       },
       false: {
         state: "hidden",
-        text: "Show Tip",
+        text: "Show Extra",
       },
       isHidden: function (element) {
         return element.classList.contains("hidden");
