@@ -1,4 +1,6 @@
-@import url('_editor_button_styles.css');
+@import url("_editor_button_styles.css");
+
+@import url("_editor_button_styles.css");
 
 :root {
   --classColor: #4cc5a1;
@@ -162,12 +164,28 @@
   color: #4f9cd6;
 }
 
+.element-selector-color {
+  color: #4f9cd6;
+}
+
 .selectorColorCSS {
   color: #d7ba7d;
 }
 
 .functionColor {
   color: #dcdcaa;
+}
+
+.function-color {
+  color: #dcdcaa;
+}
+
+.const-color {
+  color: var(--const-color);
+}
+
+.class-color {
+  color: var(--class-color);
 }
 
 .fade-in {

@@ -1,0 +1,28 @@
+<div class="card-container">
+  <header class="header">
+    <p class="header__deck-tree">{{Deck}}</p>
+    <p class="header__subdeck-name">{{Subdeck}}</p>
+  </header>
+
+  <article class="question-container">
+    <p>
+      O elemento mostrado abaixo é um elemento
+      <span class="string-color"> inline</span> ou
+      <span class="string-color"> block</span>?
+    </p>
+  </article>
+
+  <div class="element-container">
+    <p>
+      <span><</span
+      ><span class="element-selector-color">{{ElementSelector}}</span
+      ><span>>{{#ClosingTag}}</span><span><</span><span>/</span
+      ><span class="element-selector-color">{{ElementSelector}}</span
+      ><span>></span>{{/ClosingTag}}
+    </p>
+  </div>
+
+  <article class="answer-container fade-in">
+    <div class="answer-content" id="answerField">{{isBlockOrInline}}</div>
+  </article>
+</div>

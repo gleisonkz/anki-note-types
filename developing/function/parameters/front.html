@@ -1,31 +1,30 @@
 {{#Parameters}}
-<section>
-    <header>
-        <div >
-            <p class="deckTree">{{Deck}}</p>
-            <p class="subDeck">{{Subdeck}}</p>
-        </div>
-    </header>
+<section class="fade-in">
+  <header>
+    <div>
+      <p class="deckTree">{{Deck}}</p>
+      <p class="subDeck">{{Subdeck}}</p>
+    </div>
+  </header>
 
-    <article>
-        <div class="questionField">
-				 		<div>				
-							<span class="classColor">Quais são os parâmetros</span>
-							<span>da 	função </span>
-            <span class="functionColor">{{FunctionName}}</span>()?						
-        		</div>
-				 </div>
-    </article>
+  <article>
+    <div class="questionField">
+      <div>
+        <span class="classColor">Quais são os parâmetros</span>
+        <span>da função </span>
+        <span id="questionField" class="functionColor">{{FunctionName}}</span
+        >()?
+      </div>
+    </div>
+  </article>
 
-    <article>
-        <div class="notes">
-            <div class="notesChild" style="color: #4cc5a1;">
-                [...]
-            </div>
-        </div>
-    </article>
-    <footer>
-        <audio style="display:none">{{FunctionNameAudio}}</audio>
-    </footer>
+  <article>
+    <div class="notes">
+      <div class="notesChild" style="color: #4cc5a1">[...]</div>
+    </div>
+  </article>
+  <footer>
+    <audio style="display: none">{{FunctionNameAudio}}</audio>
+  </footer>
 </section>
 {{/Parameters}}

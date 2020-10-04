@@ -1,0 +1,28 @@
+<div class="card-container">
+  <header class="header">
+    <p class="header__deck-tree">{{Deck}}</p>
+    <p class="header__subdeck-name">{{Subdeck}}</p>
+  </header>
+
+  <article class="question-container">
+    <p>
+      <span class="class-color"> Como se chama</span>
+      o
+      <span class="class-color"> elemento</span>
+      descrito pela definição abaixo?
+    </br></br>
+      "<span class="class-color">{{ElementDescription}}</span>"
+  </p>
+  </article>
+
+  <article class="answer-container fade-in"> 
+    <div class="answer-content" id="answerField">
+      <span class="tag-gray-color" ><</span><span class="element-selector-color" >{{ElementSelector}}</span><span class="tag-gray-color">></span><span class="tag-gray-color" ><</span><span class="tag-gray-color">/</span><span class="element-selector-color" >{{ElementSelector}}</span><span class="tag-gray-color">></span>
+      
+    </div> 
+  </article>
+
+  <footer>
+    <audio>{{ElementNameAudio}}</audio>
+  </footer>
+</div>

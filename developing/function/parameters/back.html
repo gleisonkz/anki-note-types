@@ -1,71 +1,59 @@
 <section>
-    <header>
-        <div>
-            <p class="deckTree">{{Deck}}</p>
-            <p class="subDeck">{{Subdeck}}</p>
-        </div>
-    </header>
+  <header>
+    <div>
+      <p class="deckTree">{{Deck}}</p>
+      <p class="subDeck">{{Subdeck}}</p>
+    </div>
+  </header>
 
-    <article>
-        <div class="questionField">
-            <div>
-                <span class="classColor">Quais são os parâmetros</span>
-                <span>da função </span>
-                <span class="functionColor">{{FunctionName}}</span>()?
-            </div>
-        </div>
-    </article>
+  <article>
+    <div class="questionField">
+      <div>
+        <span class="classColor">Quais são os parâmetros</span>
+        <span>da função </span>
+        <span class="functionColor">{{FunctionName}}</span>()?
+      </div>
+    </div>
+  </article>
 
-    <article class="articleAnswer">
-        <div class="notes">
-            <div id="parameters" class="notesChild containerFlex" style="color: gray;">
-                {{Parameters}}
-            </div>
-        </div>
-    </article>
+  <article class="articleAnswer hidden auto-hidden">
+    <div class="notes">
+      <div id="parameters" class="notesChild containerFlex" style="color: gray">
+        {{Parameters}}
+      </div>
+    </div>
+  </article>
 
-    <article class="extraContainer ">
-
-        {{#Parameters}}
-        <div class="customButton " id="extra_toggle_on_button " onclick="showextra() ">
-            Show Example
-        </div>
-
-        <div class="extra " id="extrafield ">
-            <div class="notesChild ">
-                {{SampleImage}}
-            </div>
-        </div>
-
-        <div class="customButton " id="extra_toggle_off_button " onclick="hideextra() " style="display: none; ">
-            Hide Example
-        </div>
-        {{/Parameters}}
-    </article>
-    <footer>
-        <audio style="display:none">{{ParametersAudio}}</audio>
-    </footer>
+  <article class="extraContainer fade-in">
+    {{#SampleImage}}
+    <div class="extra" id="extraField">
+      <div class="notesChild">{{SampleImage}}</div>
+    </div>
+    {{/SampleImage}}
+  </article>
+  <footer>
+    <audio style="display: none">{{ParametersAudio}}</audio>
+  </footer>
 </section>
 <script>
-    $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
+  $("div:has(ul)", "div:has(ol)").addClass("notesChild");
 
-    var regex = /(?<parameter>[^:]*): (?<type>[^-]*)- \[(?<description>.*?)\]/g
-    var element = document.getElementById("parameters");
-    function addClass(element) {
-        let elementHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
-        const result = [...elementHTML.matchAll(regex)]
-            .map(item => ({
-                element: `<span>
+  var regex = /(?<parameter>[^:]*): (?<type>[^-]*)- \[(?<description>.*?)\]/g;
+  var element = document.getElementById("parameters");
+  function addClass(element) {
+    let elementHTML = element.innerHTML.replace(/&nbsp;/g, " ");
+    const result = [...elementHTML.matchAll(regex)].map((item) => ({
+      element: `<span>
                     <span class="attributeColorCSS">${item.groups.parameter}</span>: 
                     <span class="classColor">${item.groups.type}</span> - 
                     <span class="tagGrayColor">${item.groups.description}</span>
                     </span>`,
-                fullMatch: item['0']
-            }));
-        result.forEach(c => {
-            elementHTML = elementHTML.replace(c.fullMatch, c.element)
-        })
-        element.innerHTML = elementHTML;
-    }
-    addClass(element); 
+      fullMatch: item["0"],
+    }));
+    result.forEach((c) => {
+      elementHTML = elementHTML.replace(c.fullMatch, c.element);
+    });
+    element.innerHTML = elementHTML;
+  }
+  addClass(element);
 </script>
