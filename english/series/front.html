@@ -1,128 +1,115 @@
 <section>
-    <header>
-        <div>
-            <p class="deck-tree">{{Deck}}</p>
-            <p class="sub-deck">{{Subdeck}}</p>
-            <p class="info-queue">
-                <span id="infoQueue">{{info-Queue:}}</span> card |
-                <span id="infoQueue">{{info-Ivl:}}</span> Days |
-                <span id="infoQueue">{{info-Reviews:}}</span> Times
-            </p>
-        </div>
-    </header>
-    <article>
-        <div>
-            {{Snapshot}}
-        </div>
-    </article>
-    <article id="expressionArticle">
-        <div id="phrase">
-            {{Expression}}
-        </div>
-    </article>
-    <article class="buttons">
-        <div id="toggle" class="custom-button no-select" onclick="toggle()">
-            Show Expression
-        </div>
-        <div>
-            {{Audio}}
-        </div>
-    </article>
-    <article class="type" id="textType">
-        <div class="type">
-            {{type:Expression}}
-        </div>
-    </article>
+  <header>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck">{{Subdeck}}</p>
+      <p class="info-queue">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
+    </div>
+  </header>
+  <article>
+    <div>{{Snapshot}}</div>
+  </article>
+  <article id="expressionArticle">
+    <div id="phrase">{{Expression}}</div>
+  </article>
+  <article class="buttons">
+    <div id="toggle" class="custom-button no-select" onclick="toggle()">Show Expression</div>
+    <div>{{Audio}}</div>
+  </article>
+  <article class="type" id="textType">
+    <div class="type">{{type:Expression}}</div>
+  </article>
 </section>
 <script>
-    const html = {
-        get(element) {
-            return document.querySelector(element);
-        }
+  const HTML = {
+    get(element) {
+      return document.querySelector(element);
+    },
+  };
+  const isMatureCard = `{{info-Reviews:}}` > 5;
+  const textTypeElement = HTML.get("#textType");
+
+  (function enableTextType() {
+    const StyleElementHandler = {
+      true: "block",
+      false: "none",
+    };
+    textTypeElement.style.display = StyleElementHandler[isMatureCard];
+  })();
+
+  function card() {
+    const cardTypeID = `{{info-Queue:}}`;
+    const articleExpressionElement = HTML.get("#expressionArticle");
+    const toggleElement = HTML.get("#toggle");
+    const infoQueueElement = HTML.get("#infoQueue");
+
+    const cardTypeById = {};
+    const cardTypeByText = {
+      new: 0,
+      learning: 1,
+      review: 2,
+      reLearning: 3,
+    };
+    for (let prop in cardTypeByText) {
+      cardTypeById[cardTypeByText[prop]] = prop;
     }
-    const isMatureCard = `{{info-Reviews:}}` > 5;
-    const textTypeElement = html.get("#textType");
+    infoQueueElement.innerText = cardTypeById[cardTypeID];
 
-    (function enableTextType() {
-        const StyleElementHandler = {
-            true: 'block',
-            false: 'none'
-        }
-        textTypeElement.style.display = StyleElementHandler[isMatureCard];
-    })()
+    const visibility = {
+      true: {
+        state: "visible",
+        text: "Hide Expression",
+      },
+      false: {
+        state: "hidden",
+        text: "Show Expression",
+      },
+      isHidden: function (element) {
+        return element.style.visibility === "hidden" || cardTypeID == cardTypeByText.new ? true : false;
+      },
+      apply: function (toggleButton, elementToToggle) {
+        const hidden = this.isHidden(elementToToggle);
+        const stateHandler = this[hidden];
+        elementToToggle.style.visibility = stateHandler.state;
+        elementToToggle.style.visibility = stateHandler.state;
+        toggleButton.innerText = stateHandler.text;
+        toggleButton.style.visibility = cardTypeID == cardTypeByText.new ? "hidden" : "visible";
+      },
+    };
+    this.toggle = function () {
+      visibility.apply(toggleElement, articleExpressionElement);
+    };
+    this.toggle();
+  }
 
-    function card() {
-        const cardTypeID = `{{info-Queue:}}`;
-        const articleExpressionElement = html.get("#expressionArticle");
-        const toggleElement = html.get("#toggle");
-        const infoQueueElement = html.get("#infoQueue");
+  const obj = new card();
+  function toggle() {
+    obj.toggle();
+  }
 
-        const cardTypeById = {}
-        const cardTypeByText = {
-            new: 0,
-            learning: 1,
-            review: 2,
-            reLearning: 3,
-        };
-        for (let prop in cardTypeByText) {
-            cardTypeById[cardTypeByText[prop]] = prop;
-        }
-        infoQueueElement.innerText = cardTypeById[cardTypeID];
+  (function highLightTargetWord() {
+    const $phrase = HTML.get("#expressionArticle");
+    const targetWord = "{{text:Target}}";
 
-        const visibility = {
-            true: {
-                state: "visible",
-                text: "Hide Expression"
-            },
-            false: {
-                state: "hidden",
-                text: "Show Expression"
-            },
-            isHidden: function (element) {
-                return element.style.visibility === "hidden" ||
-                    cardTypeID == cardTypeByText.new ? true : false;
-            },
-            apply: function (toggleButton, elementToToggle) {
-                const hidden = this.isHidden(elementToToggle);
-                const stateHandler = this[hidden];
-                elementToToggle.style.visibility = stateHandler.state;
-                elementToToggle.style.visibility = stateHandler.state;
-                toggleButton.innerText = stateHandler.text;
-                toggleButton.style.visibility = (cardTypeID == cardTypeByText.new) ? 'hidden' : 'visible';
-            }
-        };
-        this.toggle = function () {
-            visibility.apply(toggleElement, articleExpressionElement);
-        }
-        this.toggle();
+    const index = $phrase.innerText.toLowerCase().indexOf(targetWord.toLowerCase());
+    const original = $phrase.innerText.substring(index, index + targetWord.length);
+
+    const replacementElements = [
+      {
+        element: $phrase,
+        searchValue: original,
+        classElement: "new-word",
+      },
+    ];
+    function applyStyles(object) {
+      object.element.innerHTML = object.element.innerText.replace(
+        object.searchValue,
+        `<span class="${object.classElement}">${object.searchValue}</span>`
+      );
     }
-
-    const obj = new card();
-    function toggle() {
-        obj.toggle();
-    }
-
-    (function highLightTargetWord() {
-        const phraseElement = html.get("#expressionArticle");
-        const target = "{{text:Target}}"
-
-        const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
-        const original = phraseElement.innerText.substring(index, index + target.length);
-
-        const replacementElements = [
-            {
-                element: phraseElement,
-                searchValue: original,
-                classElement: "new-word"
-            }
-        ]
-        const applyStyles = (object) => {
-            object.element.innerHTML = object.element.innerText
-                .replace(object.searchValue,
-                    `<span class="${object.classElement}">${object.searchValue}</span>`
-                );
-        }
-        replacementElements.filter(c => c.searchValue)
-            .forEach(object => applyStyles(object));
-    })();
+    replacementElements.filter((c) => c.searchValue).forEach((object) => applyStyles(object));
+  })();
 </script>

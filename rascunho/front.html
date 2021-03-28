@@ -1,109 +1,26 @@
-<section class="hidden">
-    <header>
-        <div>
-            <p class="deck-tree">{{Deck}}</p>
-            <p class="sub-deck-name">{{Subdeck}}</p> 
-        </div>
-    </header>
+<section class="fade-in">
+  <header>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="subdeck-name">{{Subdeck}}</p>
+    </div>
+  </header>
 
-    <article class="article-question">
-        <div>
-           Qual o nome dado a definição abaixo?
-        </div>
-        <div id="questionField" class="questionField">
-<span class="stringColor">"</span>{{Definiton}}<span class="stringColor">"</span>
-        </div>
-    </article>
+  <article class="article-question">
+    <div>
+      Para que server a propriedade <span class="string-color">"</span
+      ><span class="attribute-color-css">{{Property}}</span><span class="string-color">"</span> da diretiva
+      <span class="class-color">{{ClassName}}</span>?
+    </div>
+  </article>
 
-    <article class="articleTip">
-        {{#Tip}}
-        <div class="customButton" id="tipButton" onclick="toggle()">
-            Show Tip
-        </div>
-
-        <div class="tip" id="tipField">
-            {{Tip}}
-        </div>
-        {{/Tip}}
-    </article>
-
-    <article class="articleAnswer">
-        <div class="answerField">
-            <div class="notesChild">
-                [...]
-            </div>
-        </div>
-    </article>
+  <article class="answer-container">
+    <div class="answer-field">
+      <div class="notesChild">[...]</div>
+    </div>
+  </article>
+  <footer>
+    <audio style="display: none">{{PropertyAudio}}</audio>
+  </footer>
 </section>
-<script>
-    var html = {
-        get: (elementSelector) => {
-            return document.querySelector(elementSelector);
-        }
-    }
-
-    var hiddenElements = [...document.getElementsByClassName("hidden")];
-    setTimeout(() => {
-        hiddenElements.forEach(c => {
-            c.classList.remove("hidden")
-            c.classList.add("visible");
-        })
-    }, 100);
-        
-    var toggleButton = html.get("#tipButton");    
-    var extraField = html.get("#tipField");
-
-    var replaceStringAndAddClass = (...elementsID) => {
-        var replaceStringAndAddClass = [
-            { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: 'class', className: 'class-color' },
-            { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: 'fix', className: 'const-color' },
-            { pattern: /(?<function>\w+)[(][)]/g, groupName: 'function', className: 'function-color' },
-            { pattern: /(?<symbol>\?)/g, groupName: 'symbol', className: 'symbols-color' },
-            { pattern: /(?<symbol>\!)/g, groupName: 'symbol', className: 'symbols-color' },
-            { pattern: /(?<symbol>\()/g, groupName: 'symbol', className: 'symbols-color' },
-            { pattern: /(?<symbol>\))/g, groupName: 'symbol', className: 'symbols-color' },
-        ]
-
-        function replace(textElement, matches) {
-            matches.forEach(c => {
-                var matches = [...textElement.matchAll(c.pattern)];
-                matches.forEach(match => {
-                    var value = match.groups[c.groupName];
-                    textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
-                });
-            });
-            return textElement;
-        }
-
-        elementsID.forEach(elementID => {
-            var element = document.getElementById(elementID);
-            var textElement = element.innerHTML.trim();
-            textElement = replace(textElement, replaceStringAndAddClass);
-            element.innerHTML = textElement;
-        })
-    }
-    replaceStringAndAddClass('questionField');
-
-    function toggle(string) {
-        var visibility = {
-            true: {
-                state: "visible",
-                text: "Hide Extra"
-            },
-            false: {
-                state: "hidden",
-                text: "Show Extra"
-            },
-            isHidden: function (element) {
-                return element.className === "hidden" ? true : false;
-            },
-            apply: function (toggleButton, elementToToggle) {
-                var hidden = this.isHidden(elementToToggle);
-                var stateHandler = this[hidden];
-                toggleButton.innerText = stateHandler.text;
-                elementToToggle.className = stateHandler.state;
-            }
-        };
-        visibility.apply(toggleButton, extraField);
-    }
-</script>
+<script></script>

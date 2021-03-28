@@ -1,42 +1,63 @@
 <section>
-    <header>
-        <span class="deck-tree">{{Deck}}</span>
-        <span class="sub-deck-name">{{Subdeck}}</span>
-    </header>
+  <header>
+    <span class="deck-tree">{{Deck}}</span>
+    <span class="sub-deck-name">{{Subdeck}}</span>
+    <p class="label">Morph State: <span class="info-queue">{{Tags}}</span></p>
+    <p class="label">
+      Card State: <span id="infoQueue" class="info-queue">{{info-Queue:}}</span> <span class="info-queue">card</span>
+    </p>
+    <p class="label">
+      Current Interval: <span id="infoQueue" class="info-queue">{{info-Ivl:}}</span>
+      <span class="info-queue">days</span>
+    </p>
+    <p class="label">Review Times: <span id="infoQueue" class="info-queue">{{info-Reviews:}}</span></p>
+  </header>
 
-    <article class="margin-bottom fade-in">
-        <p id="phrase" class="phrase">
-            <span>{{Phrase}}</span>
-        </p>
-        <div>{{Audio}}</div>
-    </article>
+  <article class="margin-bottom fade-in">
+    <p id="phrase" class="phrase">
+      <span>{{Phrase}}</span>
+    </p>
+    <div>{{Audio}}</div>
+  </article>
 
-    <div class="fade-in">{{Translation}}</div>
-
+  <div class="fade-in">{{Translation}}</div>
 </section>
 
 <script>
-    (function highLightTargetWord() {
-        const phraseElement = document.getElementById("phrase");
-        const target = "{{text:Target}}"
+  (function highLightTargetWord() {
+    const phraseElement = document.getElementById("phrase");
+    const target = "{{text:Target}}";
 
-        const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
-        const original = phraseElement.innerText.substring(index, index + target.length);
+    const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
+    const original = phraseElement.innerText.substring(index, index + target.length);
 
-        const replacementElements = [
-            {
-                element: phraseElement,
-                searchValue: original,
-                classElement: "new-word"
-            }
-        ]
-        const applyStyles = (object) => {
-            object.element.innerHTML = object.element.innerText
-                .replace(object.searchValue,
-                    `<span class="${object.classElement}">${object.searchValue}</span>`
-                );
-        }
-        replacementElements.filter(c => c.searchValue)
-            .forEach(object => applyStyles(object));
-    })();
+    const replacementElements = [
+      {
+        element: phraseElement,
+        searchValue: original,
+        classElement: "new-word",
+      },
+    ];
+    const applyStyles = (object) => {
+      object.element.innerHTML = object.element.innerText.replace(
+        object.searchValue,
+        `<span class="${object.classElement}">${object.searchValue}</span>`
+      );
+    };
+    replacementElements.filter((c) => c.searchValue).forEach((object) => applyStyles(object));
+  })();
+
+  (function showCardStateText() {
+    const cardTypeID = `{{info-Queue:}}`;
+    const infoQueueElement = document.getElementById("infoQueue");
+    if (cardTypeID == 0) {
+      infoQueueElement.innerText = "new";
+    } else if (cardTypeID == 1) {
+      infoQueueElement.innerText = "learning";
+    } else if (cardTypeID == 2) {
+      infoQueueElement.innerText = "review";
+    } else if (cardTypeID == 3) {
+      infoQueueElement.innerText = "re-learning";
+    }
+  })();
 </script>

@@ -1,0 +1,133 @@
+<section class="fade-in">
+  <header>
+    <span class="deck-tree">🏳️ GENERAL::👅 LANGUAGES::👅 ENGLISH::GLOSSIKA ENGLISH - US</span>
+    <span class="sub-deck-name">GLOSSIKA ENGLISH - US</span>
+  </header>
+
+  <article>
+    <p id="phrase" class="phrase">
+      <span>Ela tinha uma caneta, mas não tinha nenhum papel.</span>
+    </p>
+  </article>
+  <button class="btn">Generate Card</button>
+  <span class="exist"></span>
+</section>
+<script>
+  var btn = document.querySelector(".btn");
+  var $exist = document.querySelector(".exist");
+  document.getElementById("phrase").style.visibility = "hidden";
+
+  (function highLightTargetWord() {
+    const phraseElement = document.getElementById("phrase");
+    const toggleElement = document.getElementById("toggle");
+    const target = "{{text:Target}}";
+
+    const index = phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
+    const original = phraseElement.innerText.substring(index, index + target.length);
+
+    const replacementElements = [
+      {
+        element: phraseElement,
+        searchValue: original,
+        classElement: "new-word",
+      },
+    ];
+    const applyStyles = (object) => {
+      object.element.innerHTML = object.element.innerText.replace(
+        object.searchValue,
+        `<span class="${object.classElement}">${object.searchValue}</span>`
+      );
+    };
+    replacementElements.filter((c) => c.searchValue).forEach((object) => applyStyles(object));
+  })();
+
+  function toggle() {
+    const phraseElement = document.getElementById("phrase");
+    const toggleElement = document.getElementById("toggle");
+    console.log("teste");
+
+    const visibility = {
+      true: {
+        state: "visible",
+        text: "Hide Expression",
+      },
+      false: {
+        state: "hidden",
+        text: "Show Expression",
+      },
+      isHidden: function (element) {
+        return element.style.visibility === "hidden" ? true : false;
+      },
+      apply: function (toggleButton, elementToToggle) {
+        const hidden = this.isHidden(elementToToggle);
+        const stateHandler = this[hidden];
+        elementToToggle.style.visibility = stateHandler.state;
+        toggleButton.innerText = stateHandler.text;
+      },
+    };
+    visibility.apply(toggleElement, phraseElement);
+  }
+
+  function invoke(action, version, params = {}) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener("error", () => reject("failed to issue request"));
+      xhr.addEventListener("load", () => {
+        try {
+          const response = JSON.parse(xhr.responseText);
+          if (Object.getOwnPropertyNames(response).length != 2) {
+            throw "response has an unexpected number of fields";
+          }
+          if (!response.hasOwnProperty("error")) {
+            throw "response is missing required error field";
+          }
+          if (!response.hasOwnProperty("result")) {
+            throw "response is missing required result field";
+          }
+          if (response.error) {
+            throw response.error;
+          }
+          resolve(response.result);
+        } catch (e) {
+          reject(e);
+        }
+      });
+
+      xhr.open("POST", "http://127.0.0.1:8765");
+      xhr.send(JSON.stringify({ action, version, params }));
+    });
+  }
+
+  async function generateCard(soundString) {
+    const result = await invoke("addNote", 6, {
+      note: {
+        deckName: "🏳️ General::👅 Languages::👅 English::The Mountain Secret Technique",
+        modelName: "mountain-secret-technique",
+        fields: {
+          PortuguesePhrase: "{{text:Translation}}",
+          EnglishPhrase: "{{text:Phrase}}",
+          Audio: soundString,
+          RestrictedWords: "",
+        },
+      },
+    });
+  }
+
+  async function findNotes() {
+    const result = await invoke("findNotes", 6, {
+      query: `deck:current ${"{{text:Phrase}}"}`,
+    });
+    const exist = result.length > 1;
+    $exist.innerText = exist;
+  }
+
+  var audioName = `${"{{AudioText}}"}]`;
+  var soundString = "[sound:" + audioName;
+  btn.addEventListener("click", async () => {
+    var cardResult = await generateCard(soundString);
+    alert("cartão criado com sucesso!");
+  });
+  setTimeout(() => {
+    findNotes();
+  });
+</script>

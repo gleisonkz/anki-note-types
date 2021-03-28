@@ -4,8 +4,7 @@
       <p class="deck-tree">{{Deck}}</p>
       <p class="sub-deck-name">{{Subdeck}}</p>
       <p class="info-queue">
-        <span id="infoQueue">{{info-Queue:}}</span> card |
-        <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
         <span id="infoQueue">{{info-Reviews:}}</span> Times
       </p>
     </div>
@@ -109,10 +108,7 @@
         var matches = [...textElement.matchAll(c.pattern)];
         matches.forEach((match) => {
           var value = match.groups[c.groupName];
-          textElement = textElement.replace(
-            value,
-            `<span class="${c.className}">${value}</span>`
-          );
+          textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
         });
       });
       return textElement;

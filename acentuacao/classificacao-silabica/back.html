@@ -1,73 +1,68 @@
 <section>
-    <header>
-        <div class="tags">
-            <p>{{Deck}}</p>
-            <p class="mySubdeck">{{Subdeck}}</p>
-        </div>
-    </header>
+  <header>
+    <div class="tags">
+      <p>{{Deck}}</p>
+      <p class="mySubdeck">{{Subdeck}}</p>
+    </div>
+  </header>
 
-    <span style="display: none;" id="silabaTonica">{{SilabaTonica}}</span>
+  <span style="display: none" id="silabaTonica">{{SilabaTonica}}</span>
 
-    <article>
-        <div class="questionField">
-            Qual a classificação
-            <span>silábica</span> da palavra?
-        </div>
-        <div class="palavraField">
-            <span>{{Palavra}}</span>
-        </div>
-    </article>
+  <article>
+    <div class="questionField">
+      Qual a classificação
+      <span>silábica</span> da palavra?
+    </div>
+    <div class="palavraField">
+      <span>{{Palavra}}</span>
+    </div>
+  </article>
 
-    <article class="articleAnswer">
-        <div class="notes">
-            <div class="notesChild containerFlex columnDirection" style="color: #4cc5a1;">
+  <article class="articleAnswer">
+    <div class="notes">
+      <div class="notesChild containerFlex columnDirection" style="color: #4cc5a1">
+        <span>{{ClassificacaoSilabica}}</span>
+        <span id="divisaoSilabica">{{DivisaoSilabica}}</span>
+      </div>
+    </div>
+  </article>
 
-                <span>{{ClassificacaoSilabica}}</span>
-                <span id="divisaoSilabica">{{DivisaoSilabica}}</span>
+  <article class="extraContainer">
+    {{#RegraCompleta}}
+    <div class="customButton" id="extra_toggle_on_button " onclick="showextra()">Mostrar Regras</div>
 
-            </div>
-        </div>
-    </article>
+    <div class="extra" id="extrafield">
+      <div class="notes">
+        <div class="notesChild containerFlex" style="color: #4cc5a1">{{RegraCompleta}}</div>
+      </div>
+    </div>
 
-    <article class="extraContainer ">
-
-        {{#RegraCompleta}}
-        <div class="customButton " id="extra_toggle_on_button " onclick="showextra()">
-            Mostrar Regras
-        </div>
-
-        <div class="extra" id="extrafield">
-            <div class="notes">
-                <div class="notesChild containerFlex" style="color: #4cc5a1;">
-                    {{RegraCompleta}}
-                </div>
-            </div>
-        </div>
-
-        <div class="customButton " id="extra_toggle_off_button " onclick="hideextra() " style="display: none; ">
-            Esconder Regras
-        </div>
-        {{/RegraCompleta}}
-    </article>
+    <div class="customButton" id="extra_toggle_off_button " onclick="hideextra() " style="display: none">
+      Esconder Regras
+    </div>
+    {{/RegraCompleta}}
+  </article>
 </section>
 <script>
-    $('div:has(ul)', 'div:has(ol)').addClass('notesChild');
+  $("div:has(ul)", "div:has(ol)").addClass("notesChild");
+  $("#toggleButton").click();
 
-    var silabaTonica = document.getElementById("silabaTonica");
-    var divisaoSilabica = document.getElementById("divisaoSilabica");
-    divisaoSilabica.innerHTML = divisaoSilabica.innerHTML.replace(silabaTonica.innerText, '<span class="stringColor">' + silabaTonica.innerText + '</span>');
+  var silabaTonica = document.getElementById("silabaTonica");
+  var divisaoSilabica = document.getElementById("divisaoSilabica");
+  divisaoSilabica.innerHTML = divisaoSilabica.innerHTML.replace(
+    silabaTonica.innerText,
+    '<span class="stringColor">' + silabaTonica.innerText + "</span>"
+  );
 
+  function showextra() {
+    document.getElementById("extrafield").style.display = "block ";
+    document.getElementById("extra_toggle_off_button ").style.display = "block ";
+    document.getElementById("extra_toggle_on_button ").style.display = "none ";
+  }
 
-
-    function showextra() {
-        document.getElementById("extrafield").style.display = "block ";
-        document.getElementById("extra_toggle_off_button ").style.display = "block ";
-        document.getElementById("extra_toggle_on_button ").style.display = "none ";
-    }
-
-    function hideextra() {
-        document.getElementById("extrafield").style.display = "none ";
-        document.getElementById("extra_toggle_off_button ").style.display = "none ";
-        document.getElementById("extra_toggle_on_button ").style.display = "block ";
-    }
+  function hideextra() {
+    document.getElementById("extrafield").style.display = "none ";
+    document.getElementById("extra_toggle_off_button ").style.display = "none ";
+    document.getElementById("extra_toggle_on_button ").style.display = "block ";
+  }
 </script>
