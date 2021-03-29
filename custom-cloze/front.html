@@ -3,7 +3,8 @@
     <div>
       <p class="deck-tree">{{Deck}}</p>
       <p class="sub-deck-name">{{Subdeck}}</p>
-      <p class="info-queue">
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
         <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
         <span id="infoQueue">{{info-Reviews:}}</span> Times
       </p>
@@ -14,7 +15,11 @@
     <div id="questionField" class="question-content">{{Question}}</div>
   </article>
 
-  {{#Tip}}
+  {{#QuestionImage}}
+  <article class="image-container">
+    <picture class="image-content">{{QuestionImage}}</picture>
+  </article>
+  {{/QuestionImage}} {{#Tip}}
   <article class="tip-container">
     <div class="custom-button no-select" id="tipButton" onclick="toggle()">
       <span id="textButton">Show Tip</span>
@@ -41,6 +46,49 @@
   var toggleButton = html.get("#tipButton");
   var extraField = html.get("#tipField");
 
+  var patterns = [
+    {
+      pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g,
+      groupName: "class",
+      className: "class-color",
+    },
+    {
+      pattern: /(?<fix>\w+)[.]\w+[(][)]/g,
+      groupName: "fix",
+      className: "const-color",
+    },
+    {
+      pattern: /(?<function>\w+)[(][)]/g,
+      groupName: "function",
+      className: "function-color",
+    },
+    {
+      pattern: /(?<symbol>\?)/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+    {
+      pattern: /(?<symbol>\!)/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+    {
+      pattern: /(?<symbol>\()/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+    {
+      pattern: /(?<symbol>\))/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+    {
+      pattern: /(?<css>\))/g,
+      groupName: "css",
+      className: "symbols-color",
+    },
+  ];
+
   function toggle(string) {
     var visibility = {
       true: {
@@ -64,63 +112,26 @@
     visibility.apply(toggleButton, extraField);
   }
 
-  var replaceStringAndAddClass = (...elementsID) => {
-    var patterns = [
-      {
-        pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g,
-        groupName: "class",
-        className: "class-color",
-      },
-      {
-        pattern: /(?<fix>\w+)[.]\w+[(][)]/g,
-        groupName: "fix",
-        className: "const-color",
-      },
-      {
-        pattern: /(?<function>\w+)[(][)]/g,
-        groupName: "function",
-        className: "function-color",
-      },
-      {
-        pattern: /(?<symbol>\?)/g,
-        groupName: "symbol",
-        className: "symbols-color",
-      },
-      {
-        pattern: /(?<symbol>\!)/g,
-        groupName: "symbol",
-        className: "symbols-color",
-      },
-      {
-        pattern: /(?<symbol>\()/g,
-        groupName: "symbol",
-        className: "symbols-color",
-      },
-      {
-        pattern: /(?<symbol>\))/g,
-        groupName: "symbol",
-        className: "symbols-color",
-      },
-    ];
-
-    function customReplace(textElement, matches) {
-      matches.forEach((c) => {
-        var matches = [...textElement.matchAll(c.pattern)];
-        matches.forEach((match) => {
-          var value = match.groups[c.groupName];
-          textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
-        });
-      });
-      return textElement;
-    }
-
+  function replaceStringAndAddClass(...elementsID) {
     elementsID.forEach((elementID) => {
       var element = document.getElementById(elementID);
       var textElement = element.innerHTML.trim();
       textElement = customReplace(textElement, patterns);
       element.innerHTML = textElement;
     });
-  };
+  }
+
+  function customReplace(textElement, matches) {
+    matches.forEach((c) => {
+      var matches = [...textElement.matchAll(c.pattern)];
+      matches.forEach((match) => {
+        var value = match.groups[c.groupName];
+        textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+      });
+    });
+    return textElement;
+  }
+
   replaceStringAndAddClass("questionField");
 
   (function showDescriptionCardType() {
@@ -138,4 +149,235 @@
     }
     infoQueueElement.innerText = cardTypeById[cardTypeID];
   })();
+
+  var question = document.querySelector("#questionField");
+  var questionText = question.innerHTML;
+  question.innerHTML = questionText.replace(
+    /(@)([A-Z]\w+)/g,
+    `<span class="symbols">$1</span><span class="class-color">$2</span>`
+  );
+
+  (function (root, factory) {
+    if (typeof define === "function" && define.amd) {
+      define(factory);
+    } else if (typeof exports === "object") {
+      module.exports = factory(require, exports, module);
+    } else if (root) {
+      root.TypeWriting = factory();
+    } else {
+      window.TypeWriting = factory();
+    }
+  })(this, (require, exports, module) => {
+    "use strict";
+
+    /**
+     * the exported string position
+     */
+    let _currentNumber = 1;
+    /**
+     * whether is between a html tag
+     */
+    let _inHTMLTag = false;
+
+    /**
+     * plugin task status
+     */
+    const _taskStatus = {
+      UNREADY: "UNREADY",
+      READY: "READY",
+      TYPEING: "TYPEING",
+    };
+
+    /**
+     * the default config
+     */
+    let defaults = {
+      targetElement: null,
+      inputString: "",
+      typingInterval: 150,
+      blinkInterval: "0.7s",
+      cursorColor: "black",
+      pluginCallback: () => {},
+      task: _taskStatus.UNREADY,
+    };
+
+    const _typingGo = () => {
+      if (_currentNumber <= defaults.inputString.length) {
+        const nextString = _sliceDisplayText(_currentNumber);
+        _currentNumber += 1;
+
+        if (nextString.slice(-1) === "<") {
+          _inHTMLTag = true;
+        } else if (nextString.slice(-1) === ">") {
+          _inHTMLTag = false;
+        }
+
+        defaults.targetElement.innerHTML = nextString;
+
+        if (_inHTMLTag) {
+          _typingGo();
+        } else {
+          setTimeout(() => {
+            _typingGo();
+          }, defaults.typingInterval);
+        }
+      } else {
+        defaults.task = _taskStatus.READY;
+        _currentNumber = 1;
+        defaults.pluginCallback.call();
+      }
+    };
+
+    const _sliceDisplayText = (to) => defaults.inputString.slice(0, to);
+
+    const _cleanCallback = () => {
+      defaults.pluginCallback = () => {};
+    };
+
+    // Utility method to extend defaults with user options
+    const extendDefaults = (source, properties) => {
+      for (const property in properties) {
+        if (properties.hasOwnProperty(property)) {
+          source[property] = properties[property];
+        }
+      }
+      return source;
+    };
+
+    /**
+     * TypeWriting constructor
+     */
+    class TypeWriting {
+      constructor(options, callbackFunction) {
+        if (!options || typeof options !== "object") {
+          throw new Error("`options` is invalid");
+        }
+
+        /**
+         * check value from user
+         * the string will be put in target later
+         */
+        if (!options.inputString) {
+          throw new Error("Missing argument: inputString");
+        }
+        if (typeof options.inputString !== "string") {
+          throw new Error("`inputString` is not a string");
+        }
+
+        /**
+         * set the custom config
+         */
+        defaults = extendDefaults(defaults, options);
+
+        /**
+         * callback function
+         */
+        if (callbackFunction) {
+          if (typeof callbackFunction === "function") {
+            defaults.pluginCallback = callbackFunction;
+          } else {
+            console.error(`${callbackFunction} is not a function`);
+            _cleanCallback();
+          }
+        } else {
+          _cleanCallback();
+        }
+
+        /**
+         * Calculate proper size of cursor
+         * by inserting a new inline-element with `I`
+         */
+        const calcDiv = document.createElement("div");
+        calcDiv.style.display = "inline-block";
+        calcDiv.innerHTML = "I";
+        defaults.targetElement.appendChild(calcDiv);
+        const cursorHeight = calcDiv.offsetHeight;
+        const cursorWidth = calcDiv.offsetWidth;
+        defaults.targetElement.removeChild(calcDiv);
+
+        /**
+         * cursor css style
+         */
+        const cssStyle = `@-webkit-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@-moz-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}.typingCursor::after{content:'';width:${cursorWidth}px;height:${cursorHeight}px;margin-left:5px;display:inline-block;vertical-align:bottom;background-color:${defaults.cursorColor};-webkit-animation:blink ${defaults.blinkInterval} infinite;-moz-animation:blink ${defaults.blinkInterval} infinite;animation:blink ${defaults.blinkInterval} infinite}`;
+
+        /**
+         * add CSS style in HEAD
+         */
+        const styleNode = document.createElement("style");
+        styleNode.type = "text/css";
+        if (styleNode.styleSheet) {
+          styleNode.styleSheet.cssText = cssStyle;
+        } else {
+          styleNode.appendChild(document.createTextNode(cssStyle));
+        }
+        document.head.appendChild(styleNode);
+
+        defaults.targetElement.className += " typingCursor";
+        defaults.task = _taskStatus.TYPING;
+        _typingGo();
+      }
+
+      /**
+       * change the text on the same target
+       */
+      rewrite(inputString, callbackFunction) {
+        if (defaults.task === _taskStatus.TYPING) {
+          console.warn("Last task is not finished yet");
+          setTimeout(() => {
+            this.rewrite(inputString, callbackFunction);
+          }, defaults.typingInterval);
+          return;
+        }
+
+        /**
+         * check value
+         * the string will be put in target later
+         */
+        if (!inputString) {
+          throw new Error("Missing argument: inputString");
+        }
+        if (typeof inputString !== "string") {
+          throw new Error("`inputString` is not a string");
+        }
+
+        defaults.inputString = inputString;
+
+        /**
+         * callback function
+         */
+        if (callbackFunction) {
+          if (typeof callbackFunction === "function") {
+            defaults.pluginCallback = callbackFunction;
+          } else {
+            console.error(`${callbackFunction} is not a function`);
+            _cleanCallback();
+          }
+        } else {
+          _cleanCallback();
+        }
+
+        defaults.task = _taskStatus.TYPING;
+        _typingGo();
+      }
+    }
+
+    return TypeWriting;
+  });
+  var $question = html.get("#questionField");
+  var questionText = formatCSSProperty($question.innerHTML);
+
+  new TypeWriting({
+    targetElement: $question,
+    inputString: questionText,
+    typingInterval: 30,
+    blinkInterval: "0.7s",
+    cursorColor: "#00fd55",
+  });
+
+  function formatCSSProperty(textValue) {
+    return textValue.replace(
+      /([\w-]+)(: )([\w]+)/g,
+      `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
+    );
+  }
 </script>
