@@ -122,6 +122,15 @@ article {
   padding: 0px 0px 20px 0px;
 }
 
+.questionField::after {
+  content: "";
+  width: 7px;
+  height: 23px;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
 .questionField b {
   font-weight: normal;
   color: var(--class-color);
@@ -136,6 +145,15 @@ article {
   max-width: 850px;
   width: 100%;
   font-family: courier;
+}
+
+#answerField::after {
+  content: "";
+  width: 7px;
+  height: 23px;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 .answerField b {
