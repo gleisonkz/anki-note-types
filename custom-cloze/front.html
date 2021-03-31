@@ -12,6 +12,7 @@
   </header>
 
   <article class="question-container">
+    <span class="cursor-typing hide">.</span>
     <div id="questionField" class="question-content">{{Question}}</div>
   </article>
 
@@ -150,229 +151,8 @@
     infoQueueElement.innerText = cardTypeById[cardTypeID];
   })();
 
-  var question = document.querySelector("#questionField");
-  var questionText = question.innerHTML;
-  question.innerHTML = questionText.replace(
-    /(@)([A-Z]\w+)/g,
-    `<span class="symbols">$1</span><span class="class-color">$2</span>`
-  );
-
-  (function (root, factory) {
-    if (typeof define === "function" && define.amd) {
-      define(factory);
-    } else if (typeof exports === "object") {
-      module.exports = factory(require, exports, module);
-    } else if (root) {
-      root.TypeWriting = factory();
-    } else {
-      window.TypeWriting = factory();
-    }
-  })(this, (require, exports, module) => {
-    "use strict";
-
-    /**
-     * the exported string position
-     */
-    let _currentNumber = 1;
-    /**
-     * whether is between a html tag
-     */
-    let _inHTMLTag = false;
-
-    /**
-     * plugin task status
-     */
-    const _taskStatus = {
-      UNREADY: "UNREADY",
-      READY: "READY",
-      TYPEING: "TYPEING",
-    };
-
-    /**
-     * the default config
-     */
-    let defaults = {
-      targetElement: null,
-      inputString: "",
-      typingInterval: 150,
-      blinkInterval: "0.7s",
-      cursorColor: "black",
-      pluginCallback: () => {},
-      task: _taskStatus.UNREADY,
-    };
-
-    const _typingGo = () => {
-      if (_currentNumber <= defaults.inputString.length) {
-        const nextString = _sliceDisplayText(_currentNumber);
-        _currentNumber += 1;
-
-        if (nextString.slice(-1) === "<") {
-          _inHTMLTag = true;
-        } else if (nextString.slice(-1) === ">") {
-          _inHTMLTag = false;
-        }
-
-        defaults.targetElement.innerHTML = nextString;
-
-        if (_inHTMLTag) {
-          _typingGo();
-        } else {
-          setTimeout(() => {
-            _typingGo();
-          }, defaults.typingInterval);
-        }
-      } else {
-        defaults.task = _taskStatus.READY;
-        _currentNumber = 1;
-        defaults.pluginCallback.call();
-      }
-    };
-
-    const _sliceDisplayText = (to) => defaults.inputString.slice(0, to);
-
-    const _cleanCallback = () => {
-      defaults.pluginCallback = () => {};
-    };
-
-    // Utility method to extend defaults with user options
-    const extendDefaults = (source, properties) => {
-      for (const property in properties) {
-        if (properties.hasOwnProperty(property)) {
-          source[property] = properties[property];
-        }
-      }
-      return source;
-    };
-
-    /**
-     * TypeWriting constructor
-     */
-    class TypeWriting {
-      constructor(options, callbackFunction) {
-        if (!options || typeof options !== "object") {
-          throw new Error("`options` is invalid");
-        }
-
-        /**
-         * check value from user
-         * the string will be put in target later
-         */
-        if (!options.inputString) {
-          throw new Error("Missing argument: inputString");
-        }
-        if (typeof options.inputString !== "string") {
-          throw new Error("`inputString` is not a string");
-        }
-
-        /**
-         * set the custom config
-         */
-        defaults = extendDefaults(defaults, options);
-
-        /**
-         * callback function
-         */
-        if (callbackFunction) {
-          if (typeof callbackFunction === "function") {
-            defaults.pluginCallback = callbackFunction;
-          } else {
-            console.error(`${callbackFunction} is not a function`);
-            _cleanCallback();
-          }
-        } else {
-          _cleanCallback();
-        }
-
-        /**
-         * Calculate proper size of cursor
-         * by inserting a new inline-element with `I`
-         */
-        const calcDiv = document.createElement("div");
-        calcDiv.style.display = "inline-block";
-        calcDiv.innerHTML = "I";
-        defaults.targetElement.appendChild(calcDiv);
-        const cursorHeight = calcDiv.offsetHeight;
-        const cursorWidth = calcDiv.offsetWidth;
-        defaults.targetElement.removeChild(calcDiv);
-
-        /**
-         * cursor css style
-         */
-        const cssStyle = `@-webkit-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@-moz-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}.typingCursor::after{content:'';width:${cursorWidth}px;height:${cursorHeight}px;margin-left:5px;display:inline-block;vertical-align:bottom;background-color:${defaults.cursorColor};-webkit-animation:blink ${defaults.blinkInterval} infinite;-moz-animation:blink ${defaults.blinkInterval} infinite;animation:blink ${defaults.blinkInterval} infinite}`;
-
-        /**
-         * add CSS style in HEAD
-         */
-        const styleNode = document.createElement("style");
-        styleNode.type = "text/css";
-        if (styleNode.styleSheet) {
-          styleNode.styleSheet.cssText = cssStyle;
-        } else {
-          styleNode.appendChild(document.createTextNode(cssStyle));
-        }
-        document.head.appendChild(styleNode);
-
-        defaults.targetElement.className += " typingCursor";
-        defaults.task = _taskStatus.TYPING;
-        _typingGo();
-      }
-
-      /**
-       * change the text on the same target
-       */
-      rewrite(inputString, callbackFunction) {
-        if (defaults.task === _taskStatus.TYPING) {
-          console.warn("Last task is not finished yet");
-          setTimeout(() => {
-            this.rewrite(inputString, callbackFunction);
-          }, defaults.typingInterval);
-          return;
-        }
-
-        /**
-         * check value
-         * the string will be put in target later
-         */
-        if (!inputString) {
-          throw new Error("Missing argument: inputString");
-        }
-        if (typeof inputString !== "string") {
-          throw new Error("`inputString` is not a string");
-        }
-
-        defaults.inputString = inputString;
-
-        /**
-         * callback function
-         */
-        if (callbackFunction) {
-          if (typeof callbackFunction === "function") {
-            defaults.pluginCallback = callbackFunction;
-          } else {
-            console.error(`${callbackFunction} is not a function`);
-            _cleanCallback();
-          }
-        } else {
-          _cleanCallback();
-        }
-
-        defaults.task = _taskStatus.TYPING;
-        _typingGo();
-      }
-    }
-
-    return TypeWriting;
-  });
   var $question = html.get("#questionField");
-  var questionText = formatCSSProperty($question.innerHTML);
-
-  new TypeWriting({
-    targetElement: $question,
-    inputString: questionText,
-    typingInterval: 30,
-    blinkInterval: "0.7s",
-    cursorColor: "#00fd55",
-  });
+  $question.innerHTML = formatPipe(formatCSSProperty($question.innerHTML));
 
   function formatCSSProperty(textValue) {
     return textValue.replace(
@@ -380,4 +160,125 @@
       `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
     );
   }
+
+  function formatPipe(textValue) {
+    return textValue.replace(
+      /(@)([A-Z]\w+)/g,
+      `<span class="symbols-color">$1</span><span class="class-color">$2</span>`
+    );
+  }
+
+  function processarTexto(element) {
+    const texto = element.innerHTML;
+    const split = texto.split("");
+    const wrapChar = (char) => `<span class="hide char">${char}</span>`;
+    let index = 0;
+
+    const pularTag = () => {
+      if (split[index] != "<") return;
+
+      while (index < split.length) {
+        if (split[index] == ">") break;
+        index++;
+      }
+      index++;
+    };
+
+    const processarArray = () => {
+      const texto = [];
+      while (index < split.length) {
+        if (split[index] == "<") break;
+        split[index] = wrapChar(split[index]);
+        index++;
+      }
+      return texto.join("");
+    };
+
+    while (index < split.length) {
+      pularTag();
+      processarArray();
+    }
+
+    const caracteresTransformados = split.join("");
+    element.innerHTML = caracteresTransformados;
+  }
+
+  function processarHiddenElements(cursorElement) {
+    const hiddenElements = [...document.querySelectorAll(".hide")].filter((c) => c.innerText.length);
+    let index = 0;
+
+    const currentHiddenElement = () => hiddenElements[index];
+
+    const calcStop = () => {
+      const result = [
+        {
+          keyFn: () => currentHiddenElement().innerText.trim().length == 0,
+          value: 0,
+        },
+        {
+          keyFn: () => currentHiddenElement().classList.contains("stop"),
+          value: 500,
+        },
+        { keyFn: () => true, value: 500 },
+      ].find((truthy) => truthy.keyFn());
+      return result.value;
+    };
+
+    const setCursorLastCharElement = () => {
+      hiddenElements
+        .filter((c) => c.classList.contains("char"))
+        .slice(-1)[0]
+        .append(cursorElement);
+
+      cursorElement.setAttribute("style", `top:auto;left:auto;`);
+    };
+
+    (function removeClass() {
+      if (index == hiddenElements.length) {
+        setCursorLastCharElement();
+        return;
+      }
+      let time = calcStop();
+
+      currentHiddenElement().classList.add("show");
+      setCursorPosition(currentHiddenElement(), cursorElement);
+      setTimeout(() => {
+        index++;
+        removeClass();
+      }, time);
+    })();
+  }
+
+  function setCursorPosition(element, cursorElement) {
+    const offsetY = 2,
+      offsetX = 8;
+    if (!element.classList.contains("char")) return;
+    const bound = element.getBoundingClientRect();
+    console.log(bound);
+    const { x = Math.ceil(x), y = Math.ceil(y) } = element.getBoundingClientRect();
+    debugger;
+    cursorElement.setAttribute("style", `top:${y + offsetY - window.scrollY}px;left:${x + offsetX - window.scrollX}px`);
+  }
+
+  function setClassDeepElements(element, tagNames) {
+    for (let child of element.children || []) {
+      setClassDeepElements(child, tagNames);
+    }
+    element.classList.add("hide");
+
+    if (tagNames.includes(element.tagName)) {
+      element.classList.add("char");
+    }
+  }
+
+  (function () {
+    const tagNames = ["LI"];
+    const cursor = document.querySelector(".cursor-typing");
+
+    setClassDeepElements($question, tagNames);
+    processarTexto($question);
+    setTimeout(() => {
+      processarHiddenElements(cursor);
+    }, 500);
+  })();
 </script>

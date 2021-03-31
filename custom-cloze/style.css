@@ -1,3 +1,5 @@
+@import url("_editor_button_styles.css");
+
 :root {
   --class-color: #4cc5a1;
   --string-color: #d69d85;
@@ -65,12 +67,16 @@ article {
   background-color: var(--bg-vs-code-color);
 }
 
+.card,
 .card.nightMode {
   font-size: 20px;
   font-family: consolas;
   text-align: center;
   color: var(--default-gray);
   background-color: var(--bg-vs-code-color);
+
+  margin: 25px auto;
+  max-width: 950px;
 }
 
 .deck-tree {
@@ -116,7 +122,7 @@ article {
 }
 
 .question-content {
-  font-family: consolas;
+  font-family: courier;
   font-size: 20px;
   padding: 0px 0px 20px 0px;
 }
@@ -132,6 +138,7 @@ article {
   color: var(--class-color);
   margin: 2px 20px 2px 20px;
   text-align: center;
+  font-family: courier;
 }
 
 .answer-content b {
@@ -214,8 +221,49 @@ audio {
   animation: fadeIn ease 1.5s;
 }
 
+.mobile .hide-mobile {
+  display: none;
+}
+
 @keyframes fadeIn {
   0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.hide {
+  opacity: 0;
+  font-size: 20px;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity 0.3s;
+  font-size: 20px;
+}
+
+.cursor-typing {
+  position: absolute;
+  color: transparent;
+}
+
+.cursor-typing:before {
+  content: ".";
+  width: 4px;
+  height: 10px;
+  background-color: green;
+  color: green;
+  animation: cursor 0.8s infinite;
+}
+
+@keyframes cursor {
+  0% {
+    opacity: 1;
+  }
+  50% {
     opacity: 0;
   }
   100% {

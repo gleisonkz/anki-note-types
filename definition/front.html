@@ -164,6 +164,8 @@ var questionText = question.innerHTML;
         const nextString = _sliceDisplayText(_currentNumber);
         _currentNumber += 1;
 
+        "<a>Teste</a>"
+
         if (nextString.slice(-1) === "<") {
           _inHTMLTag = true;
         } else if (nextString.slice(-1) === ">") {
@@ -330,7 +332,7 @@ var questionText = question.innerHTML;
     inputString: questionText,
     typingInterval: 30,
     blinkInterval: "0.7s",
-    cursorColor: "#00fd55",
+    cursorColor: "#00fd55",    
   });
 
   function formatCSSProperty(textValue) {

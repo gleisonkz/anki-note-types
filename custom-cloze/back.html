@@ -371,10 +371,10 @@
     return TypeWriting;
   });
   var $answer = html.get("#answerField");
-  var answerText = formatCSSProperty($answer.innerHTML);
+  var answerText = formatPipe(formatCSSProperty($answer.innerHTML));
 
   var $question = html.get("#questionField");
-  $question.innerHTML = formatCSSProperty($question.innerHTML);
+  $question.innerHTML = formatPipe(formatCSSProperty($question.innerHTML));
 
   new TypeWriting({
     targetElement: $answer,
@@ -385,9 +385,17 @@
   });
 
   function formatCSSProperty(textValue) {
-    return textValue.replace(
-      /([\w-]+)(: )([\w]+)/g,
-      `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
-    );
+    return textValue
+      .replace(
+        /([\w-]+)(: )([\w]+)/g,
+        `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
+      )
+      .replace(/&nbsp;/g, " ");
+  }
+
+  function formatPipe(textValue) {
+    return textValue
+      .replace(/(@)([A-Z]\w+)/g, `<span class="symbols-color">$1</span><span class="class-color">$2</span>`)
+      .replace(/&nbsp;/g, " ");
   }
 </script>
