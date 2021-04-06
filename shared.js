@@ -89,3 +89,18 @@ function replaceStringAndAddClass(...elementsID) {
     element.innerHTML = textElement;
   });
 }
+
+var UI = {
+  renderHeader() {
+    const $container = html.get(selector);
+    $container.innerHTML = `
+    <div>
+        <p class="deck-tree">{{Deck}}</p>
+        <p class="sub-deck-name">{{Subdeck}}</p>
+        {{#Link}}
+        <p class="sub-deck-name">Links :{{Link}}</p>
+        {{/Link}}
+    </div>
+    `;
+  },
+};
