@@ -5,19 +5,26 @@ var html = {
 };
 
 Element.prototype.formatPipe = function () {
-  this.innerHTML = this.innerHTML
-    .replace(/(@)([A-Z]\w+)/g, `<span class="symbols-color">$1</span><span class="class-color">$2</span>`)
-    .replace(/&nbsp;/g, " ");
+  this.innerHTML = this.innerHTML.replace(
+    /(@)([A-Z]\w+)/g,
+    `<span class="symbols-color">$1</span><span class="class-color">$2</span>`
+  );
   return this;
 };
 
 Element.prototype.formatCSSProperty = function () {
-  this.innerHTML = this.innerHTML
-    .replace(
-      /([\w-]+)(: )([\w]+)/g,
-      `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
-    )
-    .replace(/&nbsp;/g, " ");
+  this.innerHTML = this.innerHTML.replace(
+    /([\w-]+)(: )([\w]+)/g,
+    `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
+  );
+  return this;
+};
+
+Element.prototype.formatPascalCase = function () {
+  this.innerHTML = this.innerHTML.replace(
+    /[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*/g,
+    `<span class="class-color">$1</span>`
+  );
   return this;
 };
 

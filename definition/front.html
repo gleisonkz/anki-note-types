@@ -14,9 +14,7 @@
   <article class="article-question">
     <div id="questionField" class="questionField">
       Qual a definição do termo abaixo ?<br /><br />
-      <span class="stringColor">&quot;</span>
-      {{Term}}
-      <span class="stringColor">&quot;</span>
+      <span class="stringColor">&quot;</span>{{Term}}<span class="stringColor">&quot;</span>
     </div>
   </article>
 
@@ -55,8 +53,6 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
-
-    UI.renderHeader();
     var $question = html.get(".questionField");
 
     typingJS({
