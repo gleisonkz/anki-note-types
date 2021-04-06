@@ -9,6 +9,8 @@
     </div>
   </header>
 
+  <div id="header"></div>
+
   <article class="article-question">
     <div id="questionField" class="questionField">
       Qual a definição do termo abaixo ?<br /><br />
@@ -51,6 +53,9 @@
     if (typeof typingJS === "undefined") {
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+      await injectScript("https://unpkg.com/react@17/umd/react.development.js");
+      await injectScript("https://unpkg.com/react-dom@17/umd/react-dom.development.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/header.jsx");
     }
 
     var $question = html.get(".questionField");
@@ -61,8 +66,7 @@
       timeSlow: 500,
       callback: () => {
         $audio = html.get("audio");
-        if (!audio) return;
-        pycmd("play:q:0");
+        $audio.hasChildNodes() && pycmd("play:q:0");
       },
     }).execute();
   })();
