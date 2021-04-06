@@ -23,7 +23,7 @@ Element.prototype.formatCSSProperty = function () {
 Element.prototype.formatPascalCase = function () {
   this.innerHTML = this.innerHTML.replace(
     /[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*/g,
-    `<span class="class-color">$1</span>`
+    `<span class="class-color">$&</span>`
   );
   return this;
 };
