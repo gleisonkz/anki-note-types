@@ -41,6 +41,21 @@ Element.prototype.formatParameters = function () {
   return this;
 };
 
+Element.prototype.formatKeyValueProperty = function () {
+  const regex = /(?<key>[\w-]+): (?<value>[\w-]+);/g;
+
+  let elementHTML = this.innerHTML.replace(/&nbsp;/g, " ");
+  const result = [...elementHTML.matchAll(regex)].map((item) => ({
+    element: `<span><span class="attributeColorCSS">${item.groups.key}</span>: <span class="stringColor">${item.groups.value}</span>;</span>`,
+    fullMatch: item["0"],
+  }));
+  result.forEach((c) => {
+    elementHTML = elementHTML.replace(c.fullMatch, c.element);
+  });
+  this.innerHTML = elementHTML;
+  return this;
+};
+
 Element.prototype.formatPascalCase = function () {
   this.innerHTML = this.innerHTML.replace(
     /[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*/g,
