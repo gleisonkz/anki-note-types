@@ -7,31 +7,30 @@
   </header>
 
   <article>
-    <div class="questionField">
+    <div id="questionField" class="questionField">
       <div>
-        <span class="class-color cmd">Quais são os parâmetros</span>
-        <span class="cmd">da função </span>
-        <span id="questionField" class="functionColor">{{FunctionName}}()</span>?
+        <span class="tagGrayColor">Quantos parâmetros possui a função</span>
+        <span class="functionColor" id="replacement">{{FunctionName}}()</span>?
       </div>
     </div>
   </article>
 
   <article class="articleAnswer hidden auto-hidden">
     <div class="notes">
-      <div id="parameters" class="notesChild containerFlex" style="color: gray">{{Parameters}}</div>
+      <div class="parametersQtd notesChild containerFlex" style="color: #4cc5a1">{{ParametersQuantity}}</div>
+    </div>
+    <div id="parameters" class="notes parameters" style="margin-top: 15px">
+      <div class="notesChild containerFlex">{{Parameters}}</div>
     </div>
   </article>
 
-  <article class="extraContainer fade-in">
+  <article class="extraContainer image">
     {{#SampleImage}}
     <div class="extra" id="extraField">
       <div class="notesChild">{{SampleImage}}</div>
     </div>
     {{/SampleImage}}
   </article>
-  <footer>
-    <audio style="display: none">{{ParametersAudio}}</audio>
-  </footer>
 </section>
 <script>
   $("div:has(ul)", "div:has(ol)").addClass("notesChild");
@@ -56,282 +55,285 @@
   addClass(element);
 </script>
 <script>
-  var patterns = [
-    {
-      pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g,
-      groupName: "class",
-      className: "class-color",
-    },
-    {
-      pattern: /(?<fix>\w+)[.]\w+[(][)]/g,
-      groupName: "fix",
-      className: "const-color",
-    },
-    {
-      pattern: /(?<function>\w+)[(][)]/g,
-      groupName: "function",
-      className: "function-color",
-    },
-    {
-      pattern: /(?<symbol>\?)/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-    {
-      pattern: /(?<symbol>\!)/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-    {
-      pattern: /(?<symbol>\()/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-    {
-      pattern: /(?<symbol>\))/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-  ];
+  var replaceStringAndAddClass = (...elementsID) => {
+    console.log("Hi");
 
-  function replaceStringAndAddClass(...elementsID) {
+    function customReplace(textElement, matches) {
+      matches.forEach((c) => {
+        var matches = [...textElement.matchAll(c.pattern)];
+        matches.forEach((match) => {
+          var value = match.groups[c.groupName];
+          textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+        });
+      });
+      return textElement;
+    }
+
     elementsID.forEach((elementID) => {
+      var patterns = [
+        {
+          pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g,
+          groupName: "class",
+          className: "class-color",
+        },
+        {
+          pattern: /(?<fix>\w+)[.]\w+[(][)]/g,
+          groupName: "fix",
+          className: "const-color",
+        },
+        {
+          pattern: /(?<function>\w+)[(][)]/g,
+          groupName: "function",
+          className: "function-color",
+        },
+        {
+          pattern: /(?<symbol>\?)/g,
+          groupName: "symbol",
+          className: "symbols-color",
+        },
+        {
+          pattern: /(?<symbol>\!)/g,
+          groupName: "symbol",
+          className: "symbols-color",
+        },
+        {
+          pattern: /(?<symbol>\()/g,
+          groupName: "symbol",
+          className: "symbols-color",
+        },
+        {
+          pattern: /(?<symbol>\))/g,
+          groupName: "symbol",
+          className: "symbols-color",
+        },
+      ];
+
       var element = document.getElementById(elementID);
       var textElement = element.innerHTML.trim();
       textElement = customReplace(textElement, patterns);
+      console.log(textElement);
       element.innerHTML = textElement;
     });
-  }
+  };
+  replaceStringAndAddClass("replacement");
 
-  function customReplace(textElement, matches) {
-    matches.forEach((c) => {
-      var matches = [...textElement.matchAll(c.pattern)];
-      matches.forEach((match) => {
-        var value = match.groups[c.groupName];
-        textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
-      });
-    });
-    return textElement;
-  }
-
-  replaceStringAndAddClass("questionField");
-
-  var $question = document.querySelector("#parameters");
-  var innerHTML = $question.innerHTML.trim();
-  var targetText = customReplace(innerHTML, patterns);
-
-  (function (root, factory) {
-    if (typeof define === "function" && define.amd) {
-      define(factory);
-    } else if (typeof exports === "object") {
-      module.exports = factory(require, exports, module);
-    } else if (root) {
-      root.TypeWriting = factory();
-    } else {
-      window.TypeWriting = factory();
-    }
-  })(this, (require, exports, module) => {
-    "use strict";
-
-    /**
-     * the exported string position
-     */
-    let _currentNumber = 1;
-    /**
-     * whether is between a html tag
-     */
-    let _inHTMLTag = false;
-
-    /**
-     * plugin task status
-     */
-    const _taskStatus = {
-      UNREADY: "UNREADY",
-      READY: "READY",
-      TYPEING: "TYPEING",
+  function typingJS(options) {
+    const createStyle = () => {
+      if (document.querySelector("typingStyle")) return;
+      const css = `.hide-element-typing{opacity:0;font-size:20px}.show-element-typing{opacity:1;transition:opacity .3s;font-size:20px}.cursor-typing{position:absolute;color:transparent}.cursor-typing:before{content:".";width:4px;height:10px;background-color:green;color:green;animation:cursor .8s infinite}@keyframes cursor{0%{opacity:1}50%{opacity:0}100%{opacity:1}}`;
+      const $style = document.createElement("style");
+      $style.innerHTML = css;
+      $style.id = "typingStyle";
+      document.head.appendChild($style);
     };
 
-    /**
-     * the default config
-     */
-    let defaults = {
-      targetElement: null,
-      inputString: "",
-      typingInterval: 150,
-      blinkInterval: "0.7s",
-      cursorColor: "black",
-      pluginCallback: () => {},
-      task: _taskStatus.UNREADY,
-    };
+    const processText = (element) => {
+      let index = 0;
+      const wrapChar = (char) => `<span class="hide-element-typing char">${char}</span>`;
+      const replaceHtmlSymbols = (text) => text.replace(/&\w+;/g, (c) => wrapChar(c));
 
-    const _typingGo = () => {
-      if (_currentNumber <= defaults.inputString.length) {
-        const nextString = _sliceDisplayText(_currentNumber);
-        _currentNumber += 1;
+      const split = replaceHtmlSymbols(element.innerHTML).split("");
 
-        if (nextString.slice(-1) === "<") {
-          _inHTMLTag = true;
-        } else if (nextString.slice(-1) === ">") {
-          _inHTMLTag = false;
+      const hasSplitElements = () => index < split.length;
+
+      const skipTag = () => {
+        const isNotTagOpening = () => split[index] != "<";
+        const isTagClosing = () => split[index - 1] == ">";
+
+        if (isNotTagOpening()) return;
+
+        while (hasSplitElements()) {
+          index++;
+          if (isTagClosing()) break;
         }
+      };
 
-        defaults.targetElement.innerHTML = nextString;
+      const skipHtmlOpeningClosingSymbols = () => {
+        const isNotHtmlOpeningTagSymbol = () => split.slice(index - 1, index + 1).join("") != ">&";
 
-        if (_inHTMLTag) {
-          _typingGo();
-        } else {
-          setTimeout(() => {
-            _typingGo();
-          }, defaults.typingInterval);
+        const isNotHtmlClosingTagSymbol = () => split.slice(index - 1, index + 1).join("") != ";<";
+
+        if (isNotHtmlOpeningTagSymbol()) return;
+
+        while (hasSplitElements() && isNotHtmlClosingTagSymbol()) {
+          index++;
         }
-      } else {
-        defaults.task = _taskStatus.READY;
-        _currentNumber = 1;
-        defaults.pluginCallback.call();
-      }
-    };
+      };
 
-    const _sliceDisplayText = (to) => defaults.inputString.slice(0, to);
+      const processArray = () => {
+        const isOpeningTag = () => split[index] == "<";
 
-    const _cleanCallback = () => {
-      defaults.pluginCallback = () => {};
-    };
-
-    // Utility method to extend defaults with user options
-    const extendDefaults = (source, properties) => {
-      for (const property in properties) {
-        if (properties.hasOwnProperty(property)) {
-          source[property] = properties[property];
+        while (hasSplitElements() && !isOpeningTag()) {
+          split[index] = wrapChar(split[index]);
+          index++;
         }
-      }
-      return source;
-    };
+      };
 
-    /**
-     * TypeWriting constructor
-     */
-    class TypeWriting {
-      constructor(options, callbackFunction) {
-        if (!options || typeof options !== "object") {
-          throw new Error("`options` is invalid");
-        }
+      if (element.classList.contains("typing-ready")) return;
 
-        /**
-         * check value from user
-         * the string will be put in target later
-         */
-        if (!options.inputString) {
-          throw new Error("Missing argument: inputString");
-        }
-        if (typeof options.inputString !== "string") {
-          throw new Error("`inputString` is not a string");
-        }
+      element.classList.add("typing-ready");
 
-        /**
-         * set the custom config
-         */
-        defaults = extendDefaults(defaults, options);
+      const steps = [skipTag, skipHtmlOpeningClosingSymbols, processArray];
 
-        /**
-         * callback function
-         */
-        if (callbackFunction) {
-          if (typeof callbackFunction === "function") {
-            defaults.pluginCallback = callbackFunction;
-          } else {
-            console.error(`${callbackFunction} is not a function`);
-            _cleanCallback();
-          }
-        } else {
-          _cleanCallback();
-        }
-
-        /**
-         * Calculate proper size of cursor
-         * by inserting a new inline-element with `I`
-         */
-        const calcDiv = document.createElement("div");
-        calcDiv.style.display = "inline-block";
-        calcDiv.innerHTML = "I";
-        defaults.targetElement.appendChild(calcDiv);
-        const cursorHeight = calcDiv.offsetHeight;
-        const cursorWidth = calcDiv.offsetWidth;
-        defaults.targetElement.removeChild(calcDiv);
-
-        /**
-         * cursor css style
-         */
-        const cssStyle = `@-webkit-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@-moz-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}.typingCursor::after{content:'';width:${cursorWidth}px;height:${cursorHeight}px;margin-left:5px;display:inline-block;vertical-align:bottom;background-color:${defaults.cursorColor};-webkit-animation:blink ${defaults.blinkInterval} infinite;-moz-animation:blink ${defaults.blinkInterval} infinite;animation:blink ${defaults.blinkInterval} infinite}`;
-
-        /**
-         * add CSS style in HEAD
-         */
-        const styleNode = document.createElement("style");
-        styleNode.type = "text/css";
-        if (styleNode.styleSheet) {
-          styleNode.styleSheet.cssText = cssStyle;
-        } else {
-          styleNode.appendChild(document.createTextNode(cssStyle));
-        }
-        document.head.appendChild(styleNode);
-
-        defaults.targetElement.className += " typingCursor";
-        defaults.task = _taskStatus.TYPING;
-        _typingGo();
+      while (hasSplitElements()) {
+        steps.forEach((stepFn) => stepFn());
       }
 
-      /**
-       * change the text on the same target
-       */
-      rewrite(inputString, callbackFunction) {
-        if (defaults.task === _taskStatus.TYPING) {
-          console.warn("Last task is not finished yet");
-          setTimeout(() => {
-            this.rewrite(inputString, callbackFunction);
-          }, defaults.typingInterval);
+      element.innerHTML = split.join("");
+    };
+
+    function processHiddenElements(cursorElement, { timeSlow, timeTypingMs }) {
+      let index = 0;
+      const hiddenElements = [...document.querySelectorAll(".hide-element-typing")].filter((c) => c.innerText.length);
+
+      const currentHiddenElement = () => hiddenElements[index];
+
+      const calculateDelayTime = () => {
+        const result = [
+          {
+            keyFn: () => index == 0,
+            value: 400,
+          },
+          {
+            keyFn: () => currentHiddenElement().innerText.trim().length == 0,
+            value: 0,
+          },
+          {
+            keyFn: () => currentHiddenElement().classList.contains(options.timeSlowClass),
+            value: timeSlow,
+          },
+          { keyFn: () => true, value: timeTypingMs },
+        ].find((truthy) => truthy.keyFn());
+
+        return result.value;
+      };
+
+      const setCursorOnLastElementCharacter = () => {
+        const lastElement = hiddenElements.filter((c) => c.classList.contains("char")).slice(-1)[0];
+
+        lastElement.append(cursorElement);
+
+        cursorElement.setAttribute("style", `top:auto;left:auto;position:relative;opacity:1`);
+      };
+
+      (function removeClass() {
+        if (index == hiddenElements.length) {
+          setCursorOnLastElementCharacter();
+          options.callback();
           return;
         }
 
-        /**
-         * check value
-         * the string will be put in target later
-         */
-        if (!inputString) {
-          throw new Error("Missing argument: inputString");
-        }
-        if (typeof inputString !== "string") {
-          throw new Error("`inputString` is not a string");
-        }
+        let time = calculateDelayTime();
 
-        defaults.inputString = inputString;
+        setCursorPosition(currentHiddenElement(), cursorElement);
+        currentHiddenElement().classList.add("show-element-typing");
 
-        /**
-         * callback function
-         */
-        if (callbackFunction) {
-          if (typeof callbackFunction === "function") {
-            defaults.pluginCallback = callbackFunction;
-          } else {
-            console.error(`${callbackFunction} is not a function`);
-            _cleanCallback();
-          }
-        } else {
-          _cleanCallback();
-        }
-
-        defaults.task = _taskStatus.TYPING;
-        _typingGo();
-      }
+        setTimeout(() => {
+          index++;
+          removeClass();
+        }, time);
+      })();
     }
 
-    return TypeWriting;
-  });
+    const setCursorPosition = (element, cursorElement) => {
+      const offsetY = 2 + window.scrollY,
+        offsetX = 8 + window.scrollX;
 
-  new TypeWriting({
-    targetElement: $question,
-    inputString: targetText,
-    typingInterval: 20,
-    blinkInterval: "0.7s",
-    cursorColor: "#00fd55",
-  });
+      if (!element.classList.contains("char")) return;
+
+      const { x, y } = element.getBoundingClientRect();
+
+      cursorElement.setAttribute("style", `top:${y + offsetY}px;left:${x + offsetX}px;opacity:1`);
+    };
+
+    const setClassDeepElements = (element, tagNames) => {
+      for (let child of element.children || []) {
+        setClassDeepElements(child, tagNames);
+      }
+
+      element.classList.contains("hide-element-typing") === false && element.classList.add("hide-element-typing");
+      element.classList.contains("show-element-typing") && element.classList.remove("show-element-typing");
+
+      tagNames.includes(element.tagName) && element.classList.add("char");
+    };
+
+    createCursor = () => {
+      const cursor = document.createElement("span");
+      cursor.classList.add("cursor-typing", "hide-element-typing");
+      cursor.innerText = ".";
+      document.body.append(cursor);
+      return cursor;
+    };
+
+    getCursor = () => {
+      const cursor = document.querySelector(".cursor-typing");
+      cursor && cursor.parentNode.removeChild(cursor);
+      return createCursor();
+    };
+
+    options = options || {};
+    const defaultOptions = {
+      timeSlowClass: "stop",
+      containerSelector: ".container-typing",
+      timeTypingMs: 55,
+      timeSlow: 500,
+      tagNamesToHide: ["LI"],
+      callback: () => {},
+    };
+
+    options = { ...defaultOptions, ...options };
+
+    const container = document.querySelector(options.containerSelector);
+
+    if (!container) throw new Error("Property 'containerSelector' doesn't contains a valid element selector");
+
+    if (typeof typingJS.executing == "undefined") typingJS.executing = false;
+
+    const proxy = options.callback;
+
+    options.callback = () => {
+      typingJS.executing = false;
+      proxy();
+    };
+
+    const cursorElement = getCursor();
+
+    createStyle();
+
+    const step1 = () => setClassDeepElements(container, options.tagNamesToHide);
+    const step2 = () => processText(container);
+    const step3 = () => processHiddenElements(cursorElement, options);
+
+    const steps = [step1, step2, step3];
+
+    const executeFn = () => {
+      if (typingJS.executing) {
+        console.warn("Already executing");
+        return;
+      }
+
+      typingJS.executing = true;
+
+      steps.forEach((stepFn) => stepFn());
+    };
+    return { execute: executeFn };
+  }
+
+  $parametersQtd = document.querySelector(".parametersQtd");
+  $parameters = document.querySelector(".parameters");
+  $image = document.querySelector(".image");
+
+  $parametersQtd.classList.add("fade-in");
+  typingJS({
+    containerSelector: ".parametersQtd",
+    callback: () => {
+      $parameters.classList.add("fade-in");
+      typingJS({
+        containerSelector: ".parameters",
+        callback: () => {
+          $image.classList.add("fade-in");
+        },
+      }).execute();
+    },
+  }).execute();
 </script>

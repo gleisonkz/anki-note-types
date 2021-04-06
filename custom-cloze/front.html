@@ -12,8 +12,8 @@
   </header>
 
   <article class="question-container">
-    <span class="cursor-typing hide">.</span>
     <div id="questionField" class="question-content">{{Question}}</div>
+    <span class="cursor-typing hide">.</span>
   </article>
 
   {{#QuestionImage}}
@@ -33,252 +33,24 @@
   <article class="answer-container">
     <div class="answer-content">[...]</div>
   </article>
+  {{#QuestionAudio}}
   <footer>
     <audio>{{QuestionAudio}}</audio>
   </footer>
+  {{/QuestionAudio}}
 </section>
 <script>
-  var html = {
-    get: (elementSelector) => {
-      return document.querySelector(elementSelector);
-    },
-  };
-
-  var toggleButton = html.get("#tipButton");
-  var extraField = html.get("#tipField");
-
-  var patterns = [
-    {
-      pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g,
-      groupName: "class",
-      className: "class-color",
-    },
-    {
-      pattern: /(?<fix>\w+)[.]\w+[(][)]/g,
-      groupName: "fix",
-      className: "const-color",
-    },
-    {
-      pattern: /(?<function>\w+)[(][)]/g,
-      groupName: "function",
-      className: "function-color",
-    },
-    {
-      pattern: /(?<symbol>\?)/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-    {
-      pattern: /(?<symbol>\!)/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-    {
-      pattern: /(?<symbol>\()/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-    {
-      pattern: /(?<symbol>\))/g,
-      groupName: "symbol",
-      className: "symbols-color",
-    },
-    {
-      pattern: /(?<css>\))/g,
-      groupName: "css",
-      className: "symbols-color",
-    },
-  ];
-
-  function toggle(string) {
-    var visibility = {
-      true: {
-        state: "visible",
-        text: "Hide Tip",
-      },
-      false: {
-        state: "hidden",
-        text: "Show Tip",
-      },
-      isHidden: function (element) {
-        return element.classList.contains("hidden");
-      },
-      apply: function (toggleButton, elementToToggle) {
-        var hidden = this.isHidden(elementToToggle);
-        var stateHandler = this[hidden];
-        toggleButton.innerText = stateHandler.text;
-        elementToToggle.classList.toggle("hidden");
-      },
-    };
-    visibility.apply(toggleButton, extraField);
-  }
-
-  function replaceStringAndAddClass(...elementsID) {
-    elementsID.forEach((elementID) => {
-      var element = document.getElementById(elementID);
-      var textElement = element.innerHTML.trim();
-      textElement = customReplace(textElement, patterns);
-      element.innerHTML = textElement;
-    });
-  }
-
-  function customReplace(textElement, matches) {
-    matches.forEach((c) => {
-      var matches = [...textElement.matchAll(c.pattern)];
-      matches.forEach((match) => {
-        var value = match.groups[c.groupName];
-        textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
-      });
-    });
-    return textElement;
-  }
-
-  replaceStringAndAddClass("questionField");
-
-  (function showDescriptionCardType() {
-    const cardTypeID = `{{info-Queue:}}`;
-    const infoQueueElement = html.get("#infoQueue");
-    const cardTypeById = {};
-    const cardTypeByText = {
-      new: 0,
-      learning: 1,
-      review: 2,
-      reLearning: 3,
-    };
-    for (let prop in cardTypeByText) {
-      cardTypeById[cardTypeByText[prop]] = prop;
-    }
-    infoQueueElement.innerText = cardTypeById[cardTypeID];
-  })();
-
   var $question = html.get("#questionField");
-  $question.innerHTML = formatPipe(formatCSSProperty($question.innerHTML));
+  $question.formatPipe().formatCSSProperty();
 
-  function formatCSSProperty(textValue) {
-    return textValue.replace(
-      /([\w-]+)(: )([\w]+)/g,
-      `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
-    );
-  }
-
-  function formatPipe(textValue) {
-    return textValue.replace(
-      /(@)([A-Z]\w+)/g,
-      `<span class="symbols-color">$1</span><span class="class-color">$2</span>`
-    );
-  }
-
-  function processarTexto(element) {
-    const texto = element.innerHTML;
-    const split = texto.split("");
-    const wrapChar = (char) => `<span class="hide char">${char}</span>`;
-    let index = 0;
-
-    const pularTag = () => {
-      if (split[index] != "<") return;
-
-      while (index < split.length) {
-        if (split[index] == ">") break;
-        index++;
-      }
-      index++;
-    };
-
-    const processarArray = () => {
-      const texto = [];
-      while (index < split.length) {
-        if (split[index] == "<") break;
-        split[index] = wrapChar(split[index]);
-        index++;
-      }
-      return texto.join("");
-    };
-
-    while (index < split.length) {
-      pularTag();
-      processarArray();
-    }
-
-    const caracteresTransformados = split.join("");
-    element.innerHTML = caracteresTransformados;
-  }
-
-  function processarHiddenElements(cursorElement) {
-    const hiddenElements = [...document.querySelectorAll(".hide")].filter((c) => c.innerText.length);
-    let index = 0;
-
-    const currentHiddenElement = () => hiddenElements[index];
-
-    const calcStop = () => {
-      const result = [
-        {
-          keyFn: () => currentHiddenElement().innerText.trim().length == 0,
-          value: 0,
-        },
-        {
-          keyFn: () => currentHiddenElement().classList.contains("stop"),
-          value: 500,
-        },
-        { keyFn: () => true, value: 500 },
-      ].find((truthy) => truthy.keyFn());
-      return result.value;
-    };
-
-    const setCursorLastCharElement = () => {
-      hiddenElements
-        .filter((c) => c.classList.contains("char"))
-        .slice(-1)[0]
-        .append(cursorElement);
-
-      cursorElement.setAttribute("style", `top:auto;left:auto;`);
-    };
-
-    (function removeClass() {
-      if (index == hiddenElements.length) {
-        setCursorLastCharElement();
-        return;
-      }
-      let time = calcStop();
-
-      currentHiddenElement().classList.add("show");
-      setCursorPosition(currentHiddenElement(), cursorElement);
-      setTimeout(() => {
-        index++;
-        removeClass();
-      }, time);
-    })();
-  }
-
-  function setCursorPosition(element, cursorElement) {
-    const offsetY = 2,
-      offsetX = 8;
-    if (!element.classList.contains("char")) return;
-    const bound = element.getBoundingClientRect();
-    console.log(bound);
-    const { x = Math.ceil(x), y = Math.ceil(y) } = element.getBoundingClientRect();
-    debugger;
-    cursorElement.setAttribute("style", `top:${y + offsetY - window.scrollY}px;left:${x + offsetX - window.scrollX}px`);
-  }
-
-  function setClassDeepElements(element, tagNames) {
-    for (let child of element.children || []) {
-      setClassDeepElements(child, tagNames);
-    }
-    element.classList.add("hide");
-
-    if (tagNames.includes(element.tagName)) {
-      element.classList.add("char");
-    }
-  }
-
-  (function () {
-    const tagNames = ["LI"];
-    const cursor = document.querySelector(".cursor-typing");
-
-    setClassDeepElements($question, tagNames);
-    processarTexto($question);
-    setTimeout(() => {
-      processarHiddenElements(cursor);
-    }, 500);
-  })();
+  typingJS({
+    containerSelector: ".question-content",
+    timeTypingMs: 55,
+    timeSlow: 500,
+    callback: () => {
+      $audio = html.get("audio");
+      if (!audio) return;
+      pycmd("play:q:0");
+    },
+  }).execute();
 </script>

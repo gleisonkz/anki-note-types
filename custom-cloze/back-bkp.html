@@ -1,34 +1,190 @@
-<div class="card-container">
-  <header class="header">
-    <p class="header__deck-tree">{{Deck}}</p>
-    <p class="header__subdeck-name">{{Subdeck}}</p>
+<section>
+  <header>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
+    </div>
   </header>
 
   <article class="question-container">
-    <p>Para que serve o <span class="string-color">elemento</span> mostrado abaixo?</p>
+    <div id="questionField" class="question-content">{{Question}}</div>
   </article>
 
-  <div class="element-container">
-    <p>
-      <span>&lt;</span
-      ><span class="element-selector-color">{{ElementSelector}}</span
-      >{{^HasClosingTag}}/{{/HasClosingTag}}<span>&gt;</span>{{#HasClosingTag}}<span>&lt;</span><span>/</span
-      ><span class="element-selector-color">{{ElementSelector}}</span><span>&gt;</span>
-      {{/HasClosingTag}}
-    </p>
-  </div>
+  {{#QuestionImage}}
+  <article class="image-container">
+    <picture class="image-content">{{QuestionImage}}</picture>
+  </article>
+  {{/QuestionImage}}
 
   <article class="answer-container fade-in">
-    <div class="answer-content" id="answerField">{{ElementDescription}}</div>
+    <div class="answer-content" id="answerField">{{Answer}}</div>
   </article>
 
-  {{#Image}}
-  <article class="image-container" style="padding-top: 20px; opacity: 0">
-    <picture class="image-content">{{Image}}</picture>
+  {{#AnswerImage}}
+  <article class="image-container fade-in" style="padding-top: 20px">
+    <picture class="image-content">{{AnswerImage}}</picture>
   </article>
-  {{/Image}}
-</div>
+  {{/AnswerImage}} {{#Extra}}
+  <article class="extra-container no-select fade-in">
+    <div class="custom-button no-select" id="toggleButton" onclick="toggle()">Show Extra</div>
+
+    <div class="extra-content-container hidden" id="extraField">
+      <div class="extra-content">{{Extra}}</div>
+    </div>
+  </article>
+  {{/Extra}}
+
+  <footer>
+    <audio style="display: none">{{AnswerAudio}}</audio>
+  </footer>
+</section>
 <script>
+  Element.prototype.formatPipe = function () {
+    this.innerHTML = this.innerHTML
+      .replace(/(@)([A-Z]\w+)/g, `<span class="symbols-color">$1</span><span class="class-color">$2</span>`)
+      .replace(/&nbsp;/g, " ");
+    return this;
+  };
+
+  Element.prototype.formatCSSProperty = function () {
+    this.innerHTML = this.innerHTML
+      .replace(
+        /([\w-]+)(: )([\w]+)/g,
+        `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
+      )
+      .replace(/&nbsp;/g, " ");
+    return this;
+  };
+
+  $("div:has(ul)", "div:has(ol)").addClass("notesChild");
+
+  var html = {
+    get: (elementSelector) => {
+      return document.querySelector(elementSelector);
+    },
+  };
+
+  var toggleButton = html.get("#toggleButton");
+  var extraField = html.get("#extraField");
+
+  var patterns = [
+    {
+      pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g,
+      groupName: "class",
+      className: "class-color",
+    },
+    {
+      pattern: /(?<fix>\w+)[.]\w+[(][)]/g,
+      groupName: "fix",
+      className: "const-color",
+    },
+    {
+      pattern: /(?<function>\w+)[(][)]/g,
+      groupName: "function",
+      className: "function-color",
+    },
+    {
+      pattern: /(?<symbol>\?)/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+    {
+      pattern: /(?<symbol>\!)/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+    {
+      pattern: /(?<symbol>\()/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+    {
+      pattern: /(?<symbol>\))/g,
+      groupName: "symbol",
+      className: "symbols-color",
+    },
+  ];
+
+  function toggle(string) {
+    var visibility = {
+      true: {
+        state: "visible",
+        text: "Hide Extra",
+      },
+      false: {
+        state: "hidden",
+        text: "Show Extra",
+      },
+      isHidden: function (element) {
+        return element.classList.contains("hidden");
+      },
+      apply: function (toggleButton, elementToToggle) {
+        var hidden = this.isHidden(elementToToggle);
+        var stateHandler = this[hidden];
+        toggleButton.innerText = stateHandler.text;
+        elementToToggle.classList.toggle("hidden");
+      },
+    };
+    visibility.apply(toggleButton, extraField);
+  }
+
+  function replaceStringAndAddClass(...elementsID) {
+    elementsID.forEach((elementID) => {
+      var element = document.getElementById(elementID);
+      var textElement = element.innerHTML.trim();
+      textElement = customReplace(textElement, patterns);
+      element.innerHTML = textElement;
+    });
+  }
+
+  function customReplace(textElement, matches) {
+    matches.forEach((c) => {
+      var matches = [...textElement.matchAll(c.pattern)];
+      matches.forEach((match) => {
+        var value = match.groups[c.groupName];
+        textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+      });
+    });
+    return textElement;
+  }
+  replaceStringAndAddClass("questionField");
+
+  (function showDescriptionCardType() {
+    const cardTypeID = `{{info-Queue:}}`;
+    const infoQueueElement = html.get("#infoQueue");
+    const cardTypeById = {};
+    const cardTypeByText = {
+      new: 0,
+      learning: 1,
+      review: 2,
+      reLearning: 3,
+    };
+    for (let prop in cardTypeByText) {
+      cardTypeById[cardTypeByText[prop]] = prop;
+    }
+    infoQueueElement.innerText = cardTypeById[cardTypeID];
+  })();
+
+  (function applyDecoratorSyntaxHighlight(...elementsToFormat) {
+    elementsToFormat.forEach((selector) => {
+      const element = document.querySelector(selector);
+      const elementText = element.innerHTML;
+      element.innerHTML = elementText.replace(
+        /(@)([A-Z]\w+)/g,
+        `<span class="symbols-color">$1</span><span class="class-color">$2</span>`
+      );
+    });
+  })("#questionField", "#answerField");
+
+  var $answer = html.get("#answerField");
+  var $question = html.get("#questionField");
+  [$answer, $question].forEach((c) => c.formatPipe().formatCSSProperty());
+
   function typingJS(options) {
     const createStyle = () => {
       if (document.querySelector("typingStyle")) return;
@@ -104,7 +260,7 @@
         const result = [
           {
             keyFn: () => index == 0,
-            value: 1000,
+            value: 400,
           },
           {
             keyFn: () => currentHiddenElement().innerText.trim().length == 0,
@@ -236,8 +392,9 @@
     timeTypingMs: 55,
     timeSlow: 500,
     callback: () => {
-      const $img = document.querySelector(".image-container");
-      $img.classList.add("fade-in");
+      $audio = html.get("audio");
+      if (!audio) return;
+      pycmd("play:q:0");
     },
   }).execute();
 </script>

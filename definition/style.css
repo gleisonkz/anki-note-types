@@ -139,7 +139,6 @@ article {
 .answerField {
   border: 2px dashed rgba(85, 85, 85, 0.75);
   padding: 10px;
-  color: var(--class-color);
   margin: 2px 20px 2px 20px;
   text-align: center;
   max-width: 850px;
@@ -192,19 +191,7 @@ article {
   text-align: center;
 }
 
-.visible {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.5s linear;
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 1s, opacity 0.5s linear;
-}
-
-.customButton {
+.custom-button {
   display: block;
   font-family: Menlo;
   font-size: 16px;
@@ -218,23 +205,19 @@ article {
   margin: 20px;
   transition: background-color 0.15s ease-out;
   cursor: pointer;
+  user-select: none;
 }
 
 .no-select {
   user-select: none;
 }
 
-.customButton:hover {
+.custom-button:hover {
   background-color: rgba(85, 85, 85, 0.35);
 }
 
 audio {
   display: none;
-}
-
-.containerFlex {
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .flex-center {

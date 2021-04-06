@@ -1,3 +1,5 @@
+@import url("_editor_button_styles.css");
+
 :root {
   --class-color: #4cc5a1;
   --string-color: #d69d85;
@@ -50,11 +52,10 @@
 
 .question-container {
   display: flex;
-
+  font-family: courier;
   flex-direction: column;
   text-align: center;
   justify-content: center;
-
   margin: 20px 0;
 }
 
@@ -125,6 +126,10 @@
   transform: scale(0.9);
 }
 
+.element {
+  font-family: consolas;
+}
+
 .class-color {
   color: var(--class-color);
 }
@@ -142,6 +147,19 @@
   color: var(--elementSelectorColor);
 }
 
+.atribute-css-color {
+  color: var(--attributeColorCSS);
+}
+
+.hidden-back-cursor:before {
+  content: ".";
+  width: 4px;
+  height: 10px;
+  background-color: green;
+  color: green;
+  animation: cursor 0.8s infinite;
+}
+
 .tag-gray-color {
   color: #aeafad;
 }
@@ -151,7 +169,7 @@ audio {
 }
 
 .fade-in {
-  animation: fadeIn ease 1.5s;
+  animation: fadeIn ease 1.5s forwards;
 }
 
 @keyframes fadeIn {
