@@ -38,10 +38,11 @@
   </footer>
 </section>
 <script>
-  function injectScript(src) {
+  function injectScript(src, type) {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = src;
+      script.type = type || "";
       script.async = true;
       script.onload = resolve;
       script.onerror = reject;
@@ -54,8 +55,9 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
       await injectScript("https://unpkg.com/react@17/umd/react.development.js");
+      await injectScript("https://unpkg.com/babel-standalone@6/babel.min.js", "text/babel");
       await injectScript("https://unpkg.com/react-dom@17/umd/react-dom.development.js");
-      await injectScript("https://gleisonkz.github.io/anki-note-types/header.jsx");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/header.js");
     }
 
     var $question = html.get(".questionField");
