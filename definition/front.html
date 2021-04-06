@@ -56,84 +56,20 @@
   }
 
   (async () => {
-    if (typeof typingJS === "undefined") {
-      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
-    }
-    keyman.init({ attachType: "auto" });
-    keyman.addKeyboards("@en"); // Loads default English keyboard from Keyman Cloud (CDN)
-    keyman.addKeyboards("@th"); // Loads default Thai keyboard from Keyman Cloud (CDN)
+    !typeof typingJS && (await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js"));
+    !typeof HTML && (await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js"));
 
-    var $question = html.get(".questionField");
+    var $question = HTML.get(".questionField");
+
     typingJS({
       containerSelector: ".questionField",
       timeTypingMs: 55,
       timeSlow: 500,
       callback: () => {
-        $audio = html.get("audio");
+        $audio = HTML.get("audio");
         if (!audio) return;
         pycmd("play:q:0");
       },
     }).execute();
   })();
-</script>
-<script>
-  var html = {
-    get: (elementSelector) => {
-      return document.querySelector(elementSelector);
-    },
-  };
-
-  function replaceStringAndAddClass(...elementsID) {
-    const replaceStringAndAddClass = [
-      { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: "class", className: "class-color" },
-      { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: "fix", className: "const-color" },
-      { pattern: /(?<function>\w+)[(][)]/g, groupName: "function", className: "function-color" },
-      { pattern: /(?<symbol>\?)/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\!)/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\()/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\))/g, groupName: "symbol", className: "symbols-color" },
-    ];
-
-    function replace(textElement, matches) {
-      matches.forEach((c) => {
-        var matches = [...textElement.matchAll(c.pattern)];
-        matches.forEach((match) => {
-          var value = match.groups[c.groupName];
-          textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
-        });
-      });
-      return textElement;
-    }
-
-    elementsID.forEach((elementID) => {
-      var element = document.getElementById(elementID);
-      var textElement = element.innerHTML.trim();
-      textElement = replace(textElement, replaceStringAndAddClass);
-      element.innerHTML = textElement;
-    });
-  }
-  replaceStringAndAddClass("questionField");
-
-  function toggle(string) {
-    var visibility = {
-      true: {
-        state: "visible",
-        text: "Hide Extra",
-      },
-      false: {
-        state: "hidden",
-        text: "Show Extra",
-      },
-      isHidden: function (element) {
-        return element.className === "hidden" ? true : false;
-      },
-      apply: function (toggleButton, elementToToggle) {
-        var hidden = this.isHidden(elementToToggle);
-        var stateHandler = this[hidden];
-        toggleButton.innerText = stateHandler.text;
-        elementToToggle.className = stateHandler.state;
-      },
-    };
-    visibility.apply(tipButton, tipField);
-  }
 </script>
