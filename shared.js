@@ -91,7 +91,7 @@ function replaceStringAndAddClass(...elementsID) {
 }
 
 var UI = {
-  renderHeader() {
+  renderHeader(selector = "header") {
     const $container = html.get(selector);
     $container.innerHTML = `
     <div>
