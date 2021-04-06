@@ -25,9 +25,9 @@ Element.prototype.formatParameters = function () {
   let elementHTML = this.innerHTML.replace(/&nbsp;/g, " ");
   const result = [...elementHTML.matchAll(regex)].map((item) => ({
     element: `<span>
-                <span class="attributeColorCSS">${item.groups.parameter}</span>: 
-                <span class="classColor">${item.groups.type}</span> - 
-                <span class="tagGrayColor">${item.groups.description}</span>
+                <span class="attributeColorCSS stop">${item.groups.parameter}</span>: 
+                <span class="classColor stop">${item.groups.type}</span> - 
+                <span class="tagGrayColor stop">${item.groups.description}</span>
                 </span>`,
 
     fullMatch: item["0"],
