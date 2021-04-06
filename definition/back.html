@@ -10,8 +10,8 @@
   </header>
 
   <article class="article-question">
-    <div>Qual a definição do termo abaixo?</div>
     <div id="questionField" class="questionField">
+      Qual a definição do termo abaixo ?<br /><br />
       <span class="stringColor">"</span>{{Term}}<span class="stringColor">"</span>
     </div>
   </article>
@@ -42,322 +42,36 @@
   </footer>
 </section>
 <script>
-  $("div:has(ul)", "div:has(ol)").addClass("notesChild");
-
-  var html = {
-    get: (elementSelector) => {
-      return document.querySelector(elementSelector);
-    },
-  };
-
-  var hiddenElements = [...document.getElementsByClassName("auto-hidden")];
-  setTimeout(() => {
-    hiddenElements.forEach((c) => {
-      c.classList.remove("hidden");
-      c.classList.add("visible");
+  function injectScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
     });
-  }, 100);
-
-  $("div:has(ul)", "div:has(ol)").addClass("notesChild");
-
-  var toggleButton = html.get("#toggleButton");
-  var extraField = html.get("#extraField");
-
-  function toggle(string) {
-    var visibility = {
-      true: {
-        state: "visible",
-        text: "Hide Extra",
-      },
-      false: {
-        state: "hidden",
-        text: "Show Extra",
-      },
-      isHidden: function (element) {
-        return element.className === "hidden";
-      },
-      apply: function (toggleButton, elementToToggle) {
-        var hidden = this.isHidden(elementToToggle);
-        var stateHandler = this[hidden];
-        toggleButton.innerText = stateHandler.text;
-        elementToToggle.className = stateHandler.state;
-      },
-    };
-    visibility.apply(toggleButton, extraField);
   }
 
-  var replaceStringAndAddClass = (...elementsID) => {
-    var replaceStringAndAddClass = [
-      { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: "class", className: "class-color" },
-      { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: "fix", className: "const-color" },
-      { pattern: /(?<function>\w+)[(][)]/g, groupName: "function", className: "function-color" },
-      { pattern: /(?<keyWord>function)/g, groupName: "keyWord", className: "element-selector-color" },
-      { pattern: /(?<keyWord>return)/g, groupName: "keyWord", className: "return-keyword" },
-      { pattern: /(?<symbol>\?)/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\!)/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\()/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\))/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\{)/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\})/g, groupName: "symbol", className: "symbols-color" },
-      { pattern: /(?<symbol>\:)/g, groupName: "symbol", className: "symbols-color" },
-    ];
-
-    function replace(textElement, matches) {
-      matches.forEach((c) => {
-        var matches = [...textElement.matchAll(c.pattern)];
-        matches.forEach((match) => {
-          var value = match.groups[c.groupName];
-          textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
-        });
-      });
-      return textElement;
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+      await injectScript("https://unpkg.com/react@17/umd/react.development.js");
+      await injectScript("https://unpkg.com/react-dom@17/umd/react-dom.development.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/header.jsx");
     }
 
-    elementsID.forEach((elementID) => {
-      var element = document.getElementById(elementID);
-      let textElement = element.innerHTML.trim();
-      textElement = replace(textElement, replaceStringAndAddClass);
-      element.innerHTML = textElement;
-    });
-  };
-  replaceStringAndAddClass("questionField", "answerField");
+    var $question = html.get(".answerField");
 
-  (function (root, factory) {
-    if (typeof define === "function" && define.amd) {
-      define(factory);
-    } else if (typeof exports === "object") {
-      module.exports = factory(require, exports, module);
-    } else if (root) {
-      root.TypeWriting = factory();
-    } else {
-      window.TypeWriting = factory();
-    }
-  })(this, (require, exports, module) => {
-    "use strict";
-
-    /**
-     * the exported string position
-     */
-    let _currentNumber = 1;
-    /**
-     * whether is between a html tag
-     */
-    let _inHTMLTag = false;
-
-    /**
-     * plugin task status
-     */
-    const _taskStatus = {
-      UNREADY: "UNREADY",
-      READY: "READY",
-      TYPEING: "TYPEING",
-    };
-
-    /**
-     * the default config
-     */
-    let defaults = {
-      targetElement: null,
-      inputString: "",
-      typingInterval: 150,
-      blinkInterval: "0.7s",
-      cursorColor: "black",
-      pluginCallback: () => {},
-      task: _taskStatus.UNREADY,
-    };
-
-    const _typingGo = () => {
-      if (_currentNumber <= defaults.inputString.length) {
-        const nextString = _sliceDisplayText(_currentNumber);
-        _currentNumber += 1;
-
-        if (nextString.slice(-1) === "<") {
-          _inHTMLTag = true;
-        } else if (nextString.slice(-1) === ">") {
-          _inHTMLTag = false;
-        }
-
-        defaults.targetElement.innerHTML = nextString;
-
-        if (_inHTMLTag) {
-          _typingGo();
-        } else {
-          setTimeout(() => {
-            _typingGo();
-          }, defaults.typingInterval);
-        }
-      } else {
-        defaults.task = _taskStatus.READY;
-        _currentNumber = 1;
-        defaults.pluginCallback.call();
-      }
-    };
-
-    const _sliceDisplayText = (to) => defaults.inputString.slice(0, to);
-
-    const _cleanCallback = () => {
-      defaults.pluginCallback = () => {};
-    };
-
-    // Utility method to extend defaults with user options
-    const extendDefaults = (source, properties) => {
-      for (const property in properties) {
-        if (properties.hasOwnProperty(property)) {
-          source[property] = properties[property];
-        }
-      }
-      return source;
-    };
-
-    /**
-     * TypeWriting constructor
-     */
-    class TypeWriting {
-      constructor(options, callbackFunction) {
-        if (!options || typeof options !== "object") {
-          throw new Error("`options` is invalid");
-        }
-
-        /**
-         * check value from user
-         * the string will be put in target later
-         */
-        if (!options.inputString) {
-          throw new Error("Missing argument: inputString");
-        }
-        if (typeof options.inputString !== "string") {
-          throw new Error("`inputString` is not a string");
-        }
-
-        /**
-         * set the custom config
-         */
-        defaults = extendDefaults(defaults, options);
-
-        /**
-         * callback function
-         */
-        if (callbackFunction) {
-          if (typeof callbackFunction === "function") {
-            defaults.pluginCallback = callbackFunction;
-          } else {
-            console.error(`${callbackFunction} is not a function`);
-            _cleanCallback();
-          }
-        } else {
-          _cleanCallback();
-        }
-
-        /**
-         * Calculate proper size of cursor
-         * by inserting a new inline-element with `I`
-         */
-        const calcDiv = document.createElement("div");
-        calcDiv.style.display = "inline-block";
-        calcDiv.innerHTML = "I";
-        defaults.targetElement.appendChild(calcDiv);
-        const cursorHeight = calcDiv.offsetHeight;
-        const cursorWidth = calcDiv.offsetWidth;
-        defaults.targetElement.removeChild(calcDiv);
-
-        /**
-         * cursor css style
-         */
-        const cssStyle = `@-webkit-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@-moz-keyframes blink{0%,100%{opacity:1}50%{opacity:0}}@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}.typingCursor::after{content:'';width:${cursorWidth}px;height:${cursorHeight}px;margin-left:5px;display:inline-block;vertical-align:bottom;background-color:${defaults.cursorColor};-webkit-animation:blink ${defaults.blinkInterval} infinite;-moz-animation:blink ${defaults.blinkInterval} infinite;animation:blink ${defaults.blinkInterval} infinite}`;
-
-        /**
-         * add CSS style in HEAD
-         */
-        const styleNode = document.createElement("style");
-        styleNode.type = "text/css";
-        if (styleNode.styleSheet) {
-          styleNode.styleSheet.cssText = cssStyle;
-        } else {
-          styleNode.appendChild(document.createTextNode(cssStyle));
-        }
-        document.head.appendChild(styleNode);
-
-        defaults.targetElement.className += " typingCursor";
-        defaults.task = _taskStatus.TYPING;
-        _typingGo();
-      }
-
-      /**
-       * change the text on the same target
-       */
-      rewrite(inputString, callbackFunction) {
-        if (defaults.task === _taskStatus.TYPING) {
-          console.warn("Last task is not finished yet");
-          setTimeout(() => {
-            this.rewrite(inputString, callbackFunction);
-          }, defaults.typingInterval);
-          return;
-        }
-
-        /**
-         * check value
-         * the string will be put in target later
-         */
-        if (!inputString) {
-          throw new Error("Missing argument: inputString");
-        }
-        if (typeof inputString !== "string") {
-          throw new Error("`inputString` is not a string");
-        }
-
-        defaults.inputString = inputString;
-
-        /**
-         * callback function
-         */
-        if (callbackFunction) {
-          if (typeof callbackFunction === "function") {
-            defaults.pluginCallback = callbackFunction;
-          } else {
-            console.error(`${callbackFunction} is not a function`);
-            _cleanCallback();
-          }
-        } else {
-          _cleanCallback();
-        }
-
-        defaults.task = _taskStatus.TYPING;
-        _typingGo();
-      }
-    }
-
-    return TypeWriting;
-  });
-
-  var $question = html.get("#questionField");
-  $question.innerHTML = formatPipe(formatCSSProperty($question.innerHTML));
-
-  var $answer = html.get("#answerField");
-  var answerText = formatPipe(formatCSSProperty($answer.innerHTML));
-
-  new TypeWriting({
-    targetElement: $answer,
-    inputString: answerText,
-    typingInterval: 30,
-    blinkInterval: "0.7s",
-    cursorColor: "#00fd55",
-    
-  });
-
-  function formatCSSProperty(textValue) {
-    return textValue
-      .replace(
-        /([\w-]+)(: )([\w]+)/g,
-        `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
-      )
-      .replace(/&nbsp;/g, " ");
-  }
-
-  function formatPipe(textValue) {
-    return textValue
-      .replace(/(@)([A-Z]\w+)/g, `<span class="symbols-color">$1</span><span class="class-color">$2</span>`)
-      .replace(/&nbsp;/g, " ");
-  }
-
-  $("#toggleButton").click();
+    typingJS({
+      containerSelector: ".answerField",
+      timeTypingMs: 55,
+      timeSlow: 500,
+      callback: () => {
+        $audio = html.get("audio");
+        $audio.hasChildNodes() && pycmd("play:q:0");
+      },
+    }).execute();
+  })();
 </script>
