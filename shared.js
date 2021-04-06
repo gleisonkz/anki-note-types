@@ -21,7 +21,7 @@ Element.prototype.formatCSSProperty = function () {
   return this;
 };
 
-(function showDescriptionCardType() {
+function showDescriptionCardType() {
   const cardTypeID = `{{info-Queue:}}`;
   const infoQueueElement = html.get("#infoQueue");
   const cardTypeById = {};
@@ -35,7 +35,7 @@ Element.prototype.formatCSSProperty = function () {
     cardTypeById[cardTypeByText[prop]] = prop;
   }
   infoQueueElement.innerText = cardTypeById[cardTypeID];
-})();
+}
 
 function toggle(string) {
   var visibility = {
