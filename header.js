@@ -9,6 +9,7 @@ class LikeButton extends React.Component {
   }
 
   render() {
+    console.log("Loaded By React");
     return <button onClick={() => this.setState({ liked: true })}>Like</button>;
   }
 }
