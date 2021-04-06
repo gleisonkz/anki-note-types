@@ -57,16 +57,16 @@
 
   (async () => {
     !typeof typingJS && (await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js"));
-    !typeof HTML && (await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js"));
+    !typeof html && (await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js"));
 
-    var $question = HTML.get(".questionField");
+    var $question = html.get(".questionField");
 
     typingJS({
       containerSelector: ".questionField",
       timeTypingMs: 55,
       timeSlow: 500,
       callback: () => {
-        $audio = HTML.get("audio");
+        $audio = html.get("audio");
         if (!audio) return;
         pycmd("play:q:0");
       },

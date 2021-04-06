@@ -1,4 +1,4 @@
-var HTML = {
+var html = {
   get: (elementSelector) => {
     return document.querySelector(elementSelector);
   },
@@ -23,7 +23,7 @@ Element.prototype.formatCSSProperty = function () {
 
 (function showDescriptionCardType() {
   const cardTypeID = `{{info-Queue:}}`;
-  const infoQueueElement = HTML.get("#infoQueue");
+  const infoQueueElement = html.get("#infoQueue");
   const cardTypeById = {};
   const cardTypeByText = {
     new: 0,
