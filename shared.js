@@ -64,6 +64,35 @@ Element.prototype.formatPascalCase = function () {
   return this;
 };
 
+Element.prototype.formatPrototypeFunction = function () {
+  const patterns = [
+    { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: "class", className: "class-color" },
+    { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: "fix", className: "const-color" },
+    { pattern: /(?<function>\w+)[(][)]/g, groupName: "function", className: "function-color" },
+    { pattern: /(?<symbol>\?)/g, groupName: "symbol", className: "symbols-color" },
+    { pattern: /(?<symbol>\!)/g, groupName: "symbol", className: "symbols-color" },
+    { pattern: /(?<symbol>\()/g, groupName: "symbol", className: "symbols-color" },
+    { pattern: /(?<symbol>\))/g, groupName: "symbol", className: "symbols-color" },
+  ];
+
+  function replaceByPattern(textElement, matches) {
+    matches.forEach((c) => {
+      var matches = [...textElement.matchAll(c.pattern)];
+      matches.forEach((match) => {
+        var value = match.groups[c.groupName];
+        textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+      });
+    });
+    return textElement;
+  }
+
+  let textElement = this.innerHTML.trim();
+  textElement = replaceByPattern(textElement, patterns);
+  this.innerHTML = textElement;
+
+  return this;
+};
+
 function showDescriptionCardType() {
   const cardTypeID = `{{info-Queue:}}`;
   const infoQueueElement = html.get("#infoQueue");
@@ -102,48 +131,3 @@ function toggle(string) {
   };
   visibility.apply(tipButton, tipField);
 }
-
-function replaceStringAndAddClass(...elementsID) {
-  const replaceStringAndAddClass = [
-    { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: "class", className: "class-color" },
-    { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: "fix", className: "const-color" },
-    { pattern: /(?<function>\w+)[(][)]/g, groupName: "function", className: "function-color" },
-    { pattern: /(?<symbol>\?)/g, groupName: "symbol", className: "symbols-color" },
-    { pattern: /(?<symbol>\!)/g, groupName: "symbol", className: "symbols-color" },
-    { pattern: /(?<symbol>\()/g, groupName: "symbol", className: "symbols-color" },
-    { pattern: /(?<symbol>\))/g, groupName: "symbol", className: "symbols-color" },
-  ];
-
-  function replace(textElement, matches) {
-    matches.forEach((c) => {
-      var matches = [...textElement.matchAll(c.pattern)];
-      matches.forEach((match) => {
-        var value = match.groups[c.groupName];
-        textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
-      });
-    });
-    return textElement;
-  }
-
-  elementsID.forEach((elementID) => {
-    var element = document.getElementById(elementID);
-    var textElement = element.innerHTML.trim();
-    textElement = replace(textElement, replaceStringAndAddClass);
-    element.innerHTML = textElement;
-  });
-}
-
-var UI = {
-  renderHeader(selector = "header") {
-    const $container = html.get(selector);
-    $container.innerHTML = `
-    <div>
-        <p class="deck-tree">{{Deck}}</p>
-        <p class="sub-deck-name">{{Subdeck}}</p>
-        {{#Link}}
-        <p class="sub-deck-name">Links :{{Link}}</p>
-        {{/Link}}
-    </div>
-    `;
-  },
-};
