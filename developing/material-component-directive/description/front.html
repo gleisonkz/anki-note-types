@@ -55,18 +55,17 @@
 
     var $question = html.get(".questionField");
     var $description = html.get(".description");
-
     $description.formatHtmlElement();
 
-    // typingJS({
-    //   containerSelector: ".questionField",
-    //   typingSpeedMillisecond: 35,
-    //   typingSpeedDelay: 500,
-    //   initialSpeedDelayTime: 200,
-    //   callback: () => {
-    //     $audio = html.get("audio");
-    //     $audio && $audio.hasChildNodes() && pycmd("play:q:0");
-    //   },
-    // }).execute();
+    typingJS({
+      containerSelector: ".questionField",
+      typingSpeedMillisecond: 35,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
+      callback: () => {
+        $audio = html.get("audio");
+        $audio && $audio.hasChildNodes() && pycmd("play:q:0");
+      },
+    }).execute();
   })();
 </script>

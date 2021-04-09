@@ -13,7 +13,7 @@
         <span class="classColor"> Como se chama</span>
         o <span class="elementSelectorColor">componente</span> do <span class="classColor">Angular Material</span> que
         realiza a instrução abaixo?<br /><br />
-        "<span>{{Description}}</span>"
+        "<span class="description">{{Description}}</span>"
       </p>
     </div>
     {{/isComponent}} {{^isComponent}}
@@ -22,7 +22,7 @@
         <span class="classColor"> Como se chama</span>
         a <span class="attributeColorCSS">diretiva</span> do <span class="classColor">Angular Material</span> que
         realiza a instrução abaixo?<br /><br />
-        "<span>{{Description}}</span>"
+        "<span class="description">{{Description}}</span>"
       </p>
     </div>
     {{/isComponent}}
@@ -54,35 +54,36 @@
   </footer>
 </section>
 <script>
-  var html = {
-    get: (elementSelector) => {
-      return document.querySelector(elementSelector);
-    },
-  };
-
-  var toggleButton = html.get("#toggleButton");
-  var extraField = html.get("#extraField");
-
-  function toggle(string) {
-    var visibility = {
-      true: {
-        state: "visible",
-        text: "Hide Extra",
-      },
-      false: {
-        state: "hidden",
-        text: "Show Extra",
-      },
-      isHidden: function (element) {
-        return element.classList.contains("hidden");
-      },
-      apply: function (toggleButton, elementToToggle) {
-        var hidden = this.isHidden(elementToToggle);
-        var stateHandler = this[hidden];
-        toggleButton.innerText = stateHandler.text;
-        elementToToggle.classList.toggle("hidden");
-      },
-    };
-    visibility.apply(toggleButton, extraField);
+  function injectScript(src, type) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.type = type || "";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
   }
+
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+    }
+
+    var $description = html.get(".description");
+    $description.formatHtmlElement();
+
+    typingJS({
+      containerSelector: ".articleAnswer",
+      typingSpeedMillisecond: 35,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
+      callback: () => {
+        $audio = html.get("audio");
+        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
+      },
+    }).execute();
+  })();
 </script>
