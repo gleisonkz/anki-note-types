@@ -28,6 +28,7 @@
     {{/isComponent}}
   </article>
 
+  {{#isComponent}}
   <article class="articleAnswer fade-in">
     <div class="notes">
       <div id="answerField" class="format notesChild containerFlex">
@@ -36,7 +37,15 @@
       </div>
     </div>
   </article>
-  {{#Image}}
+  {{/isComponent}} {{^isComponent}}
+  <article class="articleAnswer fade-in">
+    <div class="notes">
+      <div id="answerField" class="format notesChild containerFlex">
+        <span class="classColor">{{Selector}}</span>
+      </div>
+    </div>
+  </article>
+  {{/isComponent}} {{#Image}}
   <article class="image-container fade-in" style="padding-top: 20px">
     <picture class="image-content">{{Image}}</picture>
   </article>
