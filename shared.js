@@ -13,7 +13,7 @@ Element.prototype.formatPipe = function () {
 };
 
 Element.prototype.formatHtmlElement = function () {
-  this.innerHTML = this.innerHTML.replace(
+  this.innerHTML = this.innerText.replace(
     /(<)((?!<)[^<>]+(?=>))(>)/g,
     `<span class="symbol">$1</span><span class="elementSelectorColor">$2</span><span class="symbol">$3</span>`
   );
