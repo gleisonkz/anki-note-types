@@ -12,6 +12,14 @@ Element.prototype.formatPipe = function () {
   return this;
 };
 
+Element.prototype.formatHtmlElement = function () {
+  this.innerHTML = this.innerHTML.replace(
+    /(<)((?!<)[^<>]+(?=>))(>)/g,
+    `<span class="symbol">$1</><span class="elementSelectorColor">$2</><span class="symbol">$3</>`
+  );
+  return this;
+};
+
 Element.prototype.formatCSSProperty = function () {
   this.innerHTML = this.innerHTML.replace(
     /([\w-]+)(: )([\w]+)/g,
