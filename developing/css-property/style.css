@@ -1,89 +1,31 @@
 @import url("_editor_button_styles.css");
 
-@import url("_editor_button_styles.css");
-
 :root {
   --classColor: #4cc5a1;
   --stringColor: #d69d85;
-  --const-color: #4fc1ff;
   --attributeColorCSS: #9cdcfe;
   --tagGrayColor: #aeafad;
   --elementSelectorColor: #4f9cd6;
   --selectorColorCSS: #d7ba7d;
   --methodColor: #dcdcaa;
-  --bgVsCodeColor: #1e1e1e;
-}
-
-.class-color {
-  color: var(--classColor);
-}
-
-.class-color b {
-  font-weight: normal;
-  color: var(--stringColor);
-}
-
-.stringColor {
-  color: #d69d85;
-}
-
-.attributeColorCSS {
-  color: #9cdcfe;
-}
-
-.tagGrayColor {
-  color: #aeafad;
-}
-
-.elementSelectorColor {
-  color: #4f9cd6;
-}
-
-.element-selector-color {
-  color: #4f9cd6;
-}
-
-.selectorColorCSS {
-  color: #d7ba7d;
-}
-
-.functionColor {
-  color: #dcdcaa;
-  font-family: consolas;
-}
-
-.function-color {
-  color: #dcdcaa;
-}
-
-.const-color {
-  color: var(--const-color);
-}
-
-.class-color {
-  color: var(--classColor);
-}
-
-.symbols-color {
-  color: var(--tagGrayColor);
-}
-
-.cmd {
-  font-family: courier;
+  --bg-vs-code-color: #1e1e1e;
+  --default-gray: rgb(206, 195, 195);
 }
 
 .card {
   font-size: 20px;
   font-family: consolas;
   text-align: center;
-  background-color: #1e1e1e;
-  padding: 25px;
-  margin: 0 auto;
-  max-width: 950px;
+  color: var(--default-gray);
+  background-color: var(--bg-vs-code-color);
 }
 
 .card.nightMode {
-  background-color: #1e1e1e;
+  font-size: 20px;
+  font-family: consolas;
+  text-align: center;
+  color: var(--default-gray);
+  background-color: var(--bg-vs-code-color);
 }
 
 .deckTree {
@@ -95,16 +37,19 @@
   margin-bottom: 20px;
 }
 
-.subDeck {
+.subdeckName {
   font-family: courier;
   text-transform: uppercase;
-  text-align: center;
   font-size: 20px;
   color: #c5be3f;
 }
 
+audio {
+  display: none;
+}
+
 .questionField {
-  font-family: courier;
+  font-family: consolas;
   font-size: 20px;
   padding: 0px 0px 20px 0px;
   display: flex;
@@ -127,16 +72,11 @@
   justify-content: center;
 }
 
-.articleAnswer {
-  margin-bottom: 10px;
+.articleAnswer + .articleAnswer {
+  margin-top: 10px;
 }
 
 .articleAnswer b {
-  font-weight: normal;
-  color: var(--stringColor);
-}
-
-.questionField b {
   font-weight: normal;
   color: var(--stringColor);
 }
@@ -147,25 +87,23 @@
 }
 
 .extraContainer {
-  display: block;
+  display: flex;
   margin-top: 20px;
   flex-flow: column wrap;
   align-items: center;
 }
 
 .extra {
-  display: flex;
+  display: block;
   font-size: 20px;
   border: 2px dashed rgba(85, 85, 85, 0.75);
   color: #4cc5a1;
   padding: 10px;
   margin: 2px 20px 2px 20px;
   text-align: center;
-  opacity: 0;
 }
 
 .notes {
-  font-family: courier;
   font-size: 20px;
   border: 2px dashed rgba(85, 85, 85, 0.75);
   padding: 10px;
@@ -207,10 +145,37 @@
   flex-wrap: wrap;
 }
 
-.parameters,
-.parametersQtd,
-.image {
-  opacity: 0;
+.classColor {
+  color: var(--classColor);
+}
+
+.classColor b {
+  font-weight: normal;
+  color: var(--stringColor);
+}
+
+.stringColor {
+  color: #d69d85;
+}
+
+.attributeColorCSS {
+  color: #9cdcfe;
+}
+
+.tagGrayColor {
+  color: #aeafad;
+}
+
+.elementSelectorColor {
+  color: #4f9cd6;
+}
+
+.selectorColorCSS {
+  color: #d7ba7d;
+}
+
+.functionColor {
+  color: #dcdcaa;
 }
 
 .fade-in {

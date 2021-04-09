@@ -1,0 +1,84 @@
+<section>
+  <header>
+    <div class="deckTree">
+      <p>{{Deck}}</p>
+      <p class="subdeckName">{{Subdeck}}</p>
+    </div>
+  </header>
+
+  <article>
+    {{#isComponent}}
+    <div class="questionField">
+      <p>
+        O componente <span class="tagGrayColor">&lt;</span><span class="elementSelectorColor">{{Selector}}</span
+        ><span class="tagGrayColor">&gt;</span> pertence a <span class="classColor">qual modulo</span> do Angular
+        Material?
+      </p>
+    </div>
+    {{/isComponent}} {{^isComponent}}
+    <div class="questionField">
+      <p>
+        A diretiva <span class="attributeColorCSS">{{Selector}}</span> pertence a
+        <span class="classColor">qual modulo</span> do Angular Material?
+      </p>
+    </div>
+    {{/isComponent}}
+  </article>
+
+  <article class="articleAnswer">
+    <div class="notes">
+      <div id="answerField" class="format notesChild containerFlex">
+        <span class="classColor fade-in">{{Module}}</span>
+      </div>
+    </div>
+  </article>
+  {{#Image}}
+  <article class="image-container fade-in" style="padding-top: 20px">
+    <picture class="image-content">{{Image}}</picture>
+  </article>
+  {{/Image}} {{#Extra}}
+  <article class="extra-container no-select fade-in">
+    <div class="custom-button no-select" id="toggleButton" onclick="toggle()">Show Extra</div>
+
+    <div class="extra-content-container hidden" id="extraField">
+      <div class="extra-content">{{Extra}}</div>
+    </div>
+  </article>
+  {{/Extra}}
+  <footer>
+    <audio style="display: none">{{ModuleNameAudio}}</audio>
+  </footer>
+</section>
+<script>
+  var html = {
+    get: (elementSelector) => {
+      return document.querySelector(elementSelector);
+    },
+  };
+
+  var toggleButton = html.get("#toggleButton");
+  var extraField = html.get("#extraField");
+
+  function toggle(string) {
+    var visibility = {
+      true: {
+        state: "visible",
+        text: "Hide Extra",
+      },
+      false: {
+        state: "hidden",
+        text: "Show Extra",
+      },
+      isHidden: function (element) {
+        return element.classList.contains("hidden");
+      },
+      apply: function (toggleButton, elementToToggle) {
+        var hidden = this.isHidden(elementToToggle);
+        var stateHandler = this[hidden];
+        toggleButton.innerText = stateHandler.text;
+        elementToToggle.classList.toggle("hidden");
+      },
+    };
+    visibility.apply(toggleButton, extraField);
+  }
+</script>

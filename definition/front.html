@@ -1,26 +1,22 @@
-<section>
+<section class="fade-in">
   <header>
     <div>
       <p class="deck-tree">{{Deck}}</p>
       <p class="sub-deck-name">{{Subdeck}}</p>
-      {{#Link}}
-      <p class="sub-deck-name">Links :{{Link}}</p>
-      {{/Link}}
+      <p class="sub-deck-name">{{Link}}</p>
     </div>
   </header>
 
-  <div id="header"></div>
-
   <article class="article-question">
+    <div>Qual o nome dado a definição abaixo?</div>
     <div id="questionField" class="questionField">
-      Qual a definição do termo abaixo ?<br /><br />
-      <span class="stringColor">&quot;</span><span class="term">{{Term}}</span><span class="stringColor">&quot;</span>
+      <span class="stringColor">"</span>{{Definition}}<span class="stringColor">"</span>
     </div>
   </article>
 
   <article class="articleTip">
     {{#Tip}}
-    <div class="custom-button" id="tipButton" onclick="toggle()">Show Tip</div>
+    <div class="customButton" id="tipButton" onclick="toggle()">Show Tip</div>
 
     <div class="tip" id="tipField">{{Tip}}</div>
     {{/Tip}}
@@ -31,9 +27,6 @@
       <div class="notesChild">[...]</div>
     </div>
   </article>
-  <footer>
-    <audio>{{TermAudio}}</audio>
-  </footer>
 </section>
 <script>
   function injectScript(src, type) {
@@ -53,14 +46,15 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
+
     var $question = html.get(".questionField");
-    var $term = html.get(".term");
-    $term.formatPascalCase();
+    $question.formatPascalCase();
 
     typingJS({
       containerSelector: ".questionField",
-      timeTypingMs: 55,
-      timeSlow: 500,
+      typingSpeedMillisecond: 45,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
         $audio.hasChildNodes() && pycmd("play:q:0");

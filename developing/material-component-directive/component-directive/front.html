@@ -1,0 +1,64 @@
+<section class="fade-in">
+  <header>
+    <div class="deckTree">
+      <p>{{Deck}}</p>
+      <p class="subdeckName">{{Subdeck}}</p>
+    </div>
+  </header>
+
+  <article>
+    {{#isComponent}}
+    <div class="questionField">
+      <p>
+        Para que serve o componente <span class="tagGrayColor">&lt;</span
+        ><span class="elementSelectorColor">{{Selector}}</span><span class="tagGrayColor">&gt;</span> do Angular
+        Material?
+      </p>
+    </div>
+    {{/isComponent}} {{^isComponent}}
+
+    <div class="questionField">
+      <p>
+        Para que serve a diretiva <span class="attributeColorCSS">{{Selector}}</span>
+        Material?
+      </p>
+    </div>
+
+    {{/isComponent}}
+  </article>
+
+  <article>
+    <div class="notes">
+      <div class="notesChild classColor">[...]</div>
+    </div>
+  </article>
+  <footer>
+    <audio>{{SelectorAudio}}</audio>
+  </footer>
+</section>
+<script>
+  var regex = /(?<key>[\w-]+): (?<value>[\w-]+);/g;
+  var elements = [...document.getElementsByClassName("format")];
+  var addClass = (element) => {
+    var elementHTML = element.innerHTML.replace(/&nbsp;/g, " ");
+    var result = [...elementHTML.matchAll(regex)].map((item) => ({
+      element: `<span><span class="attributeColorCSS">${item.groups.key}</span>: <span class="stringColor">${item.groups.value}</span>; ?</span>`,
+      fullMatch: item["0"],
+    }));
+    result.forEach((c) => {
+      elementHTML = elementHTML.replace(c.fullMatch, c.element);
+    });
+    element.innerHTML = elementHTML;
+  };
+  elements.forEach((element) => {
+    addClass(element);
+  });
+
+  var hiddenElements = [...document.getElementsByClassName("auto-hidden")];
+  setTimeout(() => {
+    hiddenElements.forEach((c) => {
+      c.classList.remove("hidden");
+      c.classList.add("visible");
+    });
+  }, 100);
+</script>

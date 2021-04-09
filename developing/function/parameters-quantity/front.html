@@ -1,30 +1,62 @@
 {{#Parameters}}
-<section>
-    <header>
-        <div >
-            <p class="deckTree">{{Deck}}</p>
-            <p class="subDeck">{{Subdeck}}</p>
-        </div>
-    </header>
+<section class="fade-in">
+  <header>
+    <div>
+      <p class="deckTree">{{Deck}}</p>
+      <p class="subDeck">{{Subdeck}}</p>
+    </div>
+  </header>
 
-    <article>
-        <div class="questionField">
-						 <div>		
-							<span class="classColor">Quantos parâmetros possui a função</span>
-            <span class="functionColor">{{FunctionName}}</span>()?
-						 </div>	
-        </div>
-    </article>
+  <article>
+    <div id="questionField" class="questionField">
+      <div>
+        <span class="tagGrayColor">Quantos parâmetros possui a função</span>
+        <span class="functionColor" id="replacement">{{FunctionName}}()</span>?
+      </div>
+    </div>
+  </article>
 
-    <article>
-        <div class="notes">
-            <div class="notesChild" style="color: #4cc5a1;">
-                [...]
-            </div>
-        </div>
-    </article>
-    <footer>
-        <audio style="display:none">{{FunctionNameAudio}}</audio>
-    </footer>
+  <article>
+    <div class="notes">
+      <div class="notesChild" style="color: #4cc5a1">[...]</div>
+    </div>
+  </article>
+  <footer>
+    <audio style="display: none">{{FunctionNameAudio}}</audio>
+  </footer>
 </section>
+<script>
+  function injectScript(src, type) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.type = type || "";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+    }
+
+    var $functionName = html.get("#replacement");
+    $functionName.formatPrototypeFunction();
+
+    typingJS({
+      containerSelector: ".questionField",
+      typingSpeedMillisecond: 45,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
+      callback: () => {
+        $audio = html.get("audio");
+        $audio.hasChildNodes() && pycmd("play:q:0");
+      },
+    }).execute();
+  })();
+</script>
 {{/Parameters}}

@@ -26,7 +26,7 @@
   </article>
 
   {{#AnswerImage}}
-  <article class="image-container fade-in" style="padding-top: 20px">
+  <article class="image-container answer-image" style="padding-top: 20px; opacity: 0">
     <picture class="image-content">{{AnswerImage}}</picture>
   </article>
   {{/AnswerImage}} {{#Extra}}
@@ -44,16 +44,57 @@
   </footer>
 </section>
 <script>
-  $("div:has(ul)", "div:has(ol)").addClass("notesChild");
+  (function showDescriptionCardType() {
+    const cardTypeID = `{{info-Queue:}}`;
+    const infoQueueElement = document.querySelector("#infoQueue");
+    const cardTypeById = {};
+    const cardTypeByText = {
+      new: 0,
+      learning: 1,
+      review: 2,
+      reLearning: 3,
+    };
+    for (let prop in cardTypeByText) {
+      cardTypeById[cardTypeByText[prop]] = prop;
+    }
+    infoQueueElement.innerText = cardTypeById[cardTypeID];
+  })();
 
-  typingJS({
-    containerSelector: ".answer-content",
-    timeTypingMs: 55,
-    timeSlow: 500,
-    callback: () => {
-      $audio = html.get("audio");
-      if (!audio) return;
-      pycmd("play:q:0");
-    },
-  }).execute();
+  function injectScript(src, type) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.type = type || "";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+    }
+
+    $question = html.get(".question-content");
+    $question.formatPipe().formatKeyValueProperty();
+
+    $image = html.get(".answer-image");
+    $answer = html.get(".answer-content");
+    $answer.formatPipe().formatKeyValueProperty();
+
+    typingJS({
+      containerSelector: ".answer-content",
+      typingSpeedMillisecond: 45,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
+      callback: () => {
+        $image && $image.classList.add("fade-in");
+        $audio = html.get("audio");
+        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
+      },
+    }).execute();
+  })();
 </script>

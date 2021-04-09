@@ -13,7 +13,6 @@
 
   <article class="question-container">
     <div id="questionField" class="question-content">{{Question}}</div>
-    <span class="cursor-typing hide">.</span>
   </article>
 
   {{#QuestionImage}}
@@ -40,17 +39,52 @@
   {{/QuestionAudio}}
 </section>
 <script>
-  var $question = html.get("#questionField");
-  $question.formatPipe().formatCSSProperty();
+  (function showDescriptionCardType() {
+    const cardTypeID = `{{info-Queue:}}`;
+    const infoQueueElement = document.querySelector("#infoQueue");
+    const cardTypeById = {};
+    const cardTypeByText = {
+      new: 0,
+      learning: 1,
+      review: 2,
+      reLearning: 3,
+    };
+    for (let prop in cardTypeByText) {
+      cardTypeById[cardTypeByText[prop]] = prop;
+    }
+    infoQueueElement.innerText = cardTypeById[cardTypeID];
+  })();
 
-  typingJS({
-    containerSelector: ".question-content",
-    timeTypingMs: 55,
-    timeSlow: 500,
-    callback: () => {
-      $audio = html.get("audio");
-      if (!audio) return;
-      pycmd("play:q:0");
-    },
-  }).execute();
+  function injectScript(src, type) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.type = type || "";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+    }
+
+    $question = html.get(".question-content");
+    $question.formatPipe().formatKeyValueProperty();
+
+    typingJS({
+      containerSelector: ".question-content",
+      typingSpeedMillisecond: 45,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
+      callback: () => {
+        $audio = html.get("audio");
+        $audio && $audio.hasChildNodes() && pycmd("play:q:0");
+      },
+    }).execute();
+  })();
 </script>

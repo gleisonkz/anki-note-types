@@ -1,19 +1,20 @@
-{{#Parameters}}
 <section class="fade-in">
   <header>
-    <div>
-      <p class="deckTree">{{Deck}}</p>
-      <p class="subDeck">{{Subdeck}}</p>
+    <div class="deckTree">
+      <p>{{Deck}}</p>
+      <p class="subdeckName">{{Subdeck}}</p>
     </div>
   </header>
 
   <article>
     <div class="questionField">
-      <div>
-        <span class="class-color cmd">Quais são os parâmetros</span>
-        <span class="cmd">da função </span>
-        <span id="replacement" class="stop functionColor">{{FunctionName}}()</span>?
-      </div>
+      <p>
+        <span class="classColor">Quais são os possíveis</span>
+        valores que a propriedade <span class="attributeColorCSS">{{PropertyName}}</span>:<span class="stringColor"
+          >"..."</span
+        >
+        pode assumir?
+      </p>
     </div>
   </article>
 
@@ -23,7 +24,7 @@
     </div>
   </article>
   <footer>
-    <audio style="display: none">{{FunctionNameAudio}}</audio>
+    <audio style="display: none">{{PropertyNameAudio}}</audio>
   </footer>
 </section>
 <script>
@@ -45,9 +46,6 @@
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
 
-    var $functionName = html.get("#replacement");
-    $functionName.formatPrototypeFunction();
-
     typingJS({
       containerSelector: ".questionField",
       typingSpeedMillisecond: 45,
@@ -60,4 +58,3 @@
     }).execute();
   })();
 </script>
-{{/Parameters}}

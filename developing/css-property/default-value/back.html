@@ -1,36 +1,41 @@
 <section>
   <header>
-    <div>
-      <p class="deckTree">{{Deck}}</p>
-      <p class="subDeck">{{Subdeck}}</p>
+    <div class="deckTree">
+      <p>{{Deck}}</p>
+      <p class="subdeckName">{{Subdeck}}</p>
     </div>
   </header>
 
   <article>
     <div class="questionField">
-      <div>
-        <span class="class-color cmd">Quais são os parâmetros</span>
-        <span class="cmd">da função </span>
-        <span id="replacement" class="functionColor">{{FunctionName}}()</span>?
-      </div>
+      <p>
+        <span class="classColor"> Qual o valor padrão</span>
+        para a propriedade <span class="attributeColorCSS">{{PropertyName}}</span>:<span class="stringColor"
+          >"..."</span
+        >
+        ?
+      </p>
     </div>
   </article>
 
   <article class="articleAnswer">
     <div class="notes">
-      <div id="parameters" class="notesChild containerFlex">{{Parameters}}</div>
+      <div id="answerField" class="format notesChild containerFlex">
+        <span class="stringColor">{{DefaultValue}}</span>
+      </div>
     </div>
   </article>
+  <article class="extraContainer">
+    <div class="customButton" id="extra_toggle_on_button" onclick="showextra()" style="display: none">Show Example</div>
 
-  <article class="extraContainer fade-in">
-    {{#SampleImage}}
-    <div class="extra" id="extraField">
-      <div class="notesChild">{{SampleImage}}</div>
+    <div class="extra" id="extrafield">
+      <div class="notesChild">{{DefaultValueImage}}</div>
     </div>
-    {{/SampleImage}}
+
+    <div class="customButton" id="extra_toggle_off_button" onclick="hideextra()">Hide Example</div>
   </article>
   <footer>
-    <audio style="display: none">{{ParametersAudio}}</audio>
+    <audio style="display: none">{{DefaultValueAudio}}</audio>
   </footer>
 </section>
 <script>
@@ -53,22 +58,13 @@
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
 
-    var $functionName = html.get("#replacement");
-    $functionName.formatPrototypeFunction();
-
-    var $parameters = html.get("#parameters");
-    var $extra = html.get(".extra");
-    $parameters.formatParameters();
-
     typingJS({
-      containerSelector: "#parameters",
-      typingSpeedMillisecond: 45,
-      typingSpeedDelay: 500,
-      initialSpeedDelayTime: 50,
+      containerSelector: "#answerField",
+      timeTypingMs: 55,
+      timeSlow: 500,
       callback: () => {
         $audio = html.get("audio");
         $audio.hasChildNodes() && pycmd("play:a:0");
-        $extra.classList.add("fade-in");
       },
     }).execute();
   })();

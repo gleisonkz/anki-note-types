@@ -1,0 +1,36 @@
+<section class="fade-in">
+  <header>
+    <div class="deckTree">
+      <p>{{Deck}}</p>
+      <p class="subdeckName">{{Subdeck}}</p>
+    </div>
+  </header>
+
+  <article>
+    {{#isComponent}}
+    <div class="questionField">
+      <p>
+        O componente <span class="tagGrayColor">&lt;</span><span class="elementSelectorColor">{{Selector}}</span
+        ><span class="tagGrayColor">&gt;</span> pertence a <span class="classColor">qual modulo</span> do Angular
+        Material?
+      </p>
+    </div>
+    {{/isComponent}} {{^isComponent}}
+    <div class="questionField">
+      <p>
+        A diretiva <span class="attributeColorCSS">{{Selector}}</span> pertence a
+        <span class="classColor">qual modulo</span> do Angular Material?
+      </p>
+    </div>
+    {{/isComponent}}
+  </article>
+
+  <article>
+    <div class="notes">
+      <div class="notesChild" style="color: #4cc5a1">[...]</div>
+    </div>
+  </article>
+  <footer>
+    <audio style="display: none">{{SelectorAudio}}</audio>
+  </footer>
+</section>

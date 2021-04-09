@@ -3,26 +3,23 @@
     <div class="deck-tree">
       <p>{{Deck}}</p>
       <p class="sub-deck-name">{{Subdeck}}</p>
-      {{#Link}}
-      <p class="sub-deck-name">Links :{{Link}}</p>
-      {{/Link}}
     </div>
   </header>
 
   <article class="article-question">
+    <div>Qual o nome dado a definição abaixo?</div>
     <div id="questionField" class="questionField">
-      Qual a definição do termo abaixo ?<br /><br />
-      <span class="stringColor">"</span>{{Term}}<span class="stringColor">"</span>
+      <span class="stringColor">"</span>{{Definition}}<span class="stringColor">"</span>
     </div>
   </article>
 
-  <article class="flex-center hidden auto-hidden">
+  <article class="flex-center">
     <div class="answerField">
-      <div id="answerField">{{Definiton}}</div>
+      <div id="answerField">{{Term}}</div>
     </div>
   </article>
 
-  <article class="hidden auto-hidden" style="padding-top: 20px">
+  <article style="padding-top: 20px">
     <picture>{{Image}}</picture>
   </article>
 
@@ -30,22 +27,22 @@
     {{#Extra}}
     <div class="customButton no-select" id="toggleButton" onclick="toggle()">Show Extra</div>
 
-    <div class="hidden" id="extraField">
-      <div>{{Extra}}</div>
+    <div id="extraField">
+      <div class="notesChild">{{Extra}}</div>
     </div>
 
     {{/Extra}}
   </article>
-
   <footer>
-    <audio style="display: none">{{DefinitionAudio}}</audio>
+    <audio style="display: none">{{TermAudio}}</audio>
   </footer>
 </section>
 <script>
-  function injectScript(src) {
+  function injectScript(src, type) {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = src;
+      script.type = type || "";
       script.async = true;
       script.onload = resolve;
       script.onerror = reject;
@@ -57,20 +54,21 @@
     if (typeof typingJS === "undefined") {
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
-      await injectScript("https://unpkg.com/react@17/umd/react.development.js");
-      await injectScript("https://unpkg.com/react-dom@17/umd/react-dom.development.js");
-      await injectScript("https://gleisonkz.github.io/anki-note-types/header.js");
     }
 
-    var $question = html.get(".answerField");
+    $("div:has(ul)", "div:has(ol)").addClass("notesChild");
+    var $question = html.get(".questionField");
+    var $answer = html.get(".answerField");
+    [$question, $answer].forEach((c) => c.formatPascalCase());
 
     typingJS({
       containerSelector: ".answerField",
-      timeTypingMs: 55,
-      timeSlow: 500,
+      typingSpeedMillisecond: 45,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio.hasChildNodes() && pycmd("play:q:0");
+        $audio.hasChildNodes() && pycmd("play:a:0");
       },
     }).execute();
   })();

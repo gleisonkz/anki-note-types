@@ -1,0 +1,45 @@
+<section class="fade-in">
+  <header>
+    <div class="deckTree">
+      <p>{{Deck}}</p>
+      <p class="subdeckName">{{Subdeck}}</p>
+    </div>
+  </header>
+
+  <article>
+    {{#isComponent}}
+    <div class="questionField">
+      <p>
+        <span class="classColor"> Como se chama</span>
+        o <span class="elementSelectorColor">componente</span> do <span class="classColor">Angular Material</span> que
+        realiza a instrução abaixo?<br /><br />
+        "<span>{{Description}}</span>"
+      </p>
+    </div>
+    {{/isComponent}} {{^isComponent}}
+    <div class="questionField">
+      <p>
+        <span class="classColor"> Como se chama</span>
+        a <span class="attributeColorCSS">diretiva</span> do <span class="classColor">Angular Material</span> que
+        realiza a instrução abaixo?<br /><br />
+        "<span>{{Description}}</span>"
+      </p>
+    </div>
+    {{/isComponent}}
+  </article>
+
+  <article>
+    <div class="notes">
+      <div class="notesChild" style="color: #4cc5a1">[...]</div>
+    </div>
+  </article>
+</section>
+<script>
+  var hiddenElements = [...document.getElementsByClassName("auto-hidden")];
+  setTimeout(() => {
+    hiddenElements.forEach((c) => {
+      c.classList.remove("hidden");
+      c.classList.add("visible");
+    });
+  }, 100);
+</script>
