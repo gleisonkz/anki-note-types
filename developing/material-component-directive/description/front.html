@@ -13,7 +13,7 @@
         <span class="classColor"> Como se chama</span>
         o <span class="elementSelectorColor">componente</span> do <span class="classColor">Angular Material</span> que
         realiza a instrução abaixo?<br /><br />
-        "<span>{{Description}}</span>"
+        "<span class="description">{{Description}}</span>"
       </p>
     </div>
     {{/isComponent}} {{^isComponent}}
@@ -22,7 +22,7 @@
         <span class="classColor"> Como se chama</span>
         a <span class="attributeColorCSS">diretiva</span> do <span class="classColor">Angular Material</span> que
         realiza a instrução abaixo?<br /><br />
-        "<span>{{Description}}</span>"
+        "<span class="description">{{Description}}</span>"
       </p>
     </div>
     {{/isComponent}}
@@ -35,11 +35,38 @@
   </article>
 </section>
 <script>
-  var hiddenElements = [...document.getElementsByClassName("auto-hidden")];
-  setTimeout(() => {
-    hiddenElements.forEach((c) => {
-      c.classList.remove("hidden");
-      c.classList.add("visible");
+  function injectScript(src, type) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.type = type || "";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
     });
-  }, 100);
+  }
+
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+    }
+
+    var $question = html.get(".questionField");
+    var $description = html.get(".description");
+
+    $description.formatHtmlElement();
+
+    // typingJS({
+    //   containerSelector: ".questionField",
+    //   typingSpeedMillisecond: 35,
+    //   typingSpeedDelay: 500,
+    //   initialSpeedDelayTime: 200,
+    //   callback: () => {
+    //     $audio = html.get("audio");
+    //     $audio && $audio.hasChildNodes() && pycmd("play:q:0");
+    //   },
+    // }).execute();
+  })();
 </script>
