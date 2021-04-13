@@ -1,17 +1,22 @@
 {{#DefaultValue}}
 <section>
   <header>
-    <div class="deckTree">
-      <p>{{Deck}}</p>
-      <p class="subdeckName">{{Subdeck}}</p>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
     </div>
   </header>
 
   <article>
-    <div class="questionField">
+    <div class="question-field">
       <p>
-        <span class="classColor"> Qual o valor padrão</span>
-        para a propriedade <span class="attributeColorCSS">{{PropertyName}}</span>:<span class="stringColor"
+        <span class="class-color"> Qual o valor padrão</span>
+        para a propriedade <span class="attribute-color-css">{{PropertyName}}</span>:<span class="string-color"
           >"..."</span
         >
         ?
@@ -25,7 +30,7 @@
     </div>
   </article>
   <footer>
-    <audio style="display: none">{{PropertyNameAudio}}</audio>
+    <audio>{{PropertyNameAudio}}</audio>
   </footer>
 </section>
 <script>
@@ -48,12 +53,13 @@
     }
 
     typingJS({
-      containerSelector: ".questionField",
-      timeTypingMs: 55,
-      timeSlow: 500,
+      containerSelector: ".question-field",
+      typingSpeedMillisecond: 25,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio.hasChildNodes() && pycmd("play:q:0");
+        $audio && $audio.hasChildNodes() && pycmd("play:q:0");
       },
     }).execute();
   })();

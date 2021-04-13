@@ -1,16 +1,21 @@
 <section>
   <header>
-    <div class="deckTree">
-      <p>{{Deck}}</p>
-      <p class="subdeckName">{{Subdeck}}</p>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
     </div>
   </header>
 
   <article>
-    <div class="questionField">
+    <div class="question-field">
       <p>
-        <span class="classColor"> Qual o valor padrão</span>
-        para a propriedade <span class="attributeColorCSS">{{PropertyName}}</span>:<span class="stringColor"
+        <span class="class-color"> Qual o valor padrão</span>
+        para a propriedade <span class="attribute-color-css">{{PropertyName}}</span>:<span class="string-color"
           >"..."</span
         >
         ?
@@ -18,27 +23,26 @@
     </div>
   </article>
 
-  <article class="articleAnswer">
+  <article class="article-answer">
     <div class="notes">
-      <div id="answerField" class="format notesChild containerFlex">
-        <span class="stringColor">{{DefaultValue}}</span>
+      <div id="answerField" class="format">
+        <span class="string-color">{{DefaultValue}}</span>
       </div>
     </div>
   </article>
-  <article class="extraContainer">
-    <div class="customButton" id="extra_toggle_on_button" onclick="showextra()" style="display: none">Show Example</div>
-
+  {{#DefaultValueImage}}
+  <article class="extra-container">
     <div class="extra" id="extrafield">
       <div class="notesChild">{{DefaultValueImage}}</div>
     </div>
-
-    <div class="customButton" id="extra_toggle_off_button" onclick="hideextra()">Hide Example</div>
   </article>
+  {{/DefaultValueImage}}
   <footer>
-    <audio style="display: none">{{DefaultValueAudio}}</audio>
+    <audio>{{DefaultValueAudio}}</audio>
   </footer>
 </section>
 <script>
+  // BACK
   $("div:has(ul)", "div:has(ol)").addClass("notesChild");
   function injectScript(src, type) {
     return new Promise((resolve, reject) => {
@@ -60,11 +64,12 @@
 
     typingJS({
       containerSelector: "#answerField",
-      timeTypingMs: 55,
-      timeSlow: 500,
+      typingSpeedMillisecond: 25,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio.hasChildNodes() && pycmd("play:a:0");
+        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
       },
     }).execute();
   })();

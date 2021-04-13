@@ -23,6 +23,7 @@
 }
 
 .answer-content {
+  font-family: courier;
   border: 2px dashed rgba(85, 85, 85, 0.75);
   padding: 10px;
   color: var(--class-color);

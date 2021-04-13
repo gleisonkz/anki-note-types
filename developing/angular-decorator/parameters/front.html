@@ -1,4 +1,5 @@
-<div class="card-container">
+{{#Parameters}}
+<section>
   <header>
     <div>
       <p class="deck-tree">{{Deck}}</p>
@@ -11,32 +12,27 @@
     </div>
   </header>
 
-  <article class="question-container">
-    <p class="stop">Para que serve o <span class="string-color">elemento</span> mostrado abaixo?</p>
-
-    <p class="stop element" style="margin-top: 20px">
-      <span class="tag-gray-color">&lt;</span
-      ><span class="element-selector-color">{{ElementSelector}}</span>{{^HasClosingTag}}/{{/HasClosingTag}}<span
-        class="tag-gray-color"
-        >&gt;</span
-      >{{#HasClosingTag}}<span class="tag-gray-color">&lt;</span><span class="tag-gray-color">/</span
-      ><span class="element-selector-color">{{ElementSelector}}</span><span class="tag-gray-color">&gt;</span>
-      {{/HasClosingTag}}
-    </p>
+  <article>
+    <div id="questionField" class="question-field">
+      <div>
+        <span class="string-color">Quais</span>
+        <span class="tag-gray-color"> são os parâmetros passados para o decorator </span>
+        <span class="string-color">&quot;</span><span class="symbols">@</span><span class="class-color">{{Name}}</span
+        ><span class="string-color">&quot;</span>?
+      </div>
+    </div>
   </article>
 
-  <article class="answer-container fade-in">
-    <div class="answer-content" id="answerField">{{ElementDescription}}</div>
+  <article class="article-answer">
+    <div class="answer-field">
+      <div class="notesChild">[...]</div>
+    </div>
   </article>
-
-  {{#Image}}
-  <article class="image-container" style="padding-top: 20px; opacity: 0">
-    <picture class="image-content">{{Image}}</picture>
-  </article>
-  {{/Image}}
-</div>
+  <footer>
+    <audio>{{NameAudio}}</audio>
+  </footer>
+</section>
 <script>
-  // BACK
   function injectScript(src, type) {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
@@ -54,16 +50,18 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
+    var $question = html.get(".questionField");
 
     typingJS({
-      containerSelector: ".answer-content",
+      containerSelector: ".question-field",
       typingSpeedMillisecond: 25,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
+        $audio.hasChildNodes() && pycmd("play:q:0");
       },
     }).execute();
   })();
 </script>
+{{/Parameters}}

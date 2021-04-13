@@ -74,11 +74,11 @@
     }
 
     $question = html.get(".question-content");
-    $question.formatPipe().formatKeyValueProperty();
+    $question.formatPipe().formatKeyValueProperty().formatPrototypeFunction();
 
     typingJS({
       containerSelector: ".question-content",
-      typingSpeedMillisecond: 45,
+      typingSpeedMillisecond: 25,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
       callback: () => {

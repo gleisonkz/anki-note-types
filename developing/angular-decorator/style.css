@@ -1,0 +1,43 @@
+@import url("_base.styles.css");
+
+article {
+  text-align: center;
+}
+
+.question-field {
+  flex-direction: column;
+}
+
+.question-field p {
+  margin: 10px;
+}
+
+.extra-container {
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.articleTip {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.tip {
+  display: none;
+  font-family: consolas;
+  font-size: 20px;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.notesChild {
+  display: flex;
+  justify-content: center;
+  color: var(--class-color);
+}
+
+.notesChild li {
+  text-align: left;
+}

@@ -1,0 +1,85 @@
+<section>
+  <header>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
+    </div>
+  </header>
+
+  <article>
+    <div id="questionField" class="question-field">
+      <div>
+        <span class="string-color">Quais</span>
+        <span class="tag-gray-color"> são os parâmetros passados para o decorator </span>
+        <span class="string-color">&quot;</span><span class="symbols">@</span><span class="class-color">{{Name}}</span
+        ><span class="string-color">&quot;</span>?
+      </div>
+    </div>
+  </article>
+
+  <article>
+    <div class="answer-field">
+      <div id="answerField" class="parameters">{{Parameters}}</div>
+    </div>
+  </article>
+
+  <article class="hidden image" style="padding-top: 20px">
+    <picture>{{Image}}</picture>
+  </article>
+
+  <article class="extra-container hidden no-select">
+    {{#Extra}}
+
+    <div class="answer-field" id="extraField">
+      <div>{{Extra}}</div>
+    </div>
+
+    {{/Extra}}
+  </article>
+
+  <footer>
+    <audio>{{DescriptionAudio}}</audio>
+  </footer>
+</section>
+<script>
+  function injectScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+    }
+
+    var $answer = html.get(".parameters");
+    $answer.formatParameters();
+    var $extra = html.get(".extra-container");
+    var $image = html.get(".image");
+
+    // typingJS({
+    //   containerSelector: ".answer-field",
+    //   typingSpeedMillisecond: 25,
+    //   typingSpeedDelay: 500,
+    //   initialSpeedDelayTime: 200,
+    //   callback: () => {
+    //     $audio = html.get("audio");
+    //      $audio && $audio.hasChildNodes() && pycmd("play:a:0");
+    //     $image.style.opacity = "1";
+    //     $extra.style.opacity = "1";
+    //   },
+    // }).execute();
+  })();
+</script>
