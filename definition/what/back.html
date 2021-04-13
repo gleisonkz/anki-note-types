@@ -1,4 +1,4 @@
-<section class="fade-in">
+<section>
   <header>
     <div>
       <p class="deck-tree">{{Deck}}</p>
@@ -12,25 +12,13 @@
   </header>
 
   <article>
-    {{#isComponent}}
-    <div class="question-field">
+    <div id="questionField" class="question-field">
+      <p>Qual a definição do termo abaixo ?</p>
       <p>
-        <span class="class-color"> Como se chama</span>
-        o <span class="element-selector-color">componente</span> do
-        <span class="class-color">Angular Material</span> que realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
+        <span class="string-color">&quot;</span><span class="term">{{Term}}</span
+        ><span class="string-color">&quot;</span>
       </p>
     </div>
-    {{/isComponent}} {{^isComponent}}
-    <div class="question-field">
-      <p>
-        <span class="class-color"> Como se chama</span>
-        a <span class="attribute-color-css">diretiva</span> do <span class="class-color">Angular Material</span> que
-        realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
-      </p>
-    </div>
-    {{/isComponent}}
   </article>
 
   <article>
@@ -38,13 +26,36 @@
       <div class="notesChild" style="color: #4cc5a1">[...]</div>
     </div>
   </article>
+
+  <article>
+    <div class="answer-field">
+      <div id="answerField">{{Definition}}</div>
+    </div>
+  </article>
+
+  <article style="padding-top: 20px">
+    <picture>{{Image}}</picture>
+  </article>
+
+  <article class="extra-container hidden no-select">
+    {{#Extra}}
+
+    <div class="answer-field" id="extraField">
+      <div>{{Extra}}</div>
+    </div>
+
+    {{/Extra}}
+  </article>
+
+  <footer>
+    <audio>{{DefinitionAudio}}</audio>
+  </footer>
 </section>
 <script>
-  function injectScript(src, type) {
+  function injectScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = src;
-      script.type = type || "";
       script.async = true;
       script.onload = resolve;
       script.onerror = reject;
@@ -56,20 +67,23 @@
     if (typeof typingJS === "undefined") {
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+      await injectScript("https://unpkg.com/react@17/umd/react.development.js");
+      await injectScript("https://unpkg.com/react-dom@17/umd/react-dom.development.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/header.js");
     }
 
-    var $question = html.get(".questionField");
-    var $description = html.get(".description");
-    $description.formatHtmlElement().formatPipe();
+    var $question = html.get(".answer-field");
+    var $extra = html.get(".extra-container");
 
     typingJS({
-      containerSelector: ".question-field",
+      containerSelector: ".answer-field",
       typingSpeedMillisecond: 25,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio && $audio.hasChildNodes() && pycmd("play:q:0");
+        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
+        $extra.style.opacity = "1";
       },
     }).execute();
   })();

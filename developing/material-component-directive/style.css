@@ -1,93 +1,8 @@
 @import url("_editor_button_styles.css");
-
-:root {
-  --classColor: #4cc5a1;
-  --stringColor: #d69d85;
-  --attributeColorCSS: #9cdcfe;
-  --tagGrayColor: #aeafad;
-  --elementSelectorColor: #4f9cd6;
-  --selectorColorCSS: #d7ba7d;
-  --methodColor: #dcdcaa;
-  --bg-vs-code-color: #1e1e1e;
-  --default-gray: rgb(206, 195, 195);
-}
+@import url("_base.styles.css");
 
 section {
   overflow: hidden;
-}
-
-.card {
-  font-size: 20px;
-  font-family: consolas;
-  text-align: center;
-  color: var(--default-gray);
-  background-color: var(--bg-vs-code-color);
-}
-
-.card.nightMode {
-  font-size: 20px;
-  font-family: consolas;
-  text-align: center;
-  color: var(--default-gray);
-  background-color: var(--bg-vs-code-color);
-}
-
-.deckTree {
-  font-family: Verdana;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 11px;
-  color: #a6a6a6;
-  margin-bottom: 20px;
-}
-
-.subdeckName {
-  font-family: courier;
-  text-transform: uppercase;
-  font-size: 20px;
-  color: #c5be3f;
-}
-
-audio {
-  display: none;
-}
-
-.questionField {
-  font-family: consolas;
-  font-size: 20px;
-  padding: 0px 0px 20px 0px;
-  text-align: center;
-}
-
-.questionField b {
-  color: var(--stringColor);
-}
-
-.answerField {
-  border: 2px dashed rgba(85, 85, 85, 0.75);
-  padding: 10px;
-  color: #4cc5a1;
-  margin: 2px 20px 2px 20px;
-  text-align: center;
-}
-
-.answerContainer {
-  margin-bottom: 20px;
-  justify-content: center;
-}
-
-.articleAnswer + .articleAnswer {
-  margin-top: 10px;
-}
-
-.articleAnswer b {
-  font-weight: normal;
-  color: var(--stringColor);
-}
-
-.articleQuestion {
-  display: flex;
-  justify-content: center;
 }
 
 .extra-container {
@@ -105,35 +20,6 @@ audio {
   transition: visibility 0s 1s, opacity 0.5s linear, transform 0.5s;
 }
 
-.custom-button {
-  display: block;
-  align-self: center;
-  font-family: Menlo;
-  font-size: 16px;
-  color: #bdc3c7;
-  background-color: rgba(85, 85, 85, 0.15);
-  border-radius: 10px;
-  padding: 5px;
-  width: 200px;
-  text-align: center;
-  font-weight: 500;
-  margin: 20px auto;
-  transition: background-color 0.15s ease-out;
-}
-
-.custom-button:hover {
-  background-color: rgba(85, 85, 85, 0.35);
-  cursor: pointer;
-}
-
-.notes {
-  font-size: 20px;
-  border: 2px dashed rgba(85, 85, 85, 0.75);
-  padding: 10px;
-  margin: 3px 20px 3px 20px;
-  text-align: center;
-}
-
 .notesChild {
   display: flex;
   justify-content: center;
@@ -141,66 +27,4 @@ audio {
 
 .notesChild li {
   text-align: left;
-}
-
-.containerFlex {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.classColor {
-  color: var(--classColor);
-}
-
-.classColor b {
-  font-weight: normal;
-  color: var(--stringColor);
-}
-
-.stringColor {
-  color: #d69d85;
-}
-
-.attributeColorCSS {
-  color: #9cdcfe;
-}
-
-.tagGrayColor {
-  color: #aeafad;
-}
-
-.elementSelectorColor {
-  color: #4f9cd6;
-}
-
-.selectorColorCSS {
-  color: #d7ba7d;
-}
-
-.functionColor {
-  color: #dcdcaa;
-}
-
-.hidden {
-  opacity: 0;
-
-  transform: translateX(-100%);
-  transition: all 0.5s;
-}
-
-.no-select {
-  user-select: none;
-}
-
-.fade-in {
-  animation: fadeIn ease 1.5s forwards;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }

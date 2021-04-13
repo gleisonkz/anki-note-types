@@ -1,32 +1,32 @@
-<section class="fade-in">
+<section>
   <header>
-    <div>
-      <p class="deck-tree">{{Deck}}</p>
+    <div class="deck-tree">
+      <p>{{Deck}}</p>
       <p class="sub-deck-name">{{Subdeck}}</p>
-      <p class="sub-deck-name">{{Link}}</p>
     </div>
   </header>
 
-  <article class="article-question">
-    <div>Qual o nome dado a definição abaixo?</div>
-    <div id="questionField" class="questionField">
-      <span class="stringColor">"</span>{{Definition}}<span class="stringColor">"</span>
+  <article>
+    <div class="question-field">
+      <p>
+        A propriedade <span class="attribute-color-css">{{PropertyName}}</span>:<span class="string-color">"..."</span>
+        pertence ao <span class="class-color">container</span> ou ao <span class="class-color">item</span> ?
+      </p>
     </div>
   </article>
 
-  <article class="articleTip">
-    {{#Tip}}
-    <div class="customButton" id="tipButton" onclick="toggle()">Show Tip</div>
-
-    <div class="tip" id="tipField">{{Tip}}</div>
-    {{/Tip}}
-  </article>
-
-  <article class="articleAnswer flex-center">
-    <div class="answerField">
-      <div class="notesChild">[...]</div>
+  <article>
+    <div id="answerField" class="answer-field notesChild containerFlex">
+      <span class="classColor">{{isContainerOrItem}}</span>
     </div>
   </article>
+
+  <article>
+    <picture class="class-color">{{ContainerItemImage}}</picture>
+  </article>
+  <footer>
+    <audio>{{ContainerItemAudio}}</audio>
+  </footer>
 </section>
 <script>
   function injectScript(src, type) {
@@ -47,17 +47,14 @@
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
 
-    var $question = html.get(".questionField");
-    $question.formatPascalCase();
-
     typingJS({
-      containerSelector: ".questionField",
-      typingSpeedMillisecond: 45,
+      containerSelector: ".answer-field",
+      typingSpeedMillisecond: 25,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio.hasChildNodes() && pycmd("play:q:0");
+        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
       },
     }).execute();
   })();

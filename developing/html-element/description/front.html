@@ -1,7 +1,14 @@
 <div class="card-container fade-in">
-  <header class="header">
-    <p class="header__deck-tree">{{Deck}}</p>
-    <p class="header__subdeck-name">{{Subdeck}}</p>
+  <header>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
+    </div>
   </header>
 
   <article class="question-container">

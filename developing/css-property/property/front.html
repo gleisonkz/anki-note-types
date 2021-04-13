@@ -12,32 +12,25 @@
   </header>
 
   <article>
-    {{#isComponent}}
     <div class="question-field">
-      <p>
-        <span class="class-color"> Como se chama</span>
-        o <span class="element-selector-color">componente</span> do
-        <span class="class-color">Angular Material</span> que realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
-      </p>
+      <div>
+        <span class="class-color">Para que serve a </span>
+        <span>propriedade</span> <span class="attribute-color-css">{{PropertyName}}</span>:<span class="string-color"
+          >"..."</span
+        >?
+      </div>
     </div>
-    {{/isComponent}} {{^isComponent}}
-    <div class="question-field">
-      <p>
-        <span class="class-color"> Como se chama</span>
-        a <span class="attribute-color-css">diretiva</span> do <span class="class-color">Angular Material</span> que
-        realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
-      </p>
-    </div>
-    {{/isComponent}}
   </article>
 
   <article>
     <div class="notes">
-      <div class="notesChild" style="color: #4cc5a1">[...]</div>
+      <div class="class-color">[...]</div>
     </div>
   </article>
+
+  <footer>
+    <audio>{{PropertyNameAudio}}</audio>
+  </footer>
 </section>
 <script>
   function injectScript(src, type) {
@@ -57,10 +50,6 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
-
-    var $question = html.get(".questionField");
-    var $description = html.get(".description");
-    $description.formatHtmlElement().formatPipe();
 
     typingJS({
       containerSelector: ".question-field",

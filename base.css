@@ -1,0 +1,71 @@
+:root {
+  --class-color: #4cc5a1;
+  --string-color: #d69d85;
+  --attribute-color-css: #9cdcfe;
+  --tag-gray-color: #aeafad;
+  --element-selector-color: #4f9cd6;
+  --selector-color-css: #d7ba7d;
+  --function-color: #dcdcaa;
+  --bg-vs-code-color: #1e1e1e;
+  --symbols: #d4d4d4;
+  --const-color: #4fc1ff;
+  --default-gray: rgb(206, 195, 195);
+  --return-keyword: #c586c0;
+}
+
+.return-keyword {
+  color: var(--return-keyword);
+}
+
+.class-color {
+  color: var(--class-color);
+}
+
+.string-color {
+  color: var(--string-color);
+}
+
+.attribute-color-css {
+  color: var(--attribute-color-css);
+}
+
+.tag-gray-color {
+  color: var(--tag-gray-color);
+}
+
+.element-selector-color {
+  color: var(--element-selector-color);
+}
+
+.selector-color-css {
+  color: var(--selector-color-css);
+}
+
+.function-color {
+  color: var(--function-color);
+}
+
+.symbols-color {
+  color: var(--symbols);
+}
+
+.const-color {
+  color: var(--const-color);
+}
+
+.no-select {
+  user-select: none;
+}
+
+.fade-in {
+  animation: fadeIn ease 1.5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,4 +1,4 @@
-<section class="fade-in">
+<section>
   <header>
     <div>
       <p class="deck-tree">{{Deck}}</p>
@@ -12,25 +12,21 @@
   </header>
 
   <article>
-    {{#isComponent}}
-    <div class="question-field">
+    <div id="questionField" class="question-field">
+      <p>Qual a definição do termo abaixo ?</p>
       <p>
-        <span class="class-color"> Como se chama</span>
-        o <span class="element-selector-color">componente</span> do
-        <span class="class-color">Angular Material</span> que realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
+        <span class="string-color">&quot;</span><span class="term">{{Term}}</span
+        ><span class="string-color">&quot;</span>
       </p>
     </div>
-    {{/isComponent}} {{^isComponent}}
-    <div class="question-field">
-      <p>
-        <span class="class-color"> Como se chama</span>
-        a <span class="attribute-color-css">diretiva</span> do <span class="class-color">Angular Material</span> que
-        realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
-      </p>
-    </div>
-    {{/isComponent}}
+  </article>
+
+  <article class="article-tip">
+    {{#Tip}}
+    <div class="custom-button" id="tipButton" onclick="toggle()">Show Tip</div>
+
+    <div class="tip" id="tipField">{{Tip}}</div>
+    {{/Tip}}
   </article>
 
   <article>
@@ -38,6 +34,10 @@
       <div class="notesChild" style="color: #4cc5a1">[...]</div>
     </div>
   </article>
+
+  <footer>
+    <audio>{{TermAudio}}</audio>
+  </footer>
 </section>
 <script>
   function injectScript(src, type) {
@@ -57,10 +57,9 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
-
     var $question = html.get(".questionField");
-    var $description = html.get(".description");
-    $description.formatHtmlElement().formatPipe();
+    var $term = html.get(".term");
+    $term.formatPascalCase();
 
     typingJS({
       containerSelector: ".question-field",
@@ -69,7 +68,7 @@
       initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio && $audio.hasChildNodes() && pycmd("play:q:0");
+        $audio.hasChildNodes() && pycmd("play:q:0");
       },
     }).execute();
   })();

@@ -1,7 +1,14 @@
 <div class="card-container">
-  <header class="header">
-    <p class="header__deck-tree">{{Deck}}</p>
-    <p class="header__subdeck-name">{{Subdeck}}</p>
+  <header>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
+    </div>
   </header>
 
   <article class="question-container">
@@ -10,23 +17,22 @@
       o
       <span class="class-color"> elemento</span>
       descrito pela definição abaixo?
-    </br></br>
-      "<span class="class-color description">{{ElementDescription}}</span>"
-  </p>
+    </p>
+    <p class="stop description" style="margin-top: 20px">"<span class="class-color">{{ElementDescription}}</span>"</p>
   </article>
 
-  <article class="answer-container"> 
+  <article class="answer-container">
     <div class="answer-content" id="answerField">
-    <p>
-      <span class="tag-gray-color">&lt;</span
-      ><span class="element-selector-color">{{ElementSelector}}</span>{{^HasClosingTag}}/{{/HasClosingTag}}<span
-        class="tag-gray-color"
-        >&gt;</span
-      >{{#HasClosingTag}}<span class="tag-gray-color">&lt;</span><span class="tag-gray-color">/</span
-      ><span class="element-selector-color">{{ElementSelector}}</span><span class="tag-gray-color">&gt;</span>
-      {{/HasClosingTag}}
-    </p>
-    </div> 
+      <p>
+        <span class="tag-gray-color">&lt;</span
+        ><span class="element-selector-color">{{ElementSelector}}</span>{{^HasClosingTag}}/{{/HasClosingTag}}<span
+          class="tag-gray-color"
+          >&gt;</span
+        >{{#HasClosingTag}}<span class="tag-gray-color">&lt;</span><span class="tag-gray-color">/</span
+        ><span class="element-selector-color">{{ElementSelector}}</span><span class="tag-gray-color">&gt;</span>
+        {{/HasClosingTag}}
+      </p>
+    </div>
   </article>
 
   {{#Image}}

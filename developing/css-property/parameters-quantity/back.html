@@ -1,4 +1,4 @@
-<section class="fade-in">
+<section>
   <header>
     <div>
       <p class="deck-tree">{{Deck}}</p>
@@ -14,8 +14,7 @@
   <article>
     <div id="questionField" class="question-field">
       <div>
-        <span class="tag-gray-color">Para que serve </span>
-        <span>a função </span>
+        <span class="tag-gray-color">Quantos parâmetros possui a função</span>
         <span class="function-color" id="replacement">{{FunctionName}}()</span>?
       </div>
     </div>
@@ -23,12 +22,20 @@
 
   <article>
     <div class="notes">
-      <div class="notesChild" style="color: #4cc5a1">[...]</div>
+      <div class="parametersQtd notesChild containerFlex" style="color: #4cc5a1">{{ParametersQuantity}}</div>
+    </div>
+    <div id="parameters" class="notes parameters" style="margin-top: 15px">
+      <div class="notesChild containerFlex">{{Parameters}}</div>
     </div>
   </article>
-  <footer>
-    <audio>{{FunctionNameAudio}}</audio>
-  </footer>
+
+  <article class="extra-container image">
+    {{#SampleImage}}
+    <div class="extra" id="extra-field">
+      <div class="notesChild">{{SampleImage}}</div>
+    </div>
+    {{/SampleImage}}
+  </article>
 </section>
 <script>
   function injectScript(src, type) {
@@ -48,17 +55,32 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
-    var $question = html.get(".question-field");
-    $question.formatPrototypeFunction();
+
+    $("div:has(ul)", "div:has(ol)").addClass("notesChild");
+    var $parametersQtd = document.querySelector(".parametersQtd");
+    var $parameters = document.querySelector(".parameters");
+    var $image = document.querySelector(".image");
+    var $functionName = html.get("#replacement");
+
+    $functionName.formatPrototypeFunction();
+    $parameters.formatParameters();
+    $parametersQtd.classList.add("fade-in");
 
     typingJS({
-      containerSelector: ".question-field",
-      typingSpeedMillisecond: 25,
+      containerSelector: ".parametersQtd",
+      typingSpeedMillisecond: 45,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
       callback: () => {
+        $parameters.classList.add("fade-in");
+        typingJS({
+          containerSelector: ".parameters",
+          callback: () => {
+            $image.classList.add("fade-in");
+          },
+        }).execute();
         $audio = html.get("audio");
-        $audio && $audio.hasChildNodes() && pycmd("play:q:0");
+        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
       },
     }).execute();
   })();

@@ -1,3 +1,4 @@
+{{#Parameters}}
 <section class="fade-in">
   <header>
     <div>
@@ -12,25 +13,12 @@
   </header>
 
   <article>
-    {{#isComponent}}
-    <div class="question-field">
-      <p>
-        <span class="class-color"> Como se chama</span>
-        o <span class="element-selector-color">componente</span> do
-        <span class="class-color">Angular Material</span> que realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
-      </p>
+    <div id="questionField" class="question-field">
+      <div>
+        <span class="tag-gray-color">Quantos parâmetros possui a função</span>
+        <span class="function-color" id="replacement">{{FunctionName}}()</span>?
+      </div>
     </div>
-    {{/isComponent}} {{^isComponent}}
-    <div class="question-field">
-      <p>
-        <span class="class-color"> Como se chama</span>
-        a <span class="attribute-color-css">diretiva</span> do <span class="class-color">Angular Material</span> que
-        realiza a instrução abaixo?<br /><br />
-        "<span class="description">{{Description}}</span>"
-      </p>
-    </div>
-    {{/isComponent}}
   </article>
 
   <article>
@@ -38,6 +26,10 @@
       <div class="notesChild" style="color: #4cc5a1">[...]</div>
     </div>
   </article>
+
+  <footer>
+    <audio>{{FunctionNameAudio}}</audio>
+  </footer>
 </section>
 <script>
   function injectScript(src, type) {
@@ -58,19 +50,19 @@
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
 
-    var $question = html.get(".questionField");
-    var $description = html.get(".description");
-    $description.formatHtmlElement().formatPipe();
+    var $functionName = html.get("#replacement");
+    $functionName.formatPrototypeFunction();
 
     typingJS({
-      containerSelector: ".question-field",
-      typingSpeedMillisecond: 25,
+      containerSelector: ".questionField",
+      typingSpeedMillisecond: 45,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
       callback: () => {
         $audio = html.get("audio");
-        $audio && $audio.hasChildNodes() && pycmd("play:q:0");
+        $audio.hasChildNodes() && pycmd("play:q:0");
       },
     }).execute();
   })();
 </script>
+{{/Parameters}}

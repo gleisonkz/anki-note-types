@@ -1,26 +1,31 @@
 <section>
   <header>
-    <div class="deckTree">
-      <p>{{Deck}}</p>
-      <p class="subdeckName">{{Subdeck}}</p>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
     </div>
   </header>
 
   <article>
     {{#isComponent}}
-    <div class="questionField">
+    <div class="question-field">
       <p>
-        <span class="classColor"> Como se chama</span>
-        o <span class="elementSelectorColor">componente</span> do <span class="classColor">Angular Material</span> que
-        realiza a instrução abaixo?<br /><br />
+        <span class="class-color"> Como se chama</span>
+        o <span class="element-selector-color">componente</span> do
+        <span class="class-color">Angular Material</span> que realiza a instrução abaixo?<br /><br />
         "<span class="description">{{Description}}</span>"
       </p>
     </div>
     {{/isComponent}} {{^isComponent}}
-    <div class="questionField">
+    <div class="question-field">
       <p>
-        <span class="classColor"> Como se chama</span>
-        a <span class="attributeColorCSS">diretiva</span> do <span class="classColor">Angular Material</span> que
+        <span class="class-color"> Como se chama</span>
+        a <span class="attribute-color-css">diretiva</span> do <span class="class-color">Angular Material</span> que
         realiza a instrução abaixo?<br /><br />
         "<span class="description">{{Description}}</span>"
       </p>
@@ -82,7 +87,7 @@
     }
 
     var $description = html.get(".description");
-    $description.formatHtmlElement();
+    $description.formatHtmlElement().formatPipe();
 
     typingJS({
       containerSelector: ".articleAnswer",

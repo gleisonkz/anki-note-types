@@ -1,49 +1,5 @@
 @import url("_editor_button_styles.css");
-
-:root {
-  --class-color: #4cc5a1;
-  --string-color: #d69d85;
-  --attributeColorCSS: #9cdcfe;
-  --tag-gray-color: #aeafad;
-  --elementSelectorColor: #4f9cd6;
-  --selectorColorCSS: #d7ba7d;
-  --methodColor: #dcdcaa;
-  --bg-vs-code-color: #1e1e1e;
-  --default-gray: rgb(206, 195, 195);
-}
-
-* {
-  margin: 0;
-  border: 0;
-  box-sizing: border-box;
-}
-
-.card,
-.card.nightMode {
-  font-size: 20px;
-  font-family: consolas;
-  text-align: center;
-  color: var(--default-gray);
-  background-color: var(--bg-vs-code-color);
-}
-
-.header__deck-tree {
-  font-family: Verdana;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 11px;
-  margin-bottom: 20px;
-
-  color: #a6a6a6;
-}
-
-.header__subdeck-name {
-  font-family: courier;
-  text-transform: uppercase;
-  font-size: 20px;
-
-  color: #c5be3f;
-}
+@import url("_base.styles.css");
 
 .card-container {
   display: flex;
@@ -56,7 +12,6 @@
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  margin: 20px 0;
 }
 
 .question-dots {
@@ -102,81 +57,7 @@
   transition: opacity 0.5s linear;
 }
 
-.custom-button {
-  display: block;
-  font-family: Menlo;
-  font-size: 16px;
-  color: #bdc3c7;
-  background-color: rgba(85, 85, 85, 0.15);
-  border-radius: 10px;
-  padding: 5px;
-  width: 50%;
-  text-align: center;
-  font-weight: 500;
-  margin: 20px;
-  transition: background-color 0.15s ease-out;
-}
-
-.custom-button:hover {
-  background-color: rgba(85, 85, 85, 0.35);
-  cursor: pointer;
-}
-
-.custom-button:active {
-  transform: scale(0.9);
-}
-
 .element {
   font-family: consolas;
-}
-
-.class-color {
-  color: var(--class-color);
-}
-
-.class-color b {
-  font-weight: normal;
-  color: var(--string-color);
-}
-
-.string-color {
-  color: #d69d85;
-}
-
-.element-selector-color {
-  color: var(--elementSelectorColor);
-}
-
-.atribute-css-color {
-  color: var(--attributeColorCSS);
-}
-
-.hidden-back-cursor:before {
-  content: ".";
-  width: 4px;
-  height: 10px;
-  background-color: green;
-  color: green;
-  animation: cursor 0.8s infinite;
-}
-
-.tag-gray-color {
-  color: #aeafad;
-}
-
-audio {
-  display: none;
-}
-
-.fade-in {
-  animation: fadeIn ease 1.5s forwards;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+  margin: 0 0 20px 0;
 }
