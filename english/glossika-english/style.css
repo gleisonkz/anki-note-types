@@ -1,3 +1,5 @@
+@import url("_editor_button_styles.css");
+
 :root {
   --header-bg-color: #293d3d;
   --customGray: rgba(85, 85, 85, 0.75);
@@ -22,8 +24,25 @@
   box-sizing: border-box;
 }
 
+.info-queue {
+  font-family: courier;
+  font-size: 11px;
+  color: #e0dab6;
+}
+
 .fade-in {
   animation: fadeIn ease 1.5s;
+}
+
+.label {
+  font-family: Verdana;
+  font-size: 11px;
+  color: #a6a6a6;
+  margin-bottom: 3px;
+}
+
+.card-info {
+  text-align: left;
 }
 
 @keyframes fadeIn {
@@ -41,8 +60,16 @@ header {
   padding: 5px;
 }
 
+.btn {
+  color: white;
+  width: 110px;
+  align-self: center;
+  margin-bottom: 10px;
+}
+
 .margin-bottom {
   border-bottom: solid 0.5px;
+  padding-bottom: 10px;
 }
 
 article {
@@ -147,4 +174,48 @@ section {
   article > p {
     margin-bottom: 10px;
   }
+}
+
+.legend-title {
+  text-align: left;
+  margin-bottom: 5px;
+  font-family: courier;
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #c5be3f;
+}
+.my-legend .legend-scale ul {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  float: left;
+  list-style: none;
+}
+.my-legend .legend-scale ul li {
+  font-size: 13px;
+  list-style: none;
+  margin-left: 0;
+  line-height: 18px;
+  margin-bottom: 2px;
+  text-align: left;
+}
+.my-legend ul.legend-labels li span {
+  display: block;
+  float: left;
+  height: 16px;
+  width: 30px;
+  margin-right: 5px;
+  margin-left: 0;
+  border: 1px solid #999;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deck-info-container {
+  display: flex;
+  flex-direction: column;
 }

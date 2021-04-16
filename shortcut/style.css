@@ -1,0 +1,25 @@
+@import url("_base.styles.css");
+
+.short-cut {
+  display: inline-grid;
+  grid-auto-flow: column;
+  column-gap: 20px;
+  text-align: center;
+}
+
+.key {
+  border: 2px dashed rgba(73, 22, 22, 0.75);
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  min-width: 60px;
+}
+
+.plus {
+  font-size: 40px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

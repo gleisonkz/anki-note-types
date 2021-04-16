@@ -54,7 +54,15 @@
   <article class="image-container fade-in" style="padding-top: 20px">
     <picture class="image-content">{{Image}}</picture>
   </article>
-  {{/Image}} {{#Extra}}
+  {{/Image}} {{#Preview}}
+  <article class="image-container" style="padding-top: 20px">
+    <picture class="image-content">{{Preview}}</picture>
+  </article>
+  {{/Preview}} {{#ImageGIF}}
+  <article class="image-container" style="padding-top: 20px">
+    <picture class="image-content">{{ImageGIF}}</picture>
+  </article>
+  {{/ImageGIF}} {{#Extra}}
   <article class="extra-container no-select fade-in">
     <div class="custom-button no-select" id="toggleButton" onclick="toggle()">Show Extra</div>
 

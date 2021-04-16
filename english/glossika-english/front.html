@@ -1,20 +1,35 @@
 <section class="fade-in">
   <header>
-    <span class="deck-tree">{{Deck}}</span>
-    <span class="sub-deck-name">{{Subdeck}}</span>
-    <button class="btn">Generate Card</button>
-    <p class="label">Already Added?&nbsp;<span class="added info-queue"></span></p>
-    <span id="info"></span>
-    <div class="card-info">
-      <p class="label">Morph State: <span class="info-queue">{{Tags}}</span></p>
-      <p class="label">
-        Card State: <span id="infoQueue" class="info-queue">{{info-Queue:}}</span> <span class="info-queue">card</span>
-      </p>
-      <p class="label">
-        Current Interval: <span id="infoQueue" class="info-queue">{{info-Ivl:}}</span>
-        <span class="info-queue">days</span>
-      </p>
-      <p class="label">Review Times: <span id="infoQueue" class="info-queue">{{info-Reviews:}}</span></p>
+    <div class="deck-info-container">
+      <span class="deck-tree">{{Deck}}</span>
+      <span class="sub-deck-name">{{Subdeck}}</span>
+    </div>
+    <button class="btn">New MST Card</button>
+
+    <div class="info-container">
+      <div class="card-info">
+        <div class="legend-title">Details</div>
+        <p class="label">Already Added?&nbsp;<span class="added info-queue"></span></p>
+        <p class="label">Morph State: <span class="info-queue">{{Tags}}</span></p>
+        <p class="label">
+          Card State: <span id="infoQueue" class="info-queue">{{info-Queue:}}</span>
+          <span class="info-queue">card</span>
+        </p>
+        <p class="label">
+          Current Interval: <span id="infoQueue" class="info-queue">{{info-Ivl:}}</span>
+          <span class="info-queue">days</span>
+        </p>
+        <p class="label">Review Times: <span id="infoQueue" class="info-queue">{{info-Reviews:}}</span></p>
+      </div>
+      <div class="my-legend">
+        <div class="legend-title">Highlights</div>
+        <div class="legend-scale">
+          <ul class="legend-labels">
+            <li><span style="background: #8dd3c7"></span>New Word</li>
+            <li><span style="background: #d69d85"></span>Connected Speech</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -68,7 +83,6 @@
 
     const $phraseElement = document.getElementById("phrase");
     const $toggleElement = document.getElementById("toggle");
-    document.getElementById("phrase").style.visibility = "hidden";
 
     const index = $phraseElement.innerText.toLowerCase().indexOf(target.toLowerCase());
     const original = $phraseElement.innerText.substring(index, index + target.length);
@@ -81,12 +95,13 @@
       },
     ];
     const applyStyles = (object) => {
-      object.element.innerHTML = object.element.innerText.replace(
+      object.element.innerHTML = object.element.innerHTML.replace(
         object.searchValue,
         `<span class="${object.classElement}">${object.searchValue}</span>`
       );
     };
     replacementElements.filter((c) => c.searchValue).forEach((object) => applyStyles(object));
+    document.getElementById("phrase").style.visibility = "hidden";
   })();
 
   // ===================================================
