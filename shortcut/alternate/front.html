@@ -1,3 +1,4 @@
+{{#SecondShortcutKey1}}
 <section>
   <header>
     <div>
@@ -14,32 +15,37 @@
   <article class="question-field">
     <div id="questionField">
       <p class="type1">Qual é a ação executada pelas teclas abaixo</p>
-      <div class="short-cut">
-        {{#FirstShortcutKey1}}
-        <span class="key">{{FirstShortcutKey1}}</span>
-        {{/FirstShortcutKey1}} {{#FirstShortcutKey2}}
+      <div class="short-cut hidden">
+        {{#SecondShortcutKey1}}
+        <span class="key">{{SecondShortcutKey1}}</span>
+        {{/SecondShortcutKey1}} {{#SecondShortcutKey2}}
         <span class="plus">+</span>
-        <span class="key">{{FirstShortcutKey2}}</span>
-        {{/FirstShortcutKey2}} {{#FirstShortcutKey3}}
+        <span class="key">{{SecondShortcutKey2}}</span>
+        {{/SecondShortcutKey2}} {{#SecondShortcutKey3}}
         <span class="plus">+</span>
-        <span class="key">{{FirstShortcutKey3}}</span>
-        {{/FirstShortcutKey3}}
+        <span class="key">{{SecondShortcutKey3}}</span>
+        {{/SecondShortcutKey3}}
       </div>
       <p class="type2">No {{Environment}}</p>
     </div>
   </article>
 
   <article>
-    <div class="answer-field">
-      <div id="answerField">{{Description}}</div>
+    <div class="notes">
+      <div class="notesChild" style="color: #4cc5a1">[...]</div>
     </div>
   </article>
+
+  <footer>
+    <audio>{{SecondShortcutAudio}}</audio>
+  </footer>
 </section>
 <script>
-  function injectScript(src) {
+  function injectScript(src, type) {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = src;
+      script.type = type || "";
       script.async = true;
       script.onload = resolve;
       script.onerror = reject;
@@ -53,11 +59,19 @@
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
 
+    const $shortcut = html.get(".short-cut");
+
     typingJS({
-      containerSelector: ".answer-field",
+      containerSelector: [".type1", ".type2"],
       typingSpeedMillisecond: 25,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
+      callback: () => {
+        $audio = html.get("audio");
+        $audio && $audio.hasChildNodes() && pycmd && pycmd("play:q:0");
+        $shortcut.classList.add("fade-in");
+      },
     }).execute();
   })();
 </script>
+{{/SecondShortcutKey1}}

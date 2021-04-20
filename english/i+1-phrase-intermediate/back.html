@@ -1,65 +1,71 @@
 <section>
-    <header>
-        <span class="deck-tree">{{Deck}}</span>
-        <span class="sub-deck-name">{{Subdeck}}</span>
-    </header>
+  <header>
+    <p class="deck-tree">{{Deck}}</p>
+    <section class="info-container">
+      <div>
+        <p class="sub-deck-name">{{Subdeck}}</p>
+        <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+        <p class="info-queue hide-mobile">
+          <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+          <span id="infoQueue">{{info-Reviews:}}</span> Times
+        </p>
+      </div>
+      <div class="my-legend">
+        <div class="legend-title">Highlights</div>
+        <div class="legend-scale">
+          <ul class="legend-labels">
+            <li><span style="background: #8dd3c7"></span>New Word</li>
+            <li><span style="background: #d69d85"></span>Connected Speech</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </header>
 
-    <article>
-        <p id="phrase" class="phrase"><span>{{Phrase}}</span></p>
-    </article>
+  <article>
+    <p id="phrase" class="phrase"><span>{{Phrase}}</span></p>
+  </article>
 
-    <hr class="fade-in">
+  <hr class="fade-in" />
 
+  <article class="fade-in answer-container">
+    {{#TranslatedWord}}
+    <span class="translated-word">{{TranslatedWord}}</span>
+    {{/TranslatedWord}} {{#Meaning}}
     <article class="fade-in">
-        <span id="NewWord" class="new-word">{{NewWord}}</span>
-        &nbsp;
-        <span class="ipa">/{{IPA}}/</span>
-        &nbsp;
-        <span class="translated-word">{{TranslatedWord}}</span>
-    </article>
-
-    <hr class="fade-in">
-
-    {{#Class}}
-    <article class="fade-in">
-        <span class="classification">Class: {{Class}}</span>
-    </article>
-    {{/Class}}
-
-    {{#Meaning}}
-    <article class="fade-in">
-        <p class="meaning">({{Meaning}})</p>
+      <p class="meaning">({{Meaning}})</p>
     </article>
     {{/Meaning}}
+  </article>
 
-    {{#Image}}
-    <article class="fade-in">
-        <picture>
-            {{Image}}
-        </picture>
-    </article>
-    {{/Image}}
+  <hr class="fade-in" />
+
+  {{#Class}}
+  <article class="fade-in">
+    <span class="classification">Class: <span class="ipa">{{Class}}</span></span>
+  </article>
+  {{/Class}} {{#Synonyms}}
+  <article class="fade-in">
+    <span class="classification">Synonyms: <span class="ipa">{{Synonyms}}</span></span>
+  </article>
+  {{/Synonyms}} {{#IPA}}
+  <article class="fade-in">
+    <span class="classification">IPA: <span class="ipa">/{{IPA}}/</span></span>
+  </article>
+  {{/IPA}} {{#Image}}
+  <article class="fade-in" style="margin-top: 20px">
+    <picture> {{Image}} </picture>
+  </article>
+  {{/Image}}
 </section>
 <script>
-    (function () {
-        const phraseElement = document.getElementById("phrase");
-        const translatedWord = "{{text:TranslatedWord}}";
-        const newWord = "{{text:NewWord}}"
-
-        const replacementElements = [
-            {
-                element: phraseElement,
-                searchValue: newWord,
-                classElement: "new-word"
-            },
-        ]
-
-        const applyStyles = (object) => {
-            object.element.innerHTML = object.element.innerText
-                .replace(object.searchValue,
-                    `<span class="${object.classElement}">${object.searchValue}</span>`
-                );
-        }
-        replacementElements.forEach(object => applyStyles(object));
-    })();
+  (function () {
+    const phrase = document.getElementById("phrase");
+    let newWord = "{{text:NewWord}}";
+    newWord = newWord.trim();
+    const regex = /[a-z|A-Z]_[a-z|A-Z]/g;
+    phrase.innerHTML = phrase.textContent.replace(newWord, `<span class="new-word">${newWord}</span>`);
+    console.log(phrase.innerHTML);
+    phrase.innerHTML = phrase.innerHTML.replace(regex, '<span class="string-color">$&</span>');
+  })();
 </script>

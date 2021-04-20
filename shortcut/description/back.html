@@ -22,23 +22,39 @@
   </article>
 
   <article>
-    <div class="answer-field">
-      <div class="short-cut fade-in">
-        {{#ShortcutKey1}}
-        <span class="key">{{ShortcutKey1}}</span>
-        {{/ShortcutKey1}} {{#ShortcutKey2}}
-        <span class="plus">+</span>
-        <span class="key">{{ShortcutKey2}}</span>
-        {{/ShortcutKey2}} {{#ShortcutKey3}}
-        <span class="plus">+</span>
-        <span class="key">{{ShortcutKey3}}</span>
-        {{/ShortcutKey3}}
-      </div>
+    <div class="short-cut fade-in">
+      {{#FirstShortcutKey1}}
+      <span class="key">{{FirstShortcutKey1}}</span>
+      {{/FirstShortcutKey1}} {{#FirstShortcutKey2}}
+      <span class="plus">+</span>
+      <span class="key">{{FirstShortcutKey2}}</span>
+      {{/FirstShortcutKey2}} {{#FirstShortcutKey3}}
+      <span class="plus">+</span>
+      <span class="key">{{FirstShortcutKey3}}</span>
+      {{/FirstShortcutKey3}}
     </div>
+    {{#SecondShortcutKey1}}
+    <p>Ou</p>
+    <div class="short-cut fade-in">
+      {{#SecondShortcutKey1}}
+      <span class="key">{{SecondShortcutKey1}}</span>
+      {{/SecondShortcutKey1}} {{#SecondShortcutKey2}}
+      <span class="plus">+</span>
+      <span class="key">{{SecondShortcutKey2}}</span>
+      {{/SecondShortcutKey2}} {{#SecondShortcutKey3}}
+      <span class="plus">+</span>
+      <span class="key">{{SecondShortcutKey3}}</span>
+      {{/SecondShortcutKey3}}
+    </div>
+    {{/SecondShortcutKey1}}
   </article>
 
   <footer>
-    <audio>{{ShortcutAudio}}</audio>
+    {{#BothShortcutsAudio}}
+    <audio>{{BothShortcutsAudio}}</audio>
+    {{/BothShortcutsAudio}} {{^BothShortcutsAudio}}
+    <audio>{{FirstShortcutAudio}}</audio>
+    {{/BothShortcutsAudio}}
   </footer>
 </section>
 <script>
