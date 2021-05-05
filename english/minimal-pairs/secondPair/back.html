@@ -1,20 +1,19 @@
 {{FrontSide}}
 
 <article class="resultCointainer rowCenter">
-    <div class="resultado">
-        <span id="resultado"></span>
-    </div>
+  <div class="resultado">
+    <span>{{FirstPair}}</span>
+  </div>
 </article>
 
 <script>
-    var answer = arrayElements.find(c => c.getAttribute('data-correct') == 'true');
-    answer.style.color = "green";
-    review = undefined;
-    $('.answer').removeClass("selecionado")
+  var answer = arrayElements.find((c) => c.getAttribute("data-correct") == "true");
+  answer.style.color = "green";
+  review = undefined;
+  $(".answer").removeClass("selecionado");
 
-    selecionado = typeof (selecionado) !== 'undefined' ? selecionado : "";
-    var resultado = answer.innerText !== selecionado ? "Wrong" : "Correct"
-    resultSpan = document.getElementById("resultado");
-    resultSpan.innerText = resultado;
-    resultSpan.style.color = resultado == "Correct" ? "green" : "red"
+  selecionado = typeof selecionado !== "undefined" ? selecionado : "";
+  var resultado = answer.innerText !== selecionado ? "Wrong" : "Correct";
+  var answerCommand = resultado == "Correct" ? "ease3" : "ease1";
+  pycmd && pycmd(answerCommand);
 </script>

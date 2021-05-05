@@ -1,0 +1,7 @@
+@import url("_editor_button_styles.css");
+@import url("_base.styles.css");
+
+.articleAnswer b {
+    font-weight: normal;
+    color: var(--string-color);
+  }

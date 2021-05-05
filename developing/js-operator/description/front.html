@@ -1,0 +1,58 @@
+<section class="fade-in">
+  <header>
+    <div>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
+    </div>
+  </header>
+
+  <article>
+      <div class="question-field">
+            <p>
+              <span class="class-color"> Como se chama</span>
+             o <span class="attribute-color-css">operador</span> que realiza a instrução abaixo?</br></br>
+             "<span class="class-color">{{OperatorDescription}}</span>"
+            </p>
+      </div>
+  </article>
+
+  <article>
+      <div class="notes">
+          <div class="notesChild" style="color: #4cc5a1;">
+              [...]
+          </div>
+      </div>
+  </article>
+</section>
+<script>
+  function injectScript(src, type) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.type = type || "";
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  (async () => {
+    if (typeof typingJS === "undefined") {
+      await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
+      await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
+    }
+
+    typingJS({
+      containerSelector: ".question-field",
+      typingSpeedMillisecond: 25,
+      typingSpeedDelay: 500,
+      initialSpeedDelayTime: 200,
+    }).execute();
+  })();
+</script>

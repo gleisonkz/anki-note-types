@@ -1,61 +1,62 @@
 <section>
-    <header>
-        <div class="tags">
-            <p>{{Deck}}</p>
-            <p class="meuSubdeck">{{Subdeck}}</p>
-        </div>
-    </header>
+  <header>
+    <div class="tags">
+      <p>{{Deck}}</p>
+      <p class="meuSubdeck">{{Subdeck}}</p>
+    </div>
+  </header>
 
-    <article class="rowCenter">
-        <div>
-            <span>tap on the right word below</span>
-        </div>
-    </article>
+  <article class="rowCenter">
+    <div>
+      <span>tap on the right word below</span>
+    </div>
+  </article>
 
-    <article class="containerArticle">
-        <div class="containerDashed">
-            <ol class="answerList">
-                <li data-index="1" class="answer ripple"><b>{{SecondPair}}</b></li>
-                <li data-index="2" id="answer2" class="answer ripple">{{FirstPair}}</li>
-            </ol>
-        </div>
-    </article>
-    <audio style="display:none">{{SecondAudio}}</audio>
+  <article class="containerArticle">
+    <div class="containerDashed">
+      <ol class="answerList">
+        <li data-index="1" class="answer ripple"><b>{{SecondPair}}</b></li>
+        <li data-index="2" id="answer2" class="answer ripple">{{FirstPair}}</li>
+      </ol>
+    </div>
+  </article>
+  <audio style="display: none">{{SecondAudio}}</audio>
 </section>
 <script>
-    var arrayElements = [];
+  var arrayElements = [];
 
-    ((function () {
-        var hasReview = typeof (review) !== 'undefined' && review.arrayElements;
-        var parent = document.getElementsByClassName('answerList')[0];
-        var elements = [...document.getElementsByClassName('answer')];
+  (function () {
+    var hasReview = typeof review !== "undefined" && review.arrayElements;
+    var parent = document.getElementsByClassName("answerList")[0];
+    var elements = [...document.getElementsByClassName("answer")];
 
-        var elementAnswer = elements.find(c => [...c.childNodes].find(d => d.nodeName == 'B') && (c.innerText = c.innerText));
-        elementAnswer.setAttribute('data-correct', true);
-        elements.forEach(c => {
-            c.id = Math.floor(Math.random() * 1000);
-            arrayElements.push(parent.removeChild(c));
-        });
+    var elementAnswer = elements.find(
+      (c) => [...c.childNodes].find((d) => d.nodeName == "B") && (c.innerText = c.innerText)
+    );
+    elementAnswer.setAttribute("data-correct", true);
+    elements.forEach((c) => {
+      c.id = Math.floor(Math.random() * 1000);
+      arrayElements.push(parent.removeChild(c));
+    });
 
-        arrayElements = hasReview ? review.arrayElements : arrayElements;
+    arrayElements = hasReview ? review.arrayElements : arrayElements;
 
-        arrayElements.sort((a, b) => a.id - b.id);
-        arrayElements.filter(c => c.innerText.trim().length)
-            .forEach(d => parent.append(d));
+    arrayElements.sort((a, b) => a.id - b.id);
+    arrayElements.filter((c) => c.innerText.trim().length).forEach((d) => parent.append(d));
 
-        if (!hasReview) {
-            review = {
-                arrayElements
-            };
-        } else {
-            review = undefined
-        }
-    }))()
+    if (!hasReview) {
+      review = {
+        arrayElements,
+      };
+    } else {
+      review = undefined;
+    }
+  })();
 
-    $('.answer').click(function (c) {
-        $('.answer').removeClass("selecionado")
-        $(this).addClass("selecionado")
-        selecionado = this.innerText;
-        pycmd("ans");
-    })
+  $(".answer").click(function (c) {
+    $(".answer").removeClass("selecionado");
+    $(this).addClass("selecionado");
+    selecionado = this.innerText;
+    pycmd && pycmd("ans");
+  });
 </script>
