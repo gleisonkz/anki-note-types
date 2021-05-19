@@ -2,16 +2,21 @@
 <section class="fade-in">
   <header>
     <div>
-      <p class="deckTree">{{Deck}}</p>
-      <p class="subDeck">{{Subdeck}}</p>
+      <p class="deck-tree">{{Deck}}</p>
+      <p class="sub-deck-name">{{Subdeck}}</p>
+      <p class="info-queue hide-mobile">{{info-Date_Created:}}</p>
+      <p class="info-queue hide-mobile">
+        <span id="infoQueue">{{info-Queue:}}</span> card | <span id="infoQueue">{{info-Ivl:}}</span> Days |
+        <span id="infoQueue">{{info-Reviews:}}</span> Times
+      </p>
     </div>
   </header>
 
   <article>
-    <div id="questionField" class="questionField">
+    <div id="questionField" class="question-field">
       <div>
-        <span class="tagGrayColor">Quantos parâmetros possui a função</span>
-        <span class="functionColor" id="replacement">{{FunctionName}}()</span>?
+        <span class="tag-gray-color">Quantos parâmetros possui a função</span>
+        <span class="function-color" id="replacement">{{FunctionName}}()</span>?
       </div>
     </div>
   </article>
@@ -21,8 +26,9 @@
       <div class="notesChild" style="color: #4cc5a1">[...]</div>
     </div>
   </article>
+
   <footer>
-    <audio style="display: none">{{FunctionNameAudio}}</audio>
+    <audio>{{FunctionNameAudio}}</audio>
   </footer>
 </section>
 <script>
@@ -48,8 +54,8 @@
     $functionName.formatPrototypeFunction();
 
     typingJS({
-      containerSelector: ".questionField",
-      typingSpeedMillisecond: 45,
+      containerSelector: ".question-field",
+      typingSpeedMillisecond: 25,
       typingSpeedDelay: 500,
       initialSpeedDelayTime: 200,
       callback: () => {

@@ -11,7 +11,7 @@
       <div>
         <span class="class-color cmd">Quais são os parâmetros</span>
         <span class="cmd">da função </span>
-        <span id="replacement" class="functionColor">{{FunctionName}}()</span>?
+        <span id="replacement" class="stop cmd functionColor">{{FunctionName}}()</span>?
       </div>
     </div>
   </article>
@@ -30,7 +30,7 @@
     {{/SampleImage}}
   </article>
   <footer>
-    <audio style="display: none">{{ParametersAudio}}</audio>
+    <audio>{{ParametersAudio}}</audio>
   </footer>
 </section>
 <script>
@@ -67,7 +67,8 @@
       initialSpeedDelayTime: 50,
       callback: () => {
         $audio = html.get("audio");
-        $audio.hasChildNodes() && pycmd("play:a:0");
+        console.log($audio);
+        $audio && $audio.hasChildNodes() && pycmd("play:a:0");
         $extra.classList.add("fade-in");
       },
     }).execute();
