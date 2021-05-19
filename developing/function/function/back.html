@@ -11,10 +11,10 @@
     </div>
   </header>
 
-  <article class="question">
-    <div class="question-field">
+  <article>
+    <div id="questionField" class="question-field">
       <div>
-        <span class="class-color">Para que serve </span>
+        <span class="tag-gray-color">Para que serve </span>
         <span>a função </span>
         <span class="function-color" id="replacement">{{FunctionName}}()</span>?
       </div>
@@ -22,13 +22,7 @@
   </article>
 
   <article class="article-answer">
-    <div id="answerField" class="notesChild containerFlex answer-field">{{FunctionDescription}}</div>
-  </article>
-
-  <article class="flex-center">
-    <div class="answer-field">
-      <div id="answerField">{{FunctionDescription}}</div>
-    </div>
+    <div id="answerField" class="answer-field">{{FunctionDescription}}</div>
   </article>
 
   <article class="extra-container">
@@ -58,6 +52,9 @@
       await injectScript("https://hernandesjunio.github.io/typingJS/typing.min.js");
       await injectScript("https://gleisonkz.github.io/anki-note-types/shared.js");
     }
+
+    var $question = html.get(".question-field");
+    $question.formatPrototypeFunction();
 
     typingJS({
       containerSelector: ".answer-field",
