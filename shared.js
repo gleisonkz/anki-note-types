@@ -22,7 +22,7 @@ Element.prototype.formatHtmlElement = function () {
 
 Element.prototype.formatCSSProperty = function () {
   this.innerHTML = this.innerHTML.replace(
-    /([\w-]+)(: )([\w]+)/g,
+    /([\w-]+)(: )([\w-]+)/g,
     `<span class="attribute-color-css">$1</span><span class="symbols-color">$2</span><span class="string-color">$3</span>`
   );
   return this;
