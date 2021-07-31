@@ -19,7 +19,9 @@
           Current Interval: <span id="infoQueue" class="info-queue">{{info-Ivl:}}</span>
           <span class="info-queue">days</span>
         </p>
-        <p class="label">Review Times: <span id="infoQueue" class="info-queue">{{info-Reviews:}}</span></p>
+        <p class="label">
+          Review Times: <span id="infoQueue" class="info-queue">{{info-Reviews:}}</span>
+        </p>
       </div>
       <div class="my-legend">
         <div class="legend-title">Highlights</div>
@@ -101,7 +103,9 @@
         `<span class="${object.classElement}">${object.searchValue}</span>`
       );
     };
-    replacementElements.filter((c) => c.searchValue).forEach((object) => applyStyles(object));
+    replacementElements
+      .filter((c) => c.searchValue)
+      .forEach((object) => applyStyles(object));
   })();
 
   // ===================================================
@@ -136,6 +140,8 @@
   // adicionado ao deck mountain-secret-technique
   // ===================================================
 
+  var hasBeenAdded;
+
   (async function verifyIfIsAdded() {
     const params = {
       action: "findNotes",
@@ -145,14 +151,15 @@
       },
     };
 
-    const response = await fetch(baseUrl, { method: "POST", body: JSON.stringify(params) });
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      body: JSON.stringify(params),
+    });
     const data = await response.json();
 
-    const hasBeenAdded = data.result.length > 0;
+    hasBeenAdded = data.result.length > 0;
     const $added = document.querySelector(".added");
     $added.innerText = hasBeenAdded ? "YES" : "NO";
-    console.log(hasBeenAdded);
-    console.log(data);
   })();
 
   // ===================================================
@@ -181,18 +188,22 @@
       },
     };
 
-    const response = await fetch(baseUrl, { method: "POST", body: JSON.stringify(params) });
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      body: JSON.stringify(params),
+    });
     const result = await response.json();
 
-    console.log("createMSTCard");
+    console.log("MST card created successfully");
     console.log(result);
   }
 
-  const $btn = document.querySelector(".btn");
-  const audioName = `${"{{AudioText}}"}]`;
-  const soundString = "[sound:" + audioName;
+  var $btn = document.querySelector(".btn");
+  var audioName = `${"{{AudioText}}"}]`;
+  var soundString = "[sound:" + audioName;
   $btn.addEventListener("click", async () => {
     try {
+      if (hasBeenAdded) return alert("Este card ja foi adicionado");
       createMSTCard(soundString);
     } catch (error) {
       alert("Cartão já adicionado!");
