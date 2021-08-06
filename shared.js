@@ -74,9 +74,17 @@ Element.prototype.formatPascalCase = function () {
 
 Element.prototype.formatPrototypeFunction = function () {
   const patterns = [
-    { pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g, groupName: "class", className: "class-color" },
+    {
+      pattern: /(?<class>\w+)[.]\w+[.]\w+[(][)]/g,
+      groupName: "class",
+      className: "class-color",
+    },
     { pattern: /(?<fix>\w+)[.]\w+[(][)]/g, groupName: "fix", className: "const-color" },
-    { pattern: /(?<function>\w+)[(][)]/g, groupName: "function", className: "function-color" },
+    {
+      pattern: /(?<function>\w+)[(][)]/g,
+      groupName: "function",
+      className: "function-color",
+    },
     { pattern: /(?<symbol>\?)/g, groupName: "symbol", className: "symbols-color" },
     { pattern: /(?<symbol>\!)/g, groupName: "symbol", className: "symbols-color" },
     { pattern: /(?<symbol>\()/g, groupName: "symbol", className: "symbols-color" },
@@ -88,7 +96,10 @@ Element.prototype.formatPrototypeFunction = function () {
       var matches = [...textElement.matchAll(c.pattern)];
       matches.forEach((match) => {
         var value = match.groups[c.groupName];
-        textElement = textElement.replace(value, `<span class="${c.className}">${value}</span>`);
+        textElement = textElement.replace(
+          value,
+          `<span class="${c.className}">${value}</span>`
+        );
       });
     });
     return textElement;
@@ -96,6 +107,20 @@ Element.prototype.formatPrototypeFunction = function () {
 
   let textElement = this.innerHTML.trim();
   textElement = replaceByPattern(textElement, patterns);
+  this.innerHTML = textElement;
+
+  return this;
+};
+
+Element.prototype.formatPrototypeProperty = function () {
+  let textElement = this.innerHTML.trim();
+
+  const [fnName, prototype, property] = textElement.split(".");
+  textElement = `
+  <span class='class-color'>${fnName}</span>
+  <span class='const-color'>${prototype}</span>
+  <span class='const-color'>${property}</span>`.trim();
+
   this.innerHTML = textElement;
 
   return this;
