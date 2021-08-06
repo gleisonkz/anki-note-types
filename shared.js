@@ -117,10 +117,7 @@ Element.prototype.formatPrototypeProperty = function () {
 
   const [fnName, prototype, property] = textElement.split(".");
   textElement = `
-  <span class='class-color'>${fnName}</span>
-  <span class='const-color'>${prototype}</span>
-  <span class='const-color'>${property}</span>`.trim();
-
+  <span class='class-color'>${fnName}</span>.<span class='const-color'>${prototype}</span>.<span class='const-color'>${property}</span>`.trim();
   this.innerHTML = textElement;
 
   return this;
